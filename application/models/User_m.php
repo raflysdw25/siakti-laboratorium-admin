@@ -1,3 +1,5 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 class user_m extends CI_Model {
 	
 	public function login($post)
@@ -19,4 +21,32 @@ class user_m extends CI_Model {
 		$query = $this->db->get();
 		return $query;
 	}
+
+	public function add($post)
+	{
+		$params['name'] = $post['fullname'];
+		$params['username'] = $post['username'];
+		$params['password'] = sha1($post['password']);
+		$this->db->insert('user', $params);
+	}
+
+	public function delete($id)
+    {
+        $this->db->where('user_id', $id);
+        $this->db->delete('user');
+    }
+
+    public function edit($post)
+	{
+		$params['name'] = $post['fullname']; //name = database fullname = user_form_add
+		$params['username'] = $post['username'];
+		if (!empty($post['password'])) {
+			# code...
+			$params['password'] = sha1($post['password']);
+		}
+		
+		$this->db->where('user_id', $post['user_id']);
+		$this->db->update('user', $params);
+	}
+
 }

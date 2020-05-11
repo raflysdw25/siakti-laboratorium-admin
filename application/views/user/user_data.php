@@ -20,12 +20,13 @@
                     </a>
                 </div>
             </div>
-            <div class="box-body table-res">
+            <div class="box-body table-responsive">
                 <?php print_r($row->result()) ?>
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
+                            <th>Nama</th>
                             <th>Username</th>
                             <th>Password</th>
                             <th>Action</th>
@@ -37,15 +38,21 @@
                             # code...
                         <tr>
                             <td><?$no++?></td>
+                            <td><?=$data->nama_user?></td>
                             <td><?=$data->username?></td>
                             <td><?=$data->password?></td>
                             <td class="text-center" width="60px">
-                                <a href="<?=site_url('user/edit/')?>" class="btn btn-primary btn-xs">
+                                 <form action="<?=site_url('user/del')?>" method="post">
+                                <a href="<?=site_url('user/edit/' .$data->user_id)?>" class="btn btn-primary btn-xs">
                                     <i class="fa fa-pencil"></i>Update
                                 </a>
-                                <a href="<?=site_url('user/edit/')?>" class="btn btn-danger btn-xs">
-                                    <i class="fa fa-pencil"></i>Delete
-                                </a>
+                               
+                                    <input type="hidden" name="user_id" value="<?$data->user_id?>">
+                                    <button onclick="return confirm('Apakah Anda Yakin Menghapus?')" 
+                                    class="btn btn-danger btn-xs">
+                                    <i class="fa fa-trash"></i>Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <?php
