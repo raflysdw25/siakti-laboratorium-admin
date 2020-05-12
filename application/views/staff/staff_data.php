@@ -1,10 +1,10 @@
 <section class="content-header">
-    <h1>Users
-        <small>Pengguna</small>
+    <h1>Staff
+        <small>Karyawan TIK</small>
     </h1>
     <ol class="breakcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Users</li>
+        <li class="active">Staff</li>
     </ol>
 </section>
 
@@ -13,9 +13,9 @@
 
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Data Users</h3>
+                <h3 class="box-title">Data Staff</h3>
                 <div class="pull-right">
-                    <a href="<?=site_url('user/add')?>" class="btn btn-primary btn-flat">
+                    <a href="<?=site_url('staff/add')?>" class="btn btn-primary btn-flat">
                         <i class="fa fa-user-plus"></i>Create
                     </a>
                 </div>
@@ -25,10 +25,17 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>NIP</th>
                             <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Kecamatan</th>
+                            <th>Kelurahan</th>
+                            <th>Kota</th>
+                            <th>Telepon</th>
+                            <th>Email</th>
                             <th>Username</th>
                             <th>Password</th>
+                            <th>ID Prodi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -38,19 +45,27 @@
                             # code...
                         <tr>
                             <td><?$no++?></td>
-                            <td><?=$data->nama_user?></td>
-                            <td><?=$data->username?></td>
+                            <td><?=$data->nip?></td>
+                            <td><?=$data->nama?></td>
+                            <td><?=$data->alamat?></td>
+                            <td><?=$data->kec_staff?></td>
+                            <td><?=$data->kel_staff?></td>
+                            <td><?=$data->kota_staff?></td>
+                            <td><?=$data->tlp_staff?></td>
+                            <td><?=$data->email_staff?></td>
+                            <td><?=$data->usr_name?></td>
                             <td><?=$data->password?></td>
+                            <td><?=$data->prodi_prodi_id?></td>
                             <td class="text-center" width="60px">
-                                 <form action="<?=site_url('user/del')?>" method="post">
-                                <a href="<?=site_url('user/edit/' .$data->user_id)?>" class="btn btn-primary btn-xs">
-                                    <i class="fa fa-pencil"></i>Update
+                                 <form action="<?=site_url('staff/del')?>" method="post">
+                                <a href="<?=site_url('staff/edit/' .$data->nip)?>" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                                
-                                    <input type="hidden" name="user_id" value="<?$data->user_id?>">
+                                    <input type="hidden" name="nip" value="<?$data->nip?>">
                                     <button onclick="return confirm('Apakah Anda Yakin Menghapus?')" 
                                     class="btn btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i>Delete
+                                    <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
                             </td>

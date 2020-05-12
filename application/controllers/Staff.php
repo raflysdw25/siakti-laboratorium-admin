@@ -3,30 +3,42 @@
 /**
  * 
  */
-class User extends CI_Controller
+class Staff extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         check_not_login();
-        $this->load->model('user_m');
+        $this->load->model('staff_m');
         $this->load->library('form_validation');
     }
     
     public function index()
     {
         # code...
-        $data['row'] = $this->user_m->get();
-        $this->load->view('template', 'User/user_data');
+        $data['row'] = $this->staff_m->get();
+        $this->load->view('template', 'staff/staff_data');
     }
 
     public function add()
     {
     	
-    	$this->form_validation->set_rules('nama_user', 'Nama', 'required');
-        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|is_unique[user.user_data');
+    	$this->form_validation->set_rules('nip', 'NIP', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+       
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('kec_staff', 'Kecamatan', 'required');
+        $this->form_validation->set_rules('kel_staff', 'Kelurahan', 'required');
+        $this->form_validation->set_rules('kota_staff', 'Kota', 'required');
+
+        $this->form_validation->set_rules('tlp_staff', 'Telepon', 'required');
+        $this->form_validation->set_rules('email_staff', 'Email', 'required|is_unique');
+
+        $this->form_validation->set_rules('usr_name', 'Username', 'required|min_length[5]|is_unique[user.user_data');
     	$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
-    	$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]', array('matches' => '%s tidak sesuai dengan password'));
+    	
+
+        $this->form_validation->set_rules('prodi_prodi_id', 'ID Prodi', 'required|min_length[5]');
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
     	$this->form_validation->set_message('min_length', '{field} minimal 5 karakter');
@@ -36,38 +48,44 @@ class User extends CI_Controller
 
         if($this->form_validation->run() == FALSE)
     	{
-    		$this->template->load('template', 'user/user_form_add');
+    		$this->template->load('template', 'staff/staff_form_add');
 		} else {
 			$post = $this->input->post(null, TRUE);
-            $this->user_m->add($post);
+            $this->staff_m->add($post);
             if ($this->db->affected_rows() > 0) {
                 # code...
                 echo "<script>
                     alert('Data berhasil disimpan');
                 </script>";
             }
-                echo "<script>windows.location='".site_url('user')."';
+                echo "<script>windows.location='".site_url('staff')."';
                 </script>";
     	}
     }
 
-    public function edit($id)
+    public function edit($nip)
     {
         
-        $this->form_validation->set_rules('nama_user', 'Nama', 'required');
-        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|callback_username_check');
+        $this->form_validation->set_rules('nip', 'NIP', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+       
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('kec_staff', 'Kecamatan', 'required');
+        $this->form_validation->set_rules('kel_staff', 'Kelurahan', 'required');
+        $this->form_validation->set_rules('kota_staff', 'Kota', 'required');
 
-        if ($this->input->post('password')) {
+        $this->form_validation->set_rules('tlp_staff', 'Telepon', 'required');
+        $this->form_validation->set_rules('email_staff', 'Email', 'required|is_unique');
+
+        $this->form_validation->set_rules('usr_name', 'Username', 'required|min_length[5]|callback_username_check');
+       
+       if ($this->input->post('password')) {
            
         $this->form_validation->set_rules('password', 'Password', '|min_length[5]');
-        $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'matches[password]', array('matches' => '%s tidak sesuai dengan password'));
         }
 
-          if ($this->input->post('passconf')) {
-           
-        $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'matches[password]', array('matches' => '%s tidak sesuai dengan password'));
-        }
-
+        $this->form_validation->set_rules('prodi_prodi_id', 'ID Prodi', 'required|min_length[5]');
+        
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
         $this->form_validation->set_message('min_length', '{field} minimal 5 karakter');
         $this->form_validation->set_message('is_unique', '{field} ini sudah dipakai, silakan diganti yang lain');
@@ -76,27 +94,27 @@ class User extends CI_Controller
 
         if($this->form_validation->run() == FALSE)
         {
-            $query = $data['row'] = $this->user_m->get();
+            $query = $data['row'] = $this->staff_m->get();
             if ($query->num_rows() > 0) {
                 # code...
                 $data['row'] = query->row();
-            $this->template->load('template', 'user/user_form_edit', $data);
+            $this->template->load('template', 'staff/staff_form_edit', $data);
             } else {
                 echo "<script>alert('Data tidak ditemukan');
                 </script>"; 
-                echo "windows.location='".site_url('user')."';
+                echo "windows.location='".site_url('staff')."';
                 </script>";
             }
         } else {
             $post = $this->input->post(null, TRUE);
-            $this->user_m->edit($post);
+            $this->staff_m->edit($post);
             if ($this->db->affected_rows() > 0) {
                 # code...
                 echo "<script>
                     alert('Data berhasil disimpan');
                 </script>";
             }
-                echo "<script>windows.location='".site_url('user')."';
+                echo "<script>windows.location='".site_url('staff')."';
                 </script>";
         }
     }
@@ -104,7 +122,7 @@ class User extends CI_Controller
     function username_check()
     {
         $post = $this->input->post(null, TRUE);
-        $query = $this->db->query("SELECT * FROM user WHERE username = '$post[username]' AND user_id != '$post[user_id]'")
+        $query = $this->db->query("SELECT * FROM staff WHERE usr_name = '$post[Username]' AND nip != '$post[nip]'")
 
         if ($query->num_rows() > 0) {
             # code...
@@ -117,15 +135,15 @@ class User extends CI_Controller
 
     public function delete()
     {
-        $id = $this->input->post('user_id');
-        $this->User_m->delete($id);
+        $id = $this->input->post('nip');
+        $this->User_m->delete($nip);
         if ($this->db->affected_rows() > 0) {
                 # code...
                 echo "<script>
                     alert('Data berhasil dihapus');
                 </script>";
             }
-                echo "<script>windows.location='".site_url('user')."';
+                echo "<script>windows.location='".site_url('staff')."';
                 </script>";
     }
 }
