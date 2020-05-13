@@ -55,13 +55,13 @@
                             <td class="text-center" width="60px">
                                  <form action="<?=site_url('barang/del')?>" method="post">
                                 <a href="<?=site_url('barang/edit/' .$data->kode_brg)?>" class="btn btn-primary btn-xs">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fas fa-pencil-alt"></i>
                                 </a>
                                
                                     <input type="hidden" name="kode_brg" value="<?$data->kode_brg?>">
                                     <button onclick="return confirm('Apakah Anda Yakin Menghapus?')" 
                                     class="btn btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i>
+                                    <i clclass="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>

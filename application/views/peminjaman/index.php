@@ -13,16 +13,15 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Kode Pinjaman</th>
-                    <th>tanggal start pinjam</th>
-                    <th>tanggal kembali end</th>
-                    <th>tanggal kembali real</th>
-                    <th>ruangan namaruang</th>
-                    <th>mahasiswa nim</th>
-                    <th>mahasiswa nim</th>
-                    <th>tujuan pinjam</th>
-                    <th>staff nip</th>
-                    <th>jadwal kuliah kode jadwal</th>
+                    <th>Kode Peminjaman</th>
+                    <th>Tanggal Peminjaman</th>
+                    <th>Tanggal Pengembalian</th>
+                    <th>Tanggal Pengembalian Real</th>
+                    <th>Nama Ruangan</th>
+                    <th>NIM Mahasiswa</th>
+                    <th>Tujuan Pinjam</th>
+                    <th>NIP Staff</th>
+                    <th>Kode Jadwal Kuliah</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,11 +40,14 @@
                     <td><?=$data->staff_nip?></td>
                     <td><?=$data->jadwal_kul_kodejdwl?></td>
                     <td class="text-center" width="60px">
-                        <a href="<?=site_url('user/edit/')?>" class="btn btn-primary btn-xs">
-                            <i class="fa fa-pencil"></i>Update
+                        <a href="<?=site_url('peminjaman/look/')?>" class="btn btn-primary btn-xs">
+                        <i class="fas fa-eye"></i>
                         </a>
-                        <a href="<?=site_url('user/edit/')?>" class="btn btn-danger btn-xs">
-                            <i class="fa fa-pencil"></i>Delete
+                        <a href="<?=site_url('peminjaman/edit/')?>" class="btn btn-primary btn-xs">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="<?=site_url('peminjaman/edit/')?>" class="btn btn-danger btn-xs">
+                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>

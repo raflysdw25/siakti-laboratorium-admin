@@ -27,11 +27,11 @@
                       <td>0251-87771411</td>
                       <td>sinarjayagroup@gmail.com</td>
                     <td class="text-center" width="60px">
-                        <a href="<?=site_url('user/edit/')?>" class="btn btn-primary btn-xs">
-                            <i class="fa fa-pencil"></i>Update
+                        <a href="<?=site_url('supplier/edit/')?>" class="btn btn-primary btn-xs">
+                            <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <a href="<?=site_url('user/edit/')?>" class="btn btn-danger btn-xs">
-                            <i class="fa fa-pencil"></i>Delete
+                        <a href="<?=site_url('supplier/edit/')?>" class="btn btn-danger btn-xs">
+                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>

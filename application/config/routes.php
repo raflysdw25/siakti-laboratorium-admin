@@ -57,3 +57,5 @@ $route['supplier'] = 'Supplier/index';
 $route['supplier/add'] = 'Supplier/add';
 $route['staff'] = 'Staff/index';
 $route['tambahdata'] = 'Tambahdata/index';
+$route['barang'] = 'Barang/index';
+$route['peminjaman'] = 'Peminjaman/index';
