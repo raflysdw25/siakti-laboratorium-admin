@@ -56,4 +56,4 @@ $route['/'] = 'Dashboard/index';
 $route['supplier'] = 'Supplier/index';
 $route['supplier/add'] = 'Supplier/add';
 $route['staff'] = 'Staff/index';
-
+$route['tambahdata'] = 'Tambahdata/index';

@@ -8,7 +8,6 @@
         </div>
     </div>
     <div class="box-body table-responsive">
-        <?php print_r($row->result()) ?>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -21,15 +20,12 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 1;
-                foreach ($row->result() as $key => $data) { ?>
-                    # code...
                 <tr>
-                    <td><?$no++?></td>
-                    <td><?=$data->nm_supplier?></td>
-                    <td><?=$data->almt_supplier?></td>
-                    <td><?=$data->telp_supplier?></td>
-                    <td><?=$data->email_supplier?></td>
+					  <td>01</td>
+                      <td>PT Sinar Jaya</td>
+                      <td>Jakarta</td>
+                      <td>0251-87771411</td>
+                      <td>sinarjayagroup@gmail.com</td>
                     <td class="text-center" width="60px">
                         <a href="<?=site_url('user/edit/')?>" class="btn btn-primary btn-xs">
                             <i class="fa fa-pencil"></i>Update
@@ -39,8 +35,6 @@
                         </a>
                     </td>
                 </tr>
-                <?php
-            } ?>
             </tbody>
         </table>
         

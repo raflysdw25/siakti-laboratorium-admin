@@ -97,13 +97,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./" class="nav-link active">
                   <i class="fas fa-boxes nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./tambah_data.html" class="nav-link">
+                <a href="./tambahdata" class="nav-link">
                   <i class="fas fa-box-open nav-icon"></i>
                   <p>Tambah Data Barang</p>
                 </a>
