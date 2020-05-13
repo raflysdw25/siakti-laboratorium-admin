@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/dist/css/skins/_all-skins.min.css">
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
@@ -32,18 +28,15 @@
                     <input type="text" name="password" class="form-control" placeholder="Password" required autofocus>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                <div class="row">
-                    <div class="col-xs-8"></div>
-                    <div class="col-xs">
-                        <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                </div>
+                <div class="form-group">
+                    <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div>            
             </form>
         </div>
     </div>
 
-   <!--  <script src="<?=base_url()?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<?=base_url()?>assets/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="<?=base_url()?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-     -->
+    
 </body>
 </html>
