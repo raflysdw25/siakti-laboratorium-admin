@@ -103,13 +103,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./tambahdata" class="nav-link">
+                <a href="./barang" class="nav-link">
                   <i class="fas fa-box-open nav-icon"></i>
                   <p>Tambah Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./peminjaman.html" class="nav-link">
+                <a href="./peminjaman" class="nav-link">
                   <i class="fas fa-shopping-basket nav-icon"></i>
                   <p>Peminjaman Barang</p>
                 </a>
