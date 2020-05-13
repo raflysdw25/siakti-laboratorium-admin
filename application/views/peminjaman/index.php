@@ -1,74 +1,87 @@
-<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">Daftar Peminjaman Barang</h3>
-        <div class="pull-right">
-            <!-- <a href="supplier/add" class="btn btn-primary btn-flat">
-                <i class="fa fa-user-plus"></i>Create
-            </a> -->
-        </div>
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark font-weight-bold">Daftar Peminjaman Laboratorium</h1>
+          </div><!-- /.col -->
+          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
-    <div class="box-body table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <!-- <tr>
-                    <th>No</th>
-                    <th>Kode Peminjaman</th>
-                    <th>Tanggal Peminjaman</th>
-                    <th>Tanggal Pengembalian</th>
-                    <th>Tanggal Pengembalian Real</th>
-                    <th>Nama Ruangan</th>
-                    <th>NIM Mahasiswa</th>
-                    <th>Tujuan Pinjam</th>
-                    <th>NIP Staff</th>
-                    <th>Kode Jadwal Kuliah</th>
-                </tr> -->
-                <tr>
-                    <th>No</th>
-                    <th>Kode Peminjaman</th>
-                    <th>Nama Peminjam</th>
-                    <th>Tanggal Peminjaman</th>
-                    <th>Tanggal Pengembalian </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+    <!-- /.content-header -->
 
-                <tbody>
-                <tr>
-                      <td>01</td>
-                      <td>AA123</td>
-                      <td>Nur Ismi Fahmia</td>
-                      <td>13 Mei 2020</td>
-                      <td>14 Mei 2020</td>
-               <!-- 
-                <tr>
-                    <td><?$no?></td>
-                    <td><?=$data->kode_pinjam?></td>
-                    <td><?=$data->tgl_pinjam_start?></td>
-                    <td><?=$data->tgl_kembali_end?></td>
-                    <td><?=$data->tgl_kembali_real?></td>
-                    <td><?=$data->ruangan_namaruang?></td>
-                    <td><?=$data->mahasiswa_nim?></td>
-                    <td><?=$data->tujuan_pinjam?></td>
-                    <td><?=$data->staff_nip?></td>
-                    <td><?=$data->jadwal_kul_kodejdwl?></td> --> 
-                    <td>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detail-modals">
-                          <i class="fas fa-eye"></i>
-                        </button>
-                        <a href="#" class="btn btn-primary">
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                        <a href="#" class="btn btn-danger">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </td>
-                </tr>
-            </tbody>
-        </table>
-        
-    </div>
-</div>
+    <section class="content">
+      <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="box-body table-responsive">
+                  <table class="table text-nowrap datatable">
+                      <thead>
+                          <!-- <tr>
+                              <th>No</th>
+                              <th>Kode Peminjaman</th>
+                              <th>Tanggal Peminjaman</th>
+                              <th>Tanggal Pengembalian</th>
+                              <th>Tanggal Pengembalian Real</th>
+                              <th>Nama Ruangan</th>
+                              <th>NIM Mahasiswa</th>
+                              <th>Tujuan Pinjam</th>
+                              <th>NIP Staff</th>
+                              <th>Kode Jadwal Kuliah</th>
+                          </tr> -->
+                          <tr>
+                              <th>No</th>
+                              <th>Kode Peminjaman</th>
+                              <th>Nama Peminjam</th>
+                              <th>Tanggal Peminjaman</th>
+                              <th>Tanggal Pengembalian </th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                                <td>01</td>
+                                <td>AA123</td>
+                                <td>Nur Ismi Fahmia</td>
+                                <td>13 Mei 2020</td>
+                                <td>14 Mei 2020</td>
+                         <!-- 
+                          <tr>
+                              <td><?$no?></td>
+                              <td><?=$data->kode_pinjam?></td>
+                              <td><?=$data->tgl_pinjam_start?></td>
+                              <td><?=$data->tgl_kembali_end?></td>
+                              <td><?=$data->tgl_kembali_real?></td>
+                              <td><?=$data->ruangan_namaruang?></td>
+                              <td><?=$data->mahasiswa_nim?></td>
+                              <td><?=$data->tujuan_pinjam?></td>
+                              <td><?=$data->staff_nip?></td>
+                              <td><?=$data->jadwal_kul_kodejdwl?></td> --> 
+                              <td>
+                                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detail-modals">
+                                    <i class="fas fa-eye"></i>
+                                  </button>
+                                  <a href="#" class="btn btn-primary">
+                                    <i class="fas fa-pencil-alt"></i>
+                                  </a>
+                                  <a href="#" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                  </a>
+                                </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                </div>
+              <!-- /.card-body -->
+              </div>
+            <!-- /.card -->
+            </div>
+          </div>
+      </div><!-- /.container-fluid -->
+      </section>
 
 <!-- Modals -->
     <div class="modal fade" id="detail-modals">
