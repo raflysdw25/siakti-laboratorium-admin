@@ -115,7 +115,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./supplier.html" class="nav-link">
+                <a href="./supplier" class="nav-link">
                   <i class="fas fa-truck nav-icon"></i>
                   <p>Supplier Barang</p>
                 </a>
