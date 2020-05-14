@@ -28,10 +28,4 @@ class Peminjaman_m extends CI_Model {
 		$query = $this->db->get();
 		return $query;
 	}
-
-	public function delete($id)
-    {
-        $this->db->where('kode_pinjam', $kode_pinjam);
-        $this->db->delete('peminjaman');
-    }
 }
