@@ -14,6 +14,6 @@ class Supplier extends CI_Controller
 
     public function add()
     {
-    	$this->load->view('supplier/supplier_form_add');
+    	$this->template->load('template','supplier/supplier_form_add');
     }
 }
