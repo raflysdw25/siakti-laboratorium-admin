@@ -64,9 +64,6 @@
                                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detail-modals">
                                     <i class="fas fa-eye"></i>
                                   </button>
-                                  <a href="#" class="btn btn-primary">
-                                    <i class="fas fa-pencil-alt"></i>
-                                  </a>
                                   <a href="#" class="btn btn-danger">
                                     <i class="fas fa-trash"></i>
                                   </a>
