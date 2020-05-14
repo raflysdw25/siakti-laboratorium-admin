@@ -1,10 +1,10 @@
 <section class="content-header">
-    <h1>Staff
-        <small>Karyawan TIK</small>
+    <h1>Barang
+        <small>Data Barang</small>
     </h1>
     <ol class="breakcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Staff</li>
+        <li class="active">Barang</li>
     </ol>
 </section>
 
@@ -13,9 +13,9 @@
 
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Add Staff</h3>
+                <h3 class="box-title">Tambah Barang</h3>
                 <div class="pull-right">
-                    <a href="<?=site_url('staff/add')?>" class="btn btn-warning btn-flat">
+                    <a href="<?=site_url('barang/add')?>" class="btn btn-warning btn-flat">
                         <i class="fa fa-undo"></i>Back
                     </a>
                 </div>
@@ -25,61 +25,51 @@
                     <div class="col-md-4 col-md-offset-4">
                        
                         <form action="" method="post">
-                            <div class="form-group" <?=form_eror('nip')? 'has-eror' : null?>">
-                                <label>NIP</label>
-                                <input type="number" name="NIP" value=<?=set_value('nip')?>" class="form-control">
-                                <?=form_eror('nip')?>
+                            <div class="form-group" <?=form_eror('kode_brg')? 'has-eror' : null?>">
+                                <label>Kode Barang</label>
+                                <input type="text" name="Kode Barang" value=<?=set_value('kode_brg')?>" class="form-control">
+                                <?=form_eror('kode_brg')?>
                             </div>
-                            <div class="form-group" <?=form_eror('nama')? 'has-eror' : null?>">
-                                <label>Nama</label>
-                                <input type="text" name="Nama" value=<?=set_value('nama')?>" class="form-control">
-                                <?=form_eror('nama')?>
+                            <div class="form-group" <?=form_eror('nama_brg')? 'has-eror' : null?>">
+                                <label>Nama Barang</label>
+                                <input type="text" name="Nama Barang" value=<?=set_value('nama_brg')?>" class="form-control">
+                                <?=form_eror('nama_brg')?>
                             </div>
-                             <div class="form-group">
-                                <label>Alamat</label>
-                                <textarea name="Alamat" class="form-control" ><?=set_value('alamat')?></textarea>
+                            <div class="form-group" <?=form_eror('jenis')? 'has-eror' : null?>">
+                                <label>Jenis Barang</label>
+                                <input type="text" name="Jenis Barang" value=<?=set_value('jenis')?>" class="form-control">
+                                <?=form_eror('jenis_brg')?>
                             </div>
-                            <div class="form-group" <?=form_eror('kec_staff')? 'has-eror' : null?>">
-                                <label>Kecamatan</label>
-                                <input type="text" name="Kecamatan" value=<?=set_value('kec_staff')?>" class="form-control">
-                                <?=form_eror('kec_staff')?>
+                            <div class="form-group">
+                                <label>Spesifikasi Barang</label>
+                                <textarea name="Spesifikasi Barang" class="form-control" ><?=set_value('spesifikasi')?></textarea>
                             </div>
-                            <div class="form-group" <?=form_eror('kel_staff')? 'has-eror' : null?>">
-                                <label>Kelurahan</label>
-                                <input type="text" name="Kelurahan" value=<?=set_value('kel_staff')?>" class="form-control">
-                                <?=form_eror('kel_staff')?>
+                            <div class="form-group" <?=form_eror('jml')? 'has-eror' : null?>">
+                                <label>Jumlah Barang</label>
+                                <input type="number" name="Jumlah Barang" value=<?=set_value('jml')?>" class="form-control">
+                                <?=form_eror('jml')?>
                             </div>
-                            <div class="form-group" <?=form_eror('kota_staff')? 'has-eror' : null?>">
-                                <label>Kota</label>
-                                <input type="text" name="Kota" value=<?=set_value('kota_staff')?>" class="form-control">
-                                <?=form_eror('kota_staff')?>
+                            <div class="form-group" <?=form_eror('satuan')? 'has-eror' : null?>">
+                                <label>Satuan</label>
+                                <input type="text" name="Satuan" value=<?=set_value('satuan')?>" class="form-control">
+                                <?=form_eror('satuan')?>
                             </div>
-                             <div class="form-group" <?=form_eror('tlp_staff')? 'has-eror' : null?>">
-                                <label>Telepon</label>
-                                <input type="number" name="Telepon" value=<?=set_value('tlp_staff')?>" class="form-control">
-                                <?=form_eror('tlp_staff')?>
+                            <div class="form-group" <?=form_eror('thn_pengadaan')? 'has-eror' : null?>">
+                                <label>Tahun Pengadaan</label>
+                                <input type="number" name="Tahun Pengadaan" value=<?=set_value('thn_pengadaan')?>" class="form-control">
+                                <?=form_eror('thn_pengadaan')?>
                             </div>
-                             <div class="form-group" <?=form_eror('email_staff')? 'has-eror' : null?>">
-                                <label>Email</label>
-                                <input type="text" name="Email" value=<?=set_value('email_staff')?>" class="form-control">
-                                <?=form_eror('email_staff')?>
+                             <div class="form-group" <?=form_eror('asal_pengadaan')? 'has-eror' : null?>">
+                                <label>Asal Pengadaan</label>
+                                <input type="text" name="Asal Pengadaan" value=<?=set_value('asal_pengadaan')?>" class="form-control">
+                                <?=form_eror('asal_pengadaan')?>
                             </div>
-                            <div class="form-group" <?=form_eror('usr_name')? 'has-eror' : null?>">
-                                <label>Usename</label>
-                                <input type="text" name="Username" value=<?=set_value('usr_name')?>" class="form-control">
-                                <?=form_eror('usr_name')?>
+                             <div class="form-group" <?=form_eror('supplier_nama_supp')? 'has-eror' : null?>">
+                                <label>Supplier</label>
+                                <input type="text" name="Supplier" value=<?=set_value('supplier_nama_supp')?>" class="form-control">
+                                <?=form_eror('supplier_nama_supp')?>
                             </div>
-                             <div class="form-group" <?=form_eror('password')? 'has-eror' : null?>">
-                                <label>Password *</label>
-                                <input type="password" name="password" 
-                                value=<?=set_value('password')?>"class="form-control">
-                                 <?=form_eror('password')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('prodi_prodi_id')? 'has-eror' : null?>">
-                                <label>ID Prodi</label>
-                                <input type="text" name="ID Prodi" value=<?=set_value('prodi_prodi_id')?>" class="form-control">
-                                <?=form_eror('prodi_prodi_id')?>
-                            </div>
+                           
                             <div class="form-group">
                                 <button type="submit" class="btn btn-succes btn-flat">
                                     <i class="fa fa-paper-plane"></i>Save</button>
