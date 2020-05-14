@@ -103,7 +103,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./barang" class="nav-link">
+                <a href="<?= site_url('barang/add')?>" class="nav-link">
                   <i class="fas fa-box-open nav-icon"></i>
                   <p>Tambah Data Barang</p>
                 </a>
@@ -115,7 +115,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./supplier" class="nav-link">
+                <a href="<?= site_url('supplier/index')?>" class="nav-link">
                   <i class="fas fa-truck nav-icon"></i>
                   <p>Supplier Barang</p>
                 </a>
