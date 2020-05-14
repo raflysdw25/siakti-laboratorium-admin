@@ -136,7 +136,7 @@ class Staff extends CI_Controller
     public function delete()
     {
         $id = $this->input->post('nip');
-        $this->User_m->delete($nip);
+        $this->staff_m->delete($nip);
         if ($this->db->affected_rows() > 0) {
                 # code...
                 echo "<script>
