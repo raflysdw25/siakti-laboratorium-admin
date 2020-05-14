@@ -1,86 +1,90 @@
-<section class="content-header">
-    <h1>Barang
-        <small>Data Barang</small>
-    </h1>
-    <ol class="breakcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Barang</li>
-    </ol>
-</section>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark font-weight-bold">Tambah Barang Laboratorium</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Laboratorium</a></li>
+              <li class="breadcrumb-item active">Tambah Barang</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-<!-- <Main content> -->
+    <!-- Main content -->
     <section class="content">
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Tambah Barang</h3>
-                <div class="pull-right">
-                    <a href="<?=site_url('barang/add')?>" class="btn btn-warning btn-flat">
-                        <i class="fa fa-undo"></i>Back
-                    </a>
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4">
-                       
-                        <form action="" method="post">
-                            <div class="form-group" <?=form_eror('kode_brg')? 'has-eror' : null?>">
-                                <label>Kode Barang</label>
-                                <input type="text" name="Kode Barang" value=<?=set_value('kode_brg')?>" class="form-control">
-                                <?=form_eror('kode_brg')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('nama_brg')? 'has-eror' : null?>">
-                                <label>Nama Barang</label>
-                                <input type="text" name="Nama Barang" value=<?=set_value('nama_brg')?>" class="form-control">
-                                <?=form_eror('nama_brg')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('jenis')? 'has-eror' : null?>">
-                                <label>Jenis Barang</label>
-                                <input type="text" name="Jenis Barang" value=<?=set_value('jenis')?>" class="form-control">
-                                <?=form_eror('jenis_brg')?>
+      <div class="container-fluid">
+        <!-- /.row -->
+        <form action="#" method="POST">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-boxes"></i> Detail Barang
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="id_barang">ID Barang</label>
+                                <input type="number" name="id_barang" class="form-control" id="id_barang" placeholder="Masukkan ID Barang">
                             </div>
                             <div class="form-group">
-                                <label>Spesifikasi Barang</label>
-                                <textarea name="Spesifikasi Barang" class="form-control" ><?=set_value('spesifikasi')?></textarea>
+                                <label for="nama_barang">Nama Barang</label>
+                                <input type="text" name="nama_barang" class="form-control" id="nama_barang" placeholder="Masukkan Nama Barang">
                             </div>
-                            <div class="form-group" <?=form_eror('jml')? 'has-eror' : null?>">
-                                <label>Jumlah Barang</label>
-                                <input type="number" name="Jumlah Barang" value=<?=set_value('jml')?>" class="form-control">
-                                <?=form_eror('jml')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('satuan')? 'has-eror' : null?>">
-                                <label>Satuan</label>
-                                <input type="text" name="Satuan" value=<?=set_value('satuan')?>" class="form-control">
-                                <?=form_eror('satuan')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('thn_pengadaan')? 'has-eror' : null?>">
-                                <label>Tahun Pengadaan</label>
-                                <input type="number" name="Tahun Pengadaan" value=<?=set_value('thn_pengadaan')?>" class="form-control">
-                                <?=form_eror('thn_pengadaan')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('asal_pengadaan')? 'has-eror' : null?>">
-                                <label>Asal Pengadaan</label>
-                                <input type="text" name="Asal Pengadaan" value=<?=set_value('asal_pengadaan')?>" class="form-control">
-                                <?=form_eror('asal_pengadaan')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('supplier_nama_supp')? 'has-eror' : null?>">
-                                <label>Supplier</label>
-                                <input type="text" name="Supplier" value=<?=set_value('supplier_nama_supp')?>" class="form-control">
-                                <?=form_eror('supplier_nama_supp')?>
-                            </div>
-                           
                             <div class="form-group">
-                                <button type="submit" class="btn btn-succes btn-flat">
-                                    <i class="fa fa-paper-plane"></i>Save</button>
-                                <button type="reset" class="btn btn-flat">Reset</button>
+                                <label for="jumlah_barang">Jumlah Barang</label>
+                                <input type="number" min="0" class="form-control" name="jumlah_barang" id="jumlah_barang" placeholder="Masukkan Jumlah Barang">
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <label for="spesifikasi_barang">Spesifikasi Barang</label>
+                                <textarea name="spesifikasi_barang" id="spesifikasi_barang" cols="30" rows="10" class="form-control ckeditor"></textarea>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
-                
-                
+                <div class="col-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-shopping-cart"></i> Detail Penerimaan
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Tahun">Tanggal</label>
+                                <div class="input-group date" id="datepicker" data-target-input="nearest">
+                                  <input type="text" class="form-control datetimepicker-input" data-target="#datepicker" placeholder="Pilih Tanggal"/>
+                                  <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier_barang">Supplier</label>
+                                <input type="text" class="form-control" id="supplier_barang" placeholder="Supplier Barang">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <div class="p-2">
+                    <button type="submit" class="btn btn-success btn-lg">Simpan</button>
+                    <a href="index.html" class="btn btn-danger btn-lg">Batal</a>
+                </div>
             </div>
-        </div>
-        
+        </form>
+      </div><!-- /.container-fluid -->
     </section>
