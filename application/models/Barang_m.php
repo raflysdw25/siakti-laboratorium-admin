@@ -1,67 +1,94 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+use GuzzleHttp\Client;
+
 class Barang_m extends CI_Model {
+
+	private $_client;
+
+	public function __construct()
+    {
+        $this->_client = new Client([
+            'base_uri' => 'http://127.0.0.1/siakti-api/index.php/api/'
+        ]);
+    }
 	
-	public function view($post)
-	{
-		$this->db->select('*');
-		$this->db->from('barang');
-		$this->db->where('kode_brg', $post['Kode Barang']);
-		$this->db->where('nama_brg', $post['Nama Barang']);
-		$this->db->where('jenis', $post['Jenis Barang']);
-		$this->db->where('spesifikasi', $post['Spesifikasi Barang']);
-		$this->db->where('jml', $post['Jumlah Barang']);
-		$this->db->where('satuan', $post['Satuan']);
-		$this->db->where('thn_pengadaan', $post['Tahun Pengadaan']);
-		$this->db->where('asal_pengadaan', $post['Asal Pengadaan']);
-		$this->db->where('supplier_nama_supp', $post['Supplier']);
-		$query = $this->db->get();
-		return $query; 
-	}
+	
 
 	public function get($id = null)
 	{
-		$this->db->from('barang');
-		if($id != null){
-			$this->db->where('kode_brg', $kode_brg);
+		if($id){
+			$response = $this->_client->request('GET', 'laboratorium/barang', [
+				'query' => [
+					'kode_brg' => $id
+				]
+			]);			
+		}else{
+			$response = $this->_client->request('GET', 'laboratorium/barang');
 		}
-		$query = $this->db->get();
-		return $query;
+
+        $result = json_decode($response->getBody()->getContents());
+                
+        return $result->data;
 	}
 
-	public function add($post)
-	{
-		$params['kode_brg'] = $post['Kode Barang'];
-		$params['nama_brg'] = $post['Nama Barang'];
-		$params['jenis'] = $post['Jenis Barang'];
-		$params['spesifikasi'] = $post['Spesifikasi Barang'];
-		$params['jml'] = $post['Jumlah Barang'];
-		$params['satuan'] = $post['Satuan'];
-		$params['thn_pengadaan'] = $post['Tahun Pengadaan'];
-		$params['asal_pengadaan'] = $post['Asal Pengadaan'];
-		$params['supplier_nama_supp'] = $post['Supplier'];
-		$this->db->insert('barang', $params);
+	public function add()
+	{		
+		$data = [
+			"kode_brg" => $this->input->post('kode_brg',true),
+			"nama_brg" => $this->input->post('nama_brg',true),
+			"jenis" => $this->input->post('jenis',true),
+			"spesifikasi" => $this->input->post('spesifikasi',true),
+			"jml" => $this->input->post('jml',true),
+			"satuan" => $this->input->post('satuan',true),
+			"thn_pengadaan" => date("Y-m-d", strtotime($this->input->post('thn_pengadaan',true))),
+			"asal_pengadaan" => $this->input->post('asal_pengadaan',true),
+			"supplier_nama_supp" => $this->input->post('supplier_nama_supp',true),			
+		];		
+
+		$response = $this->_client->request('POST', 'laboratorium/barang',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
 	}
 
-	public function delete($id)
+	public function delete($kode_brg)
     {
-        $this->db->where('kode_brg', $kode_brg);
-        $this->db->delete('barang');
+		$response = $this->_client->request('DELETE', 'laboratorium/barang', [
+            'form_params' => [
+                'kode_brg' => $kode_brg,
+            ]            
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
     }
 
-    public function edit($post)
+    public function edit()
 	{
-		$params['kode_brg'] = $post['Kode Barang'];
-		$params['nama_brg'] = $post['Nama Barang'];
-		$params['jenis'] = $post['Jenis Barang'];
-		$params['spesifikasi'] = $post['Spesifikasi Barang'];
-		$params['jml'] = $post['Jumlah Barang'];
-		$params['satuan'] = $post['Satuan'];
-		$params['thn_pengadaan'] = $post['Tahun Pengadaan'];
-		$params['asal_pengadaan'] = $post['Asal Pengadaan'];
-		$params['supplier_nama_supp'] = $post['Supplier'];
-		$this->db->where('kode_brg', $post['Kode Barang']);
-		$this->db->update('barang', $params);
+		$data = [
+			"kode_brg" => $this->input->post('kode_brg',true),
+			"nama_brg" => $this->input->post('nama_brg',true),
+			"jenis" => $this->input->post('jenis',true),
+			"spesifikasi" => $this->input->post('spesifikasi',true),
+			"jml" => $this->input->post('jml',true),
+			"satuan" => $this->input->post('satuan',true),
+			"thn_pengadaan" => date("Y-m-d", strtotime($this->input->post('thn_pengadaan',true))),
+			"asal_pengadaan" => $this->input->post('asal_pengadaan',true),
+			"supplier_nama_supp" => $this->input->post('supplier_nama_supp',true),			
+		];		
+
+		$response = $this->_client->request('PUT', 'laboratorium/barang',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
 	}
 
 }

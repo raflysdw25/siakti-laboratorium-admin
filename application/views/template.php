@@ -188,6 +188,7 @@
 <script src="<?= base_url() ?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url() ?>assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?= base_url() ?>assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script>
 
 <script>
   $(function () {
@@ -201,6 +202,46 @@
       "responsive": true,
     });
   });
+  ClassicEditor
+      .create( document.querySelector('.ckeditor') )
+      .then( editor => {
+          console.log(editor);
+      } )
+      .catch( error => {
+          console.error( error );
+      } );
+
 </script>
+<script>
+  // Untuk modal dengan bootstrap
+  jQuery(document).ready(function($){
+        $('#mymodal').on('show.bs.modal', function(e){
+            var button = $(e.relatedTarget);
+            var modal = $(this);
+
+            // Untuk menampilkan modal sesuai desain yang sudah dibaut di show.blade.php
+            modal.find('.modal-body').load(button.data('remote'));
+            // Untuk menampilkan title di modal
+            modal.find('.modal-title').html(button.data('title'));
+        });
+  });
+</script>
+
+<!-- Modal Script -->
+<div class="modal fade" id="mymodal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title font-weight-bold">Detail Barang</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+      </div>
+    </div>      
+</div>
 </body>
 </html>

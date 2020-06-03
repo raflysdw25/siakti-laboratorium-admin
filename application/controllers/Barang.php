@@ -9,109 +9,90 @@ class Barang extends CI_Controller
     {
         parent::__construct();
         // check_not_login();
-        // $this->load->model('Barang_m');
-        // $this->load->library('form_validation');
+        $this->load->model(['Barang_m', 'supplier_m']);
+        $this->load->library('form_validation');
     }
     
     public function index()
     {
         # code...
-        $data['row'] = $this->Barang_m->get();
-        $this->load->view('template', 'barang/barang_data');
+        $data['barang'] = $this->Barang_m->get();
+        $this->template->load('template', 'barang/index',$data);
+    }
+
+    public function showBarang($id){
+        $data['barang'] = $this->Barang_m->get($id)[0];
+        $data['generator'] = new Picqer\Barcode\BarcodeGeneratorPNG(); //Digunakan untuk mengenerate barcode
+        $this->load->view('barang/barang_show',$data);
     }
 
     public function add()
     {
-        $this->template->load('template','barang/barang_add');
-    	// $this->form_validation->set_rules('kode_brg', 'Kode Barang', 'required|is_unique');
-        // $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');
-        // $this->form_validation->set_rules('jenis', 'Jenis Barang', 'required');
-        // $this->form_validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
-        // $this->form_validation->set_rules('jml', 'Jumlah Barang', 'required');
-        // $this->form_validation->set_rules('satuan', 'satuan', 'required');
-        // $this->form_validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
-        // $this->form_validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        // $this->form_validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
+        $validation = $this->form_validation;
+    	$validation->set_rules('kode_brg', 'Kode Barang', 'required');
+        $validation->set_rules('nama_brg', 'Nama_Barang', 'required');
+        $validation->set_rules('jenis', 'Jenis Barang', 'required');
+        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
+        $validation->set_rules('jml', 'Jumlah Barang', 'required');
+        $validation->set_rules('satuan', 'satuan', 'required');
+        $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
+        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
+        $validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
     	
     	
-        // $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
-    	// $this->form_validation->set_message('is_unique', '{field} ini sudah dipakai, silakan diganti yang lain');
-    	// $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
+    	$this->form_validation->set_message('is_unique', '{field} ini sudah dipakai, silakan diganti yang lain');
+    	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
-        // if($this->form_validation->run() == FALSE)
-    	// {
-    	// 	$this->template->load('template', 'barang/barang_form_add');
-		// } else {
-		// 	$post = $this->input->post(null, TRUE);
-        //     $this->Barang_m->add($post);
-        //     if ($this->db->affected_rows() > 0) {
-        //         # code...
-        //         echo "<script>
-        //             alert('Data berhasil disimpan');
-        //         </script>";
-        //     }
-        //         echo "<script>windows.location='".site_url('barang')."';
-        //         </script>";
-    	// }
+        
+        if($validation->run() == FALSE)
+    	{
+            $suppliers = $this->supplier_m->get();
+            $data = ['suppliers' => $suppliers];
+    		$this->template->load('template', 'barang/barang_add', $data);
+		} else {			
+            $result = $this->Barang_m->add();            
+            $this->session->set_flashdata('success', 'Barang Berhasil ditambahkan');
+            redirect('barang');                        
+    	}
     }
 
     public function edit($kode_brg)
-    {
-        
-        // $this->form_validation->set_rules('kode_brg', 'Kode Barang', 'required|is_unique');
-        // $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');
-        // $this->form_validation->set_rules('jenis', 'Jenis Barang', 'required');
-        // $this->form_validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
-        // $this->form_validation->set_rules('jml', 'Jumlah Barang', 'required');
-        // $this->form_validation->set_rules('satuan', 'satuan', 'required');
-        // $this->form_validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
-        // $this->form_validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        // $this->form_validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
-        
-        
-        // $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
-        // $this->form_validation->set_message('is_unique', '{field} ini sudah dipakai, silakan diganti yang lain');
-        // $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+    {        
+        $validation = $this->form_validation;
+    	$validation->set_rules('kode_brg', 'Kode Barang', 'required');
+        $validation->set_rules('nama_brg', 'Nama_Barang', 'required');
+        $validation->set_rules('jenis', 'Jenis Barang', 'required');
+        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
+        $validation->set_rules('jml', 'Jumlah Barang', 'required');
+        $validation->set_rules('satuan', 'satuan', 'required');
+        $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
+        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
+        $validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
+    	
+    	
+        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
+    	$this->form_validation->set_message('is_unique', '{field} ini sudah dipakai, silakan diganti yang lain');
+    	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
-
-        // if($this->form_validation->run() == FALSE)
-        // {
-        //     $query = $data['row'] = $this->Barang_m->get();
-        //     if ($query->num_rows() > 0) {
-        //         # code...
-        //         $data['row'] = query->row();
-        //     $this->template->load('template', 'barang/barang_form_edit', $data);
-        //     } else {
-        //         echo "<script>alert('Data tidak ditemukan');
-        //         </script>"; 
-        //         echo "windows.location='".site_url('barang')."';
-        //         </script>";
-        //     }
-        // } else {
-        //     $post = $this->input->post(null, TRUE);
-        //     $this->Barang_m->edit($post);
-        //     if ($this->db->affected_rows() > 0) {
-        //         # code...
-        //         echo "<script>
-        //             alert('Data berhasil disimpan');
-        //         </script>";
-        //     }
-        //         echo "<script>windows.location='".site_url('barang')."';
-        //         </script>";
-        // }
+        
+        if($validation->run() == FALSE)
+    	{
+            $suppliers = $this->supplier_m->get();
+            $barang = $this->Barang_m->get($kode_brg)[0];
+            $data = ['suppliers' => $suppliers, 'barang' => $barang];
+    		$this->template->load('template', 'barang/barang_edit', $data);
+		} else {			
+            $result = $this->Barang_m->edit();            
+            $this->session->set_flashdata('success', 'Data Barang Berhasil diubah');
+            redirect('barang');                        
+    	}
     }
 
-    public function delete()
-    {
-        $id = $this->input->post('kode_brg');
-        $this->User_m->delete($kode_brg);
-        if ($this->db->affected_rows() > 0) {
-                # code...
-                echo "<script>
-                    alert('Data berhasil dihapus');
-                </script>";
-            }
-                echo "<script>windows.location='".site_url('barang')."';
-                </script>";
+    public function delete($kode_brg)
+    {        
+        $result = $this->Barang_m->delete($kode_brg);        
+        $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
+        redirect('barang'); 
     }
 }

@@ -1,25 +1,43 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class user_m extends CI_Model {
+use GuzzleHttp\Client;
+
+class Supplier_m extends CI_Model {
+
+	private $_client;
+
+	public function __construct()
+    {
+        $this->_client = new Client([
+            'base_uri' => 'http://api-siakti.raflywebdeveloper.com/api/',
+        ]);
+    }
 	
 	public function login($post)
 	{
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where('username', $post['username']);
-		$this->db->where('password', shal($post['password']);
+		$this->db->where('password', shal($post['password']));
 		$query = $this->db->get();
 		return $query; 
 	}
 
-	public function get($id = null)
+	public function get($nama_supp = null)
 	{
-		$this->db->from('user');
-		if($id != null){
-			$this->db->where('user_id', $id);
+		if($nama_supp){
+			$response = $this->_client->request('GET', 'laboratorium/supplier', [
+				'query' => [
+					'nama_supp' => $nama_supp
+				]
+			]);			
+		}else{
+			$response = $this->_client->request('GET', 'laboratorium/supplier');
 		}
-		$query = $this->db->get();
-		return $query;
+
+        $result = json_decode($response->getBody()->getContents());
+                
+        return $result->data;
 	}
 
 	public function add($post)

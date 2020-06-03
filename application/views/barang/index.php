@@ -1,77 +1,95 @@
-<section class="content-header">
-    <h1>Barang
-        <small>Data Barang</small>
-    </h1>
-    <ol class="breakcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Barang</li>
-    </ol>
-</section>
-
-<!-- <Main content> -->
-    <section class="content">
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Data Barang</h3>
-                <div class="pull-right">
-                    <a href="<?=site_url('staff/add')?>" class="btn btn-primary btn-flat">
-                        <i class="fa fa-user-plus"></i>Create
-                    </a>
-                </div>
-            </div>
-            <div class="box-body table-responsive">
-                <?php print_r($row->result()) ?>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
-                            <th>Jenis Barang</th>
-                            <th>Spesifikasi Barang</th>
-                            <th>Jumlah Barang</th>
-                            <th>Satuan</th>
-                            <th>Tahun Pengadaan</th>
-                            <th>Asal Pengadaan</th>
-                            <th>Supplier</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($row->result() as $key => $data) { ?>
-                            # code...
-                        <tr>
-                            <td><?$no++?></td>
-                            <td><?=$data->kode_brg?></td>
-                            <td><?=$data->nama_brg?></td>
-                            <td><?=$data->jenis?></td>
-                            <td><?=$data->spesifikasi?></td>
-                            <td><?=$data->jml?></td>
-                            <td><?=$data->satuan?></td>
-                            <td><?=$data->thn_pengadaan?></td>
-                            <td><?=$data->asal_pengadaan?></td>
-                            <td><?=$data->supplier_nama_supp?></td>
-                            <td class="text-center" width="60px">
-                                 <form action="<?=site_url('barang/del')?>" method="post">
-                                <a href="<?=site_url('barang/edit/' .$data->kode_brg)?>" class="btn btn-primary btn-xs">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                               
-                                    <input type="hidden" name="kode_brg" value="<?$data->kode_brg?>">
-                                    <button onclick="return confirm('Apakah Anda Yakin Menghapus?')" 
-                                    class="btn btn-danger btn-xs">
-                                    <i clclass="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php
-                    } ?>
-                    </tbody>
-                </table>
-                
+<!-- Content Header (Page header) -->
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark font-weight-bold">Daftar Barang Laboratorium</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Laboratorium</a></li>
+              <li class="breadcrumb-item active">Data Barang</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-12">
+              <a href="<?= site_url('barang/add')?>" class="btn btn-primary">
+                <i class="fas fa-plus"></i>  Tambah Data
+              </a>
             </div>
         </div>
+        <?php if ($this->session->flashdata('success')) : ?>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><?= $this->session->flashdata('success')?></strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body table-responsive">
+                <table class="table text-nowrap datatable">
+                  <thead>
+                    <tr>
+                      <th>Kode Barang</th>
+                      <th>Nama Barang</th>
+                      <th>Tersedia</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php foreach($barang as $brg):?>
+                    <tr>
+                      <td><?= $brg->kode_brg ?></td>
+                      <td><?= $brg->nama_brg ?></td>
+                      <td><span class="badge badge-info"><?= $brg->jml." ".$brg->satuan ?></span></td>
+                      <td>
+                        <a href="#mymodal" 
+                            class="btn btn-info" 
+                            data-toggle="modal" 
+                            data-remote="<?= site_url('barang/showBarang/'.$brg->kode_brg)?>"
+                            data-target="#mymodal"
+                            data-title="Detail Barang <?= $brg->kode_brg?>">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detail-modals">
+                          <i class="fas fa-eye"></i>
+                        </button> -->
+                        <a href="<?= site_url('barang/edit/'.$brg->kode_brg)?>" class="btn btn-primary">
+                          <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="<?= site_url('barang/delete/'.$brg->kode_brg)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>                    
+                  <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
         
+      </div><!-- /.container-fluid -->
     </section>
+    <!-- /.content -->
+
+    
