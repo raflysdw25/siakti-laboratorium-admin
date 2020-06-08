@@ -59,3 +59,7 @@ $route['staff'] = 'Staff/index';
 $route['tambahdata'] = 'Tambahdata/index';
 $route['barang'] = 'Barang/index';
 $route['peminjaman'] = 'Peminjaman/index';
+
+// Client Side
+$route['client'] = 'client/Client/index';
+$route['data-peminjam'] = 'client/Client/showData';

@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Supplier extends CI_Controller
+class Tambahdata extends CI_Controller
 {
     
     public function index()
