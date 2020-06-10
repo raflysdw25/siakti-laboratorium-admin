@@ -65,3 +65,4 @@ $route['client'] = 'client/Client/index';
 $route['data-peminjam'] = 'client/Client/showData';
 $route['stripe_card'] = 'client/Client/stripeCard';
 $route['panduan'] = 'client/Client/panduan';
+$route['daftar'] = 'client/Client/daftar';

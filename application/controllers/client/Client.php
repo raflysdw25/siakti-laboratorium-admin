@@ -32,4 +32,10 @@ class Client extends CI_Controller
         $this->template->load('template_client', 'client/panduan');
     }
 
+        public function daftar()
+    {
+        $this->template->load('template_client', 'client/daftar');
+    }
+
+
 }

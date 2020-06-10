@@ -21,6 +21,7 @@
             <div class="section-button mt-4">
               <a href="./stripe_card" class="btn btn-primary btn-lg p-4 w-25">PINJAM ALAT</a>
               <a href="./stripe_card.html" class="btn btn-primary btn-lg p-4 w-25">KEMBALIKAN ALAT</a>
+              <a href="./daftar" class="btn btn-primary btn-lg p-4 w-25">DAFTARKAN KTM</a>
             </div>
           </div>
         </div>   
