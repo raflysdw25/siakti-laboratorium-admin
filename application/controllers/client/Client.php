@@ -14,11 +14,37 @@ class Client extends CI_Controller
     }
 
     public function index(){
-        
+        $this->template->load('template_client', 'client/index');
     }
 
     public function showData()
     {
         $this->template->load('template_client', 'client/card_data');
     }
+
+    public function stripeCard()
+    {
+        $this->template->load('template_client', 'client/stripe_card');
+    }
+
+    public function panduan()
+    {
+        $this->template->load('template_client', 'client/panduan');
+    }
+
+    public function daftar()
+    {
+        $this->template->load('template_client', 'client/daftar');
+    }
+
+    public function card_data()
+    {
+        $this->template->load('template_client', 'client/card_data');
+    }
+
+    public function form_peminjaman()
+    {
+        $this->template->load('template_client', 'client/form_peminjaman');
+    }
+
 }

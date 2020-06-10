@@ -76,13 +76,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./client" class="nav-link active">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Beranda</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./panduan.html" class="nav-link">
+                <a href="./panduan" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Panduan</p>
                 </a>

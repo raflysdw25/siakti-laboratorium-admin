@@ -1,3 +1,26 @@
+                   <?php
+                    $content = $_POST["nama_mahasiswa"];
+                    if ($content[0] == '%') {
+                    $start = "%B";
+                    $end = "^";
+                    function getBetween($content,$start,$end)
+                    {
+                         $r = explode($start, $content);
+                         if (isset($r[1]))
+                         {
+                              $r = explode($end, $r[1]);
+                              return $r[0];
+                         }
+                    return '';
+                    }
+                    $kartu = getBetween($content, $start, $end);}
+                    else
+                    {
+                      $kartu = $content;
+                    }
+                    ?>
+
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -35,8 +58,12 @@
                         <th>Alamat</th>
                         <td>Jl. Panaragan Penggilingan No. 07 RT 01 RW 06</td>
                     </tr>
+                    <tr>
+                      <th>Nomor KTM</th>
+                      <td><?php echo $kartu ?></td>
+                    </tr>
                 </table>
-                <a href="form_peminjaman.html" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
+                <a href="form_peminjaman" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
             </div>
         </div>
       </div>
