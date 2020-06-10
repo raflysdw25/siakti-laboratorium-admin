@@ -20,9 +20,9 @@
         <div class="row">
           <div class="col-12 text-center" >
             <h4 class="font-weight-lighter">Silahkan <em>swipe</em> KTM atau ATM anda pada mesin yang telah disiapkan </h4>
-            <form action="#" class="mt-4">
+            <form action="card_data" class="mt-4" method="POST">
                 <div class="form-group">
-                    <input type="text" name="nama_mahasiswa" class="form-control form-control-lg w-50 m-auto" placeholder="Nama anda" autofocus>
+                    <input type="text" name="nama_mahasiswa" placeholder="Nama anda" autofocus>
                 </div>
             </form>
           </div>
