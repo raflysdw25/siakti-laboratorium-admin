@@ -1,5 +1,6 @@
                    <?php
                     $content = $_POST["nama_mahasiswa"];
+                    if ($content[0] == '%') {
                     $start = "%B";
                     $end = "^";
                     function getBetween($content,$start,$end)
@@ -12,8 +13,13 @@
                          }
                     return '';
                     }
-                    $kartu = getBetween($content, $start, $end);
+                    $kartu = getBetween($content, $start, $end);}
+                    else
+                    {
+                      $kartu = $content;
+                    }
                     ?>
+
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
