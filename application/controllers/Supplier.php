@@ -77,8 +77,8 @@ class Supplier extends CI_Controller
 
     public function delete($nama_supp)
     {        
-        $result = $this->supplier_m->delete($kode_brg);        
+        $result = $this->supplier_m->delete($nama_supp);        
         $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
-        redirect('barang'); 
+        redirect('supplier'); 
     }
 }

@@ -65,7 +65,7 @@
                       <a href="<?= site_url('supplier/edit/'.$supplier->nama_supp)?>" class="btn btn-primary">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      <a href="<?= site_url('supplier/delete/'.$supplier->nama_supp)?>" class="btn btn-danger">
+                      <a href="<?= site_url('supplier/delete/'.$supplier->nama_supp)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                       </a>
                     </td>
