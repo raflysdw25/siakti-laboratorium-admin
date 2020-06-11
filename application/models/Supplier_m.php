@@ -68,4 +68,17 @@ class Supplier_m extends CI_Model {
                 
         return $result;
 	}
+
+	public function delete($nama_supp)
+    {
+		$response = $this->_client->request('DELETE', 'laboratorium/supplier', [
+            'form_params' => [
+                'nama_supp' => $nama_supp,
+            ]            
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
+    }
 }
