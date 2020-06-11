@@ -6,10 +6,11 @@ class Peminjaman_m extends CI_Model {
 
 	private $_client;
 
+	// 'base_uri' => 'http://127.0.0.1/siakti-api/index.php/api/'  --> backup uri
 	public function __construct()
     {
         $this->_client = new Client([
-            'base_uri' => 'http://127.0.0.1/siakti-api/index.php/api/'
+            'base_uri' => 'http://127.0.0.1/siakti-api-laboratorium/index.php/api/',
         ]);
     }
 	

@@ -3,7 +3,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1 class="m-0 text-dark font-weight-bold">Tambah Data Supplier</h1>
+        <h1 class="m-0 text-dark font-weight-bold">Ubah Data Supplier</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -34,27 +34,27 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="nama_supp">Nama Perusahaan</label>
-                            <input type="text" name="nama_supp" class="form-control" id="nama_supp" placeholder="Masukkan  Nama Perusahaan">
+                            <input type="text" name="nama_supp" class="form-control" id="nama_supp" value="<?= $supplier->nama_supp ?>" readonly >
                             <small class="<?= form_error('nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('nama_supp')?></small>
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan Alamat">
+                            <input type="text" name="alamat" class="form-control" id="alamat" value="<?= $supplier->alamat ?>">
                             <small class="<?= form_error('alamat') ? "form-text text-danger" : ''?>"><?= form_error('alamat')?></small>
                         </div>
                         <div class="form-group">
                             <label for="tlpn">Nomor Telepon</label>
-                            <input type="tel"  class="form-control" name="tlpn" id="tlpn" placeholder="Masukkan Nomor Telepon">
+                            <input type="tel"  class="form-control" name="tlpn" id="tlpn" value="<?= $supplier->tlpn ?>">
                             <small class="<?= form_error('tlpn') ? "form-text text-danger" : ''?>"><?= form_error('tlpn')?></small>
                         </div>
                         <div class="form-group">
                             <label for="email">Email Perusahaan</label>
-                            <input type="email"  class="form-control" name="email" id="email" placeholder="Masukkan Email Perusahaan">
+                            <input type="email"  class="form-control" name="email" id="email" value="<?= $supplier->email ?>">
                             <small class="<?= form_error('email') ? "form-text text-danger" : ''?>"><?= form_error('email')?></small>
                         </div>
                         <div class="form-group">
                             <label for="pic"><i>Person in Charge</i></label>
-                            <input type="text"  class="form-control" name="pic" id="pic" placeholder="Masukkan PIC Perusahaan">
+                            <input type="text"  class="form-control" name="pic" id="pic" value="<?= $supplier->pic ?>">
                             <small class="<?= form_error('pic') ? "form-text text-danger" : ''?>"><?= form_error('pic')?></small>
                         </div>
                     </div>

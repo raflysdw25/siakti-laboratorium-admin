@@ -78,7 +78,7 @@ class Barang extends CI_Controller
         
         if($validation->run() == FALSE)
     	{
-            $suppliers = $this->supplier_m->get();
+            $suppliers = $this->supplier_m->get();            
             $barang = $this->Barang_m->get($kode_brg)[0];
             $data = ['suppliers' => $suppliers, 'barang' => $barang];
     		$this->template->load('template', 'barang/barang_edit', $data);

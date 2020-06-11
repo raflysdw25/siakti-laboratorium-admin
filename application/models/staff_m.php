@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class staff_m extends CI_Model {
+class Staff_m extends CI_Model {
 	
 	public function login($post)
 	{

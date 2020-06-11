@@ -8,22 +8,13 @@ class Supplier_m extends CI_Model {
 
 	public function __construct()
     {
+		// 'base_uri' => 'http://127.0.0.1/siakti-api/index.php/api/'  --> backup uri
         $this->_client = new Client([
-            'base_uri' => 'http://api-siakti.raflywebdeveloper.com/api/',
+            'base_uri' => 'http://127.0.0.1/siakti-api-laboratorium/index.php/api/',
         ]);
     }
 	
-	public function login($post)
-	{
-		$this->db->select('*');
-		$this->db->from('user');
-		$this->db->where('username', $post['username']);
-		$this->db->where('password', shal($post['password']));
-		$query = $this->db->get();
-		return $query; 
-	}
-
-	public function get($nama_supp = null)
+	public function get($nama_supp = '')
 	{
 		if($nama_supp){
 			$response = $this->_client->request('GET', 'laboratorium/supplier', [
@@ -40,10 +31,41 @@ class Supplier_m extends CI_Model {
         return $result->data;
 	}
 
-	public function add($post)
+	public function add()
 	{
-		$params['nm_supplier'] = $post['nm_supplier'];
-		$params['almt_supplier'] = $post['almt_supplier'] != "" ? $post['almt_supplier'] :null;
-		$this->db->insert('user', $params);
+		$data = [			
+			"nama_supp" => $this->input->post('nama_supp',true),
+			"alamat" => $this->input->post('alamat',true),
+			"tlpn" => $this->input->post('tlpn',true),
+			"email" => $this->input->post('email',true),
+			"pic" => $this->input->post('pic',true),						
+		];		
+
+		$response = $this->_client->request('POST', 'laboratorium/supplier',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
+	}
+
+	public function edit()
+	{
+		$data = [			
+			"nama_supp" => $this->input->post('nama_supp',true),
+			"alamat" => $this->input->post('alamat',true),
+			"tlpn" => $this->input->post('tlpn',true),
+			"email" => $this->input->post('email',true),
+			"pic" => $this->input->post('pic',true),						
+		];		
+
+		$response = $this->_client->request('PUT', 'laboratorium/supplier',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
 	}
 }

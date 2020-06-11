@@ -22,9 +22,21 @@
       <!-- /.row -->
       <div class="row">
         <div class="col-12">
-          <a href="tambah_supplier.html" class="btn btn-primary mb-2">
+          <a href="<?= site_url('supplier/add') ?>" class="btn btn-primary mb-2">
             <i class="fas fa-plus"></i> Tambah Supplier
           </a>
+          <?php if ($this->session->flashdata('success')) : ?>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><?= $this->session->flashdata('success')?></strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+          <?php endif; ?>
           <div class="card">
             <div class="card-body table-responsive">
               <table class="table text-nowrap table-bordered datatable">
@@ -40,22 +52,25 @@
                   </tr>
                 </thead>
                 <tbody>
+                <?php $no = 1;
+                 foreach($suppliers as $supplier): ?>
                   <tr>
-                    <td>01</td>
-                    <td>PT Sinar Jaya</td>
-                    <td>Jakarta</td>
-                    <td>0251-87771411</td>
-                    <td>sinarjayagroup@gmail.com</td>
-                    <td>Teddy Sudrajat</td>
+                    <td><?= $no++ ?></td>
+                    <td><?= $supplier->nama_supp ?></td>
+                    <td><?= $supplier->alamat ?></td>
+                    <td><?= $supplier->tlpn ?></td>
+                    <td><?= $supplier->email ?></td>
+                    <td><?= $supplier->pic ?></td>
                     <td>
-                      <a href="#" class="btn btn-primary">
+                      <a href="<?= site_url('supplier/edit/'.$supplier->nama_supp)?>" class="btn btn-primary">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      <a href="#" class="btn btn-danger">
+                      <a href="<?= site_url('supplier/delete/'.$supplier->nama_supp)?>" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                       </a>
                     </td>
                   </tr>
+                 <?php endforeach; ?>
                 </tbody>
               </table>
             </div>

@@ -2,7 +2,7 @@
 
 use GuzzleHttp\Client;
 
-class Barang_m extends CI_Model {
+class Mahasiswa_m extends CI_Model {
 
 	private $_client;
 
@@ -19,13 +19,13 @@ class Barang_m extends CI_Model {
 	public function get($id = null)
 	{
 		if($id){
-			$response = $this->_client->request('GET', 'laboratorium/barang', [
+			$response = $this->_client->request('GET', 'mahasiswa', [
 				'query' => [
-					'kode_brg' => $id
+					'nim' => $id
 				]
 			]);			
 		}else{
-			$response = $this->_client->request('GET', 'laboratorium/barang');
+			$response = $this->_client->request('GET', 'mahasiswa');
 		}
 
         $result = json_decode($response->getBody()->getContents());
@@ -36,7 +36,7 @@ class Barang_m extends CI_Model {
 	public function add()
 	{		
 		$data = [
-			"kode_brg" => $this->input->post('kode_brg',true),
+			"nim" => $this->input->post('nim',true),
 			"nama_brg" => $this->input->post('nama_brg',true),
 			"jenis" => $this->input->post('jenis',true),
 			"spesifikasi" => $this->input->post('spesifikasi',true),
@@ -47,7 +47,7 @@ class Barang_m extends CI_Model {
 			"supplier_nama_supp" => $this->input->post('supplier_nama_supp',true),			
 		];		
 
-		$response = $this->_client->request('POST', 'laboratorium/barang',[
+		$response = $this->_client->request('POST', 'mahasiswa',[
             'form_params' => $data
         ]);
 
@@ -56,11 +56,11 @@ class Barang_m extends CI_Model {
         return $result;
 	}
 
-	public function delete($kode_brg)
+	public function delete($nim)
     {
-		$response = $this->_client->request('DELETE', 'laboratorium/barang', [
+		$response = $this->_client->request('DELETE', 'mahasiswa', [
             'form_params' => [
-                'kode_brg' => $kode_brg,
+                'nim' => $nim,
             ]            
         ]);
 
@@ -72,7 +72,7 @@ class Barang_m extends CI_Model {
     public function edit()
 	{
 		$data = [
-			"kode_brg" => $this->input->post('kode_brg',true),
+			"nim" => $this->input->post('nim',true),
 			"nama_brg" => $this->input->post('nama_brg',true),
 			"jenis" => $this->input->post('jenis',true),
 			"spesifikasi" => $this->input->post('spesifikasi',true),
@@ -83,13 +83,29 @@ class Barang_m extends CI_Model {
 			"supplier_nama_supp" => $this->input->post('supplier_nama_supp',true),			
 		];		
 
-		$response = $this->_client->request('PUT', 'laboratorium/barang',[
+		$response = $this->_client->request('PUT', 'mahasiswa',[
             'form_params' => $data
         ]);
 
         $result = json_decode($response->getBody()->getContents(),true);
                 
         return $result;
-	}
+    }
+    
+
+    public function updateKartu()
+    {
+        $data = [
+			"no_ktm" => $this->input->post('no_ktm')			
+		];		
+
+		$response = $this->_client->request('PUT', 'mahasiswa/updateKartu',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(),true);
+                
+        return $result;
+    }
 
 }

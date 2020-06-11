@@ -35,7 +35,7 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="box-body table-responsive">
+              <div class="card-body table-responsive">
                   <table class="table text-nowrap datatable">
                       <thead>
                           <tr>

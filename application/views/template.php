@@ -97,25 +97,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./" class="nav-link active">
+                <a href="<?= site_url('barang')?>" class="nav-link active">
                   <i class="fas fa-boxes nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
-              </li>
+              </li>              
               <li class="nav-item">
-                <a href="<?= site_url('barang/add')?>" class="nav-link">
-                  <i class="fas fa-box-open nav-icon"></i>
-                  <p>Tambah Data Barang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./peminjaman" class="nav-link">
+                <a href="<?= site_url('peminjaman')?>" class="nav-link">
                   <i class="fas fa-shopping-basket nav-icon"></i>
                   <p>Peminjaman Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= site_url('supplier/index')?>" class="nav-link">
+                <a href="<?= site_url('supplier')?>" class="nav-link">
                   <i class="fas fa-truck nav-icon"></i>
                   <p>Supplier Barang</p>
                 </a>
