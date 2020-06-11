@@ -19,18 +19,7 @@
               </a>
             </div>
         </div>
-        <?php if ($this->session->flashdata('success')) : ?>
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong><?= $this->session->flashdata('success')?></strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
+        <?php $this->view('alert'); ?>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->

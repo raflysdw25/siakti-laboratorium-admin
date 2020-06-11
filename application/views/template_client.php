@@ -38,7 +38,10 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>        
+      </li>
+      <li class="nav-item">
+        <?php $this->view('alert')?>
       </li>
     </ul>
 
@@ -76,13 +79,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./client" class="nav-link active">
+                <a href="<?= site_url('client') ?>" class="nav-link active">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Beranda</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./panduan" class="nav-link">
+                <a href="<?= site_url('client/panduan') ?>" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Panduan</p>
                 </a>

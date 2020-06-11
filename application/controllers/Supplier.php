@@ -10,13 +10,13 @@ class Supplier extends CI_Controller
     {
         parent::__construct();
         // check_not_login();
-        $this->load->model(['supplier_m']);
+        $this->load->model(['Supplier_m']);
         $this->load->library('form_validation');
     }
     
     public function index()
     {
-        $data['suppliers'] = $this->supplier_m->get();        
+        $data['suppliers'] = $this->Supplier_m->get();        
         $this->template->load('template', 'supplier/index',$data);
     }
 
@@ -37,7 +37,7 @@ class Supplier extends CI_Controller
     	{
             $this->template->load('template','supplier/supplier_form_add');
 		} else {			
-            $result = $this->supplier_m->add();            
+            $result = $this->Supplier_m->add();            
             $this->session->set_flashdata('success', 'Perusahaan Berhasil ditambahkan');
             redirect('supplier');                        
     	}
@@ -63,12 +63,12 @@ class Supplier extends CI_Controller
         if($validation->run() == FALSE)
     	{
             
-            $supplier = $this->supplier_m->get($nama_supp);
-            // var_dump($supplier); exit;
+            $supplier = $this->Supplier_m->get($nama_supp)[0];
+            echo $supplier->responseDesc; exit;
             $data['supplier'] = $supplier;
             $this->template->load('template','supplier/supplier_form_edit', $data);
 		} else {			
-            $result = $this->supplier_m->edit();            
+            $result = $this->Supplier_m->edit();            
             $this->session->set_flashdata('success', 'Perusahaan Berhasil ditambahkan');
             redirect('supplier');                        
     	}
@@ -77,8 +77,12 @@ class Supplier extends CI_Controller
 
     public function delete($nama_supp)
     {        
-        $result = $this->supplier_m->delete($nama_supp);        
-        $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
-        redirect('supplier'); 
+        $nama_supp= str_replace("%20","-",$nama_supp);
+        $result = $this->Supplier_m->delete($nama_supp);        
+        // var_dump($result); var_dump($nama_supp); exit;        
+        if($result->responseCode == "00"){
+            $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
+            redirect('supplier');             
+        }
     }
 }

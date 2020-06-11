@@ -16,7 +16,7 @@ class Supplier_m extends CI_Model {
 	
 	public function get($nama_supp = '')
 	{
-		if($nama_supp){
+		if($nama_supp){			
 			$response = $this->_client->request('GET', 'laboratorium/supplier', [
 				'query' => [
 					'nama_supp' => $nama_supp
@@ -77,7 +77,7 @@ class Supplier_m extends CI_Model {
             ]            
         ]);
 
-        $result = json_decode($response->getBody()->getContents(),true);
+        $result = json_decode($response->getBody()->getContents());
                 
         return $result;
     }

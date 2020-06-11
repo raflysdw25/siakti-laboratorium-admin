@@ -1,26 +1,3 @@
-                   <?php
-                    $content = $_POST["nama_mahasiswa"];
-                    if ($content[0] == '%') {
-                    $start = "%B";
-                    $end = "^";
-                    function getBetween($content,$start,$end)
-                    {
-                         $r = explode($start, $content);
-                         if (isset($r[1]))
-                         {
-                              $r = explode($end, $r[1]);
-                              return $r[0];
-                         }
-                    return '';
-                    }
-                    $kartu = getBetween($content, $start, $end);}
-                    else
-                    {
-                      $kartu = $content;
-                    }
-                    ?>
-
-
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -44,26 +21,26 @@
                 <table class="table table-borderless table-responsive-sm mt-4 ">
                     <tr>
                         <th>Nama Lengkap</th>
-                        <td>Muhammad Rafly Sadewa</td>
+                        <td><?= $mahasiswa->nama_mhs ?></td>
                     </tr>
                     <tr>
                         <th>Nomor Induk</th>
-                        <td>4617010058</td>
+                        <td><?= $mahasiswa->nim ?></td>
                     </tr>
                     <tr>
                         <th>Nomor Telepon</th>
-                        <td>081218860714</td>
+                        <td><?= $mahasiswa->tlp_mhs ?></td>
                     </tr>
                     <tr>
                         <th>Alamat</th>
-                        <td>Jl. Panaragan Penggilingan No. 07 RT 01 RW 06</td>
+                        <td><?= $mahasiswa->add_mhs ?></td>
                     </tr>
                     <tr>
-                      <th>Nomor KTM</th>
-                      <td><?php echo $kartu ?></td>
+                      <th>Email</th>
+                      <td><?= $mahasiswa->email_mhs ?></td>
                     </tr>
                 </table>
-                <a href="form_peminjaman" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
+                <a href="#" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
             </div>
         </div>
       </div>

@@ -62,9 +62,8 @@ $route['peminjaman'] = 'Peminjaman/index';
 
 // Client Side
 $route['client'] = 'client/Client/index';
-$route['data-peminjam'] = 'client/Client/showData';
-$route['stripe_card'] = 'client/Client/stripeCard';
-$route['panduan'] = 'client/Client/panduan';
-$route['daftar'] = 'client/Client/daftar';
-$route['card_data'] = 'client/Client/card_data';
-$route['form_peminjaman'] = 'client/Client/form_peminjaman';
+$route['client/stripe_card'] = 'client/Client/stripeCard';
+$route['client/panduan'] = 'client/Client/panduan';
+$route['client/daftar'] = 'client/Client/daftar';
+$route['client/card_data/(:any)'] = 'client/Client/card_data/$1';
+$route['client/form_peminjaman'] = 'client/Client/form_peminjaman';

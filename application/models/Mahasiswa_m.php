@@ -33,6 +33,19 @@ class Mahasiswa_m extends CI_Model {
         return $result->data;
 	}
 
+	public function kartuMahasiswa_get($no_ktm)
+	{
+		$response = $this->_client->request('GET', 'mahasiswa/kartuMahasiswa', [
+			'query' => [
+				'no_ktm' => $no_ktm
+			]
+		]);
+
+		$result = json_decode($response->getBody()->getContents());
+                
+        return $result;
+	}
+
 	public function add()
 	{		
 		$data = [
@@ -96,6 +109,7 @@ class Mahasiswa_m extends CI_Model {
     public function updateKartu()
     {
         $data = [
+			"nim" => $this->input->post('nim'),
 			"no_ktm" => $this->input->post('no_ktm')			
 		];		
 
