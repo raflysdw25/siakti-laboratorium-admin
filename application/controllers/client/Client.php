@@ -36,6 +36,17 @@ class Client extends CI_Controller
 
         // $no_ktm = '';
 
+        function getBetween($content,$start,$end)
+        {
+            $r = explode($start, $content);
+            if (isset($r[1]))
+                {
+                    $r = explode($end, $r[1]);
+                    return $r[0];
+                }
+            return '';
+        }
+
         $content = $this->input->post('no_ktm');
         if ($content[0] == '%') {
             $start = "%B";
