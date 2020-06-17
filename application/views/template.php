@@ -97,19 +97,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= site_url('barang')?>" class="nav-link active">
+                <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang')  ? ' active' : '' ?>">
                   <i class="fas fa-boxes nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>              
               <li class="nav-item">
-                <a href="<?= site_url('peminjaman')?>" class="nav-link">
+                <a href="<?= site_url('peminjaman')?>" class="nav-link <?=($this->uri->segment(1) == 'peminjaman')  ? ' active' : '' ?>">
                   <i class="fas fa-shopping-basket nav-icon"></i>
                   <p>Peminjaman Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= site_url('supplier')?>" class="nav-link">
+                <a href="<?= site_url('supplier')?>" class="nav-link <?=($this->uri->segment(1) == 'supplier')  ? ' active' : '' ?>">
                   <i class="fas fa-truck nav-icon"></i>
                   <p>Supplier Barang</p>
                 </a>
@@ -226,14 +226,14 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title font-weight-bold">Detail Barang</h4>
+            <h4 class="modal-title font-weight-bold"></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
 
-          </div>
+          </div>          
       </div>
     </div>      
 </div>

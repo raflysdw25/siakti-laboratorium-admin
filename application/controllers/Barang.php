@@ -14,15 +14,17 @@ class Barang extends CI_Controller
     }
     
     public function index()
-    {
-        # code...
+    {        
+        
         $data['barang'] = $this->Barang_m->get();
         $this->template->load('template', 'barang/index',$data);
     }
 
     public function showBarang($id){
-        $data['barang'] = $this->Barang_m->get($id)[0];
-        $data['generator'] = new Picqer\Barcode\BarcodeGeneratorPNG(); //Digunakan untuk mengenerate barcode
+        $barang = $this->Barang_m->get($id)[0];
+        $supplier = $this->supplier_m->get($barang->supplier_id_supp)[0];
+        $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+        $data = ["barang" => $barang, "supplier" => $supplier, 'generator' => $generator]; //Digunakan untuk mengenerate barcode
         $this->load->view('barang/barang_show',$data);
     }
 
@@ -32,12 +34,10 @@ class Barang extends CI_Controller
     	$validation->set_rules('kode_brg', 'Kode Barang', 'required');
         $validation->set_rules('nama_brg', 'Nama_Barang', 'required');
         $validation->set_rules('jenis', 'Jenis Barang', 'required');
-        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
-        $validation->set_rules('jml', 'Jumlah Barang', 'required');
-        $validation->set_rules('satuan', 'satuan', 'required');
+        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');                
         $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
         $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        $validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
+        $validation->set_rules('supplier_id_supp', 'Supplier', 'required');
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
@@ -47,10 +47,12 @@ class Barang extends CI_Controller
         
         if($validation->run() == FALSE)
     	{
+            $maxId = number_format($this->Barang_m->maxId()[0]->max);
+            $nextId = ($maxId == null) ? 1 :  $maxId + 1;
             $suppliers = $this->supplier_m->get();
-            $data = ['suppliers' => $suppliers];
+            $data = ['suppliers' => $suppliers, 'nextId' => $nextId];
     		$this->template->load('template', 'barang/barang_add', $data);
-		} else {			
+		} else {            			
             $result = $this->Barang_m->add();            
             $this->session->set_flashdata('success', 'Barang Berhasil ditambahkan');
             redirect('barang');                        
@@ -63,12 +65,10 @@ class Barang extends CI_Controller
     	$validation->set_rules('kode_brg', 'Kode Barang', 'required');
         $validation->set_rules('nama_brg', 'Nama_Barang', 'required');
         $validation->set_rules('jenis', 'Jenis Barang', 'required');
-        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');
-        $validation->set_rules('jml', 'Jumlah Barang', 'required');
-        $validation->set_rules('satuan', 'satuan', 'required');
+        $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');        
         $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
         $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        $validation->set_rules('supplier_nama_supp', 'Supplier', 'required');
+        $validation->set_rules('supplier_id_supp', 'Supplier', 'required');
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
@@ -87,6 +87,13 @@ class Barang extends CI_Controller
             $this->session->set_flashdata('success', 'Data Barang Berhasil diubah');
             redirect('barang');                        
     	}
+    }
+
+    public function ubahStatus($kode_brg, $status)
+    {
+        $result = $this->Barang_m->updateStatus($kode_brg,$status);
+        $this->session->set_flashdata('success', 'Status Barang Berhasil diubah');
+        redirect('barang');                        
     }
 
     public function delete($kode_brg)

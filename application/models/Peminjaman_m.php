@@ -13,30 +13,14 @@ class Peminjaman_m extends CI_Model {
             'base_uri' => 'http://127.0.0.1/siakti-api-laboratorium/index.php/api/',
         ]);
     }
-	
-	// public function view($post)
-	// {
-	// 	$this->db->select('*');
-	// 	$this->db->from('peminjaman');
-	// 	$this->db->where('kode_pinjam', $post['Kode Peminjaman']);
-	// 	$this->db->where('tgl_pinjam_start', $post['Tanggal Peminjaman']);
-	// 	$this->db->where('tgl_kembali_end', $post['Tanggal Pengembalin']);
-	// 	$this->db->where('tgl_kembali_real', $post['Tanggal Pengembalin Real']);
-	// 	$this->db->where('ruangan_namaruang', $post['Nama Ruangan']);
-	// 	$this->db->where('mahasiswa_nim', $post['NIM Mahasiswa']);
-	// 	$this->db->where('tujuan_pinjam', $post['Tujuan Peminjaman']);
-	// 	$this->db->where('staff_nip', $post['NIP Staff']);
-	// 	$this->db->where('jadwal_kul_kodejdwl', $post['Kode Jadwal Kuliah']);
-	// 	$query = $this->db->get();
-	// 	return $query; 
-	// }
+		
 
-	public function get($id = null)
+	public function get($kd_pjm = null)
 	{
-		if($id){
+		if($kd_pjm){
 			$response = $this->_client->request('GET', 'laboratorium/peminjaman', [
 				'query' => [
-					'kd_pjm' => $id
+					'kd_pjm' => $kd_pjm
 				]
 			]);			
 		}else{
@@ -53,11 +37,11 @@ class Peminjaman_m extends CI_Model {
     {
 		$response = $this->_client->request('DELETE', 'laboratorium/peminjaman', [
             'form_params' => [
-                'kd_pjm' => $kd_pijm,
+                'kd_pjm' => $kd_pjm,
             ]            
         ]);
 
-        $result = json_decode($response->getBody()->getContents(),true);
+        $result = json_decode($response->getBody()->getContents());
                 
         return $result;
     }

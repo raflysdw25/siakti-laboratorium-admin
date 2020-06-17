@@ -14,12 +14,12 @@ class Supplier_m extends CI_Model {
         ]);
     }
 	
-	public function get($nama_supp = '')
+	public function get($id_supp = '')
 	{
-		if($nama_supp){			
+		if($id_supp){			
 			$response = $this->_client->request('GET', 'laboratorium/supplier', [
 				'query' => [
-					'nama_supp' => $nama_supp
+					'id_supp' => $id_supp
 				]
 			]);			
 		}else{
@@ -31,9 +31,16 @@ class Supplier_m extends CI_Model {
         return $result->data;
 	}
 
+	public function maxId(){
+		$response = $this->_client->request('GET', 'laboratorium/supplier/maxId');
+		$result = json_decode($response->getBody()->getContents());                
+        return $result->data;
+	}
+
 	public function add()
 	{
 		$data = [			
+			"id_supp" => $this->input->post('id_supp',true),
 			"nama_supp" => $this->input->post('nama_supp',true),
 			"alamat" => $this->input->post('alamat',true),
 			"tlpn" => $this->input->post('tlpn',true),
@@ -53,6 +60,7 @@ class Supplier_m extends CI_Model {
 	public function edit()
 	{
 		$data = [			
+			"id_supp" => $this->input->post('id_supp',true),
 			"nama_supp" => $this->input->post('nama_supp',true),
 			"alamat" => $this->input->post('alamat',true),
 			"tlpn" => $this->input->post('tlpn',true),
@@ -69,11 +77,11 @@ class Supplier_m extends CI_Model {
         return $result;
 	}
 
-	public function delete($nama_supp)
+	public function delete($id_supp)
     {
 		$response = $this->_client->request('DELETE', 'laboratorium/supplier', [
             'form_params' => [
-                'nama_supp' => $nama_supp,
+                'id_supp' => $id_supp,
             ]            
         ]);
 

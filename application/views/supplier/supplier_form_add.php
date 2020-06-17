@@ -33,6 +33,11 @@
                     <!-- form start -->
                     <div class="card-body">
                         <div class="form-group">
+                            <label for="id_supp">ID Perusahaan</label>                            
+                            <input type="text" name="id_supp" class="form-control" id="id_supp" value="<?= $nextId ?>" readonly>
+                            <small class="<?= form_error('id_supp') ? "form-text text-danger" : ''?>"><?= form_error('id_supp')?></small>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_supp">Nama Perusahaan</label>
                             <input type="text" name="nama_supp" class="form-control" id="nama_supp" placeholder="Masukkan  Nama Perusahaan">
                             <small class="<?= form_error('nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('nama_supp')?></small>

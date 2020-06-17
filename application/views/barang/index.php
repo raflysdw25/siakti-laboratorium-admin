@@ -19,7 +19,9 @@
               </a>
             </div>
         </div>
-        <?php $this->view('alert'); ?>
+        <div class="mt-2">
+          <?php $this->view('alert'); ?>
+        </div>        
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -37,7 +39,7 @@
                     <tr>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
-                      <th>Tersedia</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -46,7 +48,7 @@
                     <tr>
                       <td><?= $brg->kode_brg ?></td>
                       <td><?= $brg->nama_brg ?></td>
-                      <td><span class="badge badge-info"><?= $brg->jml." ".$brg->satuan ?></span></td>
+                      <td><span class="badge <?= ($brg->status == 'TERSEDIA') ? "badge-success" : "badge-danger"?>"><?= $brg->status?></span></td>
                       <td>
                         <a href="#mymodal" 
                             class="btn btn-info" 

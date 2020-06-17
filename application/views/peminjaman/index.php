@@ -39,37 +39,42 @@
                   <table class="table text-nowrap datatable">
                       <thead>
                           <tr>
-                              <th>Kode Peminjaman</th>
-                              <th>Nama Mahasiswa</th>
+                              <th>#</th>
                               <th>Tanggal Peminjaman</th>
+                              <th>Tanggal Kembali</th>
                               <th>Tanggal Pengembalian </th>
+                              <th>Status </th>
                               <th>Action</th>
                           </tr>
                       </thead>
                       <tbody>
                         <?php foreach ($peminjaman as $pinjambrg):?>
-                          <tr>
-                                <td><?= $pinjambrg->kd_pjm ?></td>
-                                <td><?= $pinjambrg->nama_mahasiswa ?></td>
-                                <td><?= $pinjambrg->tgl_pjm ?></td>
-                                <td><?= $pinjambrg->tgl_blk ?></td>
-                    
-
-                                <!-- <td>AA123</td>
-                                <td>Nur Ismi Fahmia</td>
-                                <td>13 Mei 2020</td>
-                                <td>14 Mei 2020</td> -->
-                         
+                          <tr>                              
+                              <td><?= $pinjambrg->kd_pjm ?></td>                              
+                              <td><?= ($pinjambrg->tgl_pjm == null) ? "Tanggal Belum diatur" : $pinjambrg->tgl_pjm ?></td>
+                              <td><?= ($pinjambrg->tgl_blk == null) ? "Tanggal Belum diatur" : $pinjambrg->tgl_blk?></td>
+                              <td><?= ($pinjambrg->tgl_blk_real == null) ? "Barang belum dikembalikan" : $pinjambrg->tgl_pjm ?></td>
+                              <td>
+                                <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : "badge-success"?>"><?= $pinjambrg->status ?></span>
+                              </td>                                                                       
                               <td>
                                 <a href="#mymodal" 
-                            class="btn btn-info" 
-                            data-toggle="modal" 
-                            data-remote="<?= site_url('peminjaman/showPeminjaman/'.$pinjambrg->kd_pjm)?>"
-                            data-target="#mymodal"
-                            data-title="Detail Peminjaman <?= $pinjambrg->kd_pjm?>">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="<?= site_url('peminjaman/delete/'.$pinjambrg->kd_pjm)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
+                                  class="btn btn-info" 
+                                  data-toggle="modal" 
+                                  data-remote="<?= site_url('peminjaman/detailBarang/'.$pinjambrg->kd_pjm)?>"
+                                  data-target="#mymodal"
+                                  data-title="Detail Peminjaman <?= $pinjambrg->kd_pjm?>">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="#mymodal" class="btn btn-primary"
+                                  data-toggle="modal"
+                                  data-remote="<?= site_url('peminjaman/detailPeminjam/'.$pinjambrg->mahasiswa_nim."/".$pinjambrg->staff_nip)?>"
+                                  data-target="#mymodal"
+                                  data-title="Detail Peminjam"
+                                >
+                                  <i class="fas fa-user"></i>
+                                </a>
+                                <a href="<?= site_url('peminjaman/delete/'.$pinjambrg->kd_pjm)?>"  class="btn btn-danger">
                           <i class="fas fa-trash"></i>
                         </a>
                    </td>

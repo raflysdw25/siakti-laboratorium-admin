@@ -25,24 +25,13 @@
           <a href="<?= site_url('supplier/add') ?>" class="btn btn-primary mb-2">
             <i class="fas fa-plus"></i> Tambah Supplier
           </a>
-          <?php if ($this->session->flashdata('success')) : ?>
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong><?= $this->session->flashdata('success')?></strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-          <?php endif; ?>
+          <?php $this->view('alert') ?>
           <div class="card">
             <div class="card-body table-responsive">
               <table class="table text-nowrap table-bordered datatable">
                 <thead>
                   <tr>
-                    <th>No</th>
+                    <th>#</th>
                     <th>Nama Supplier</th>
                     <th>Alamat</th>
                     <th>Telepon</th>
@@ -53,19 +42,20 @@
                 </thead>
                 <tbody>
                 <?php $no = 1;
+                  
                  foreach($suppliers as $supplier): ?>
-                  <tr>
-                    <td><?= $no++ ?></td>
+                  <tr>                    
+                    <td><?= $supplier->id_supp ?></td>
                     <td><?= $supplier->nama_supp ?></td>
                     <td><?= $supplier->alamat ?></td>
                     <td><?= $supplier->tlpn ?></td>
                     <td><?= $supplier->email ?></td>
                     <td><?= $supplier->pic ?></td>
                     <td>
-                      <a href="<?= site_url('supplier/edit/'.$supplier->nama_supp)?>" class="btn btn-primary">
+                      <a href="<?= site_url('supplier/edit/'.$supplier->id_supp)?>" class="btn btn-primary">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      <a href="<?= site_url('supplier/delete/'.$supplier->nama_supp)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
+                      <a href="<?= site_url('supplier/delete/'.$supplier->id_supp)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                       </a>
                     </td>

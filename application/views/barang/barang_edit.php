@@ -3,15 +3,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark font-weight-bold">Tambah Barang Laboratorium</h1>
-            <a href="<?= site_url('barang')?>" class="btn btn-primary btn-sm mt-2">
-               <i class="fas fa-undo"></i> Kembali
-            </a>
+            <h1 class="m-0 text-dark font-weight-bold">Edit Barang Laboratorium</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Laboratorium</a></li>
-              <li class="breadcrumb-item active">Tambah Barang</li>
+              <li class="breadcrumb-item active">Edit Barang</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -35,20 +32,33 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="kode_brg">Kode Barang</label>
-                                <input type="number" name="kode_brg" class="form-control" id="kode_brg" placeholder="Masukkan ID Barang" readonly value="<?= $barang->kode_brg?>">
-                                <small class="<?= form_error('kode_brg') ? "form-text text-danger" : ''?>"><?= form_error('kode_brg')?></small>
+                            <div class="row">
+                                <div class="col-4">                                
+                                    <div class="form-group">
+                                        <label for="kode_brg">Kode Barang</label>
+                                        <input type="number" name="kode_brg" class="form-control" id="kode_brg" placeholder="Masukkan ID Barang" readonly value="<?= $barang->kode_brg?>">
+                                        <small class="<?= form_error('kode_brg') ? "form-text text-danger" : ''?>"><?= form_error('kode_brg')?></small>
+                                    </div>
+                                </div>
+                                <div class="col-4">                                
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <input type="text" name="status" id="status" class="form-control <?= ($barang->status == 'TERSEDIA') ? "bg-success" : "bg-danger" ?> " value="<?= $barang->status ?>" readonly>
+                                        <small class="<?= form_error('status') ? "form-text text-danger" : ''?>"><?= form_error('status')?></small>
+                                    </div>
+                                </div>
+                                <div class="col-4">                                
+                                    <div class="form-group">
+                                        <label for="barcode">Barcode</label>
+                                        <input type="text" name="barcode" id="barcode" class="form-control" value="<?= $barang->barcode ?>" readonly>
+                                        <small class="<?= form_error('barcode') ? "form-text text-danger" : ''?>"><?= form_error('barcode')?></small>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="nama_brg">Nama Barang</label>
-                                <input type="text" name="nama_brg" class="form-control" id="nama_brg" placeholder="Masukkan Nama Barang" value="<?= $barang->nama_brg?>">
+                                <input type="text" name="nama_brg" class="form-control" id="nama_brg" value="<?= $barang->nama_brg?>">
                                 <small class="<?= form_error('nama_brg') ? "form-text text-danger" : ''?>"><?= form_error('nama_brg')?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="jml">Jumlah Barang</label>
-                                <input type="number" min="0" class="form-control" name="jml" id="jml" placeholder="Masukkan Jumlah Barang" value="<?= $barang->jml?>">
-                                <small class="<?= form_error('jml') ? "form-text text-danger" : ''?>"><?= form_error('jml')?></small>
                             </div>
                             <div class="form-group">
                                 <label for="jenis">Jenis Barang</label>
@@ -60,17 +70,8 @@
                                 <small class="<?= form_error('jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis')?></small>
                             </div>
                             <div class="form-group">
-                                <label for="satuan">Satuan Barang</label>
-                                <select name="satuan" id="satuan" class="custom-select">                                    
-                                    <option value="pcs"  <?= ($barang->satuan == "pcs")? "selected" : '' ?> >pcs</option>
-                                    <option value="buah" <?= ($barang->satuan == "buah")? "selected" : '' ?>>buah</option>
-                                    <option value="meter" <?= ($barang->satuan == "meter")? "selected" : '' ?>>meter</option>
-                                </select>
-                                <small class="<?= form_error('satuan') ? "form-text text-danger" : ''?>"><?= form_error('satuan')?></small>
-                            </div>
-                            <div class="form-group">
                                 <label for="spesifikasi">Spesifikasi Barang</label>
-                                <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="10" class="form-control"><?= $barang->spesifikasi?></textarea>
+                                <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="5" class="form-control"><?= $barang->spesifikasi?></textarea>
                                 <small class="<?= form_error('spesifikasi') ? "form-text text-danger" : ''?>"><?= form_error('spesifikasi')?></small>
                             </div>
                         </div>
@@ -91,7 +92,7 @@
                             <div class="form-group">
                                 <label for="thn_pengadaan">Tahun Pengadaan</label>
                                 <div class="input-group" id="thn_pengadaan">
-                                  <input type="date" name="thn_pengadaan" class="form-control" value="<?= $barang->thn_pengadaan ?>" />
+                                  <input type="number" min="2014" max="2099" name="thn_pengadaan" class="form-control" value="<?= $barang->thn_pengadaan ?>" />
                                   <small class="<?= form_error('thn_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('thn_pengadaan')?></small>
                                 </div>
                             </div>
@@ -105,22 +106,24 @@
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
                             </div>
                             <div class="form-group">
-                                <label for="supplier_nama_supp">Supplier</label>
-                                <select class="custom-select" name="supplier_nama_supp" id="supplier_nama_supp">                                    
+                                <label for="supplier_id_supp">Supplier</label>
+                                <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">                                    
                                     <?php foreach($suppliers as $supplier): ?>
-                                        <option value="<?= $supplier->nama_supp ?>" <?= ($supplier->nama_supp == $barang->supplier_nama_supp)? "selected" : '' ?>><?= $supplier->nama_supp ?></option>
+                                        <option value="<?= $supplier->id_supp ?>" <?= ($supplier->id_supp == $barang->supplier_id_supp)? "selected" : '' ?>><?= $supplier->nama_supp ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <small class="<?= form_error('supplier_nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_nama_supp')?></small>
-                            </div>
+                                <small class="<?= form_error('supplier_id_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_id_supp')?></small>
+                            </div>                            
                         </div>
                         <!-- /.card-body -->
+                        
+                    </div>
+                    <div class="p-2">
+                        <button type="submit" class="btn btn-success btn-lg">Simpan</button>
+                        <a href="<?= site_url('barang') ?>" class="btn btn-danger btn-lg">Batal</a>
                     </div>
                 </div>
-                <div class="p-2">
-                    <button type="submit" class="btn btn-success btn-lg">Simpan</button>
-                    <a href="index.html" class="btn btn-danger btn-lg">Batal</a>
-                </div>
+                
             </div>
         </form>
       </div><!-- /.container-fluid -->

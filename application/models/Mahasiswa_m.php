@@ -16,12 +16,12 @@ class Mahasiswa_m extends CI_Model {
 	
 	
 
-	public function get($id = null)
+	public function get($nim = null)
 	{
-		if($id){
+		if($nim){
 			$response = $this->_client->request('GET', 'mahasiswa', [
 				'query' => [
-					'nim' => $id
+					'nim' => $nim
 				]
 			]);			
 		}else{

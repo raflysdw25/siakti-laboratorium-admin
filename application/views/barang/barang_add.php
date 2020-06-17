@@ -33,20 +33,15 @@
                         <!-- form start -->
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="kode_brg">kode Barang</label>
-                                <input type="number" name="kode_brg" class="form-control" id="kode_brg" placeholder="Masukkan ID Barang">
+                                <label for="kode_brg">Kode Barang</label>
+                                <input type="number" name="kode_brg" class="form-control" id="kode_brg" placeholder="Masukkan ID Barang" value="<?= $nextId ?>" readonly>
                                 <small class="<?= form_error('kode_brg') ? "form-text text-danger" : ''?>"><?= form_error('kode_brg')?></small>
                             </div>
                             <div class="form-group">
                                 <label for="nama_brg">Nama Barang</label>
                                 <input type="text" name="nama_brg" class="form-control" id="nama_brg" placeholder="Masukkan Nama Barang">
                                 <small class="<?= form_error('nama_brg') ? "form-text text-danger" : ''?>"><?= form_error('nama_brg')?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="jml">Jumlah Barang</label>
-                                <input type="number" min="0" class="form-control" name="jml" id="jml" placeholder="Masukkan Jumlah Barang">
-                                <small class="<?= form_error('jml') ? "form-text text-danger" : ''?>"><?= form_error('jml')?></small>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label for="jenis">Jenis Barang</label>
                                 <select name="jenis" id="jenis" class="custom-select">
@@ -56,20 +51,10 @@
                                     <option value="Laptop">Laptop</option>
                                 </select>
                                 <small class="<?= form_error('jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis')?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="satuan">Satuan Barang</label>
-                                <select name="satuan" id="satuan" class="custom-select">
-                                    <option value="" selected>--Pilih Satuan Barang--</option>
-                                    <option value="pcs">pcs</option>
-                                    <option value="buah">buah</option>
-                                    <option value="meter">meter</option>
-                                </select>
-                                <small class="<?= form_error('satuan') ? "form-text text-danger" : ''?>"><?= form_error('satuan')?></small>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label for="spesifikasi">Spesifikasi Barang</label>
-                                <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="10" class="form-control"></textarea>
+                                <textarea name="spesifikasi" id="spesifikasi" cols="30" rows="5" class="form-control"></textarea>
                                 <small class="<?= form_error('spesifikasi') ? "form-text text-danger" : ''?>"><?= form_error('spesifikasi')?></small>
                             </div>
                         </div>
@@ -90,7 +75,7 @@
                             <div class="form-group">
                                 <label for="thn_pengadaan">Tahun Pengadaan</label>
                                 <div class="input-group" id="thn_pengadaan">
-                                  <input type="date" name="thn_pengadaan" class="form-control" data-target="#datepicker" placeholder="Pilih Tahun Pengadaan"/>
+                                  <input type="number" name="thn_pengadaan" class="form-control" min="2014" max="2099" value="<?= date('Y') ?>"/>
                                   <small class="<?= form_error('thn_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('thn_pengadaan')?></small>
                                 </div>
                             </div>
@@ -105,30 +90,24 @@
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
                             </div>
                             <div class="form-group">
-                                <label for="supplier_nama_supp">Supplier</label>
-                                <select class="custom-select" name="supplier_nama_supp" id="supplier_nama_supp">
+                                <label for="supplier_id_supp">Supplier</label>
+                                <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">
                                     <option value="" selected>--Pilih--</option>
                                     <?php foreach($suppliers as $supplier): ?>
-                                        <option value="<?= $supplier->nama_supp ?>"><?= $supplier->nama_supp ?></option>
+                                        <option value="<?= $supplier->id_supp ?>"><?= $supplier->nama_supp ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <small class="<?= form_error('supplier_nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_nama_supp')?></small>
+                                <small class="<?= form_error('supplier_id_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_id_supp')?></small>
                             </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
-                </div>
-                <div class="p-2">
-                    <button type="submit" class="btn btn-success btn-lg">Simpan</button>
-                    <a href="index.html" class="btn btn-danger btn-lg">Batal</a>
-                </div>
+                    <div class="p-2">
+                        <button type="submit" class="btn btn-success btn-lg">Simpan</button>
+                        <a href="<?= site_url('barang') ?>" class="btn btn-danger btn-lg">Batal</a>
+                    </div>
+                </div>                
             </div>
         </form>
       </div><!-- /.container-fluid -->
-    </section>
-
-    <script>
-        // $(function() {
-        //     $( "#thn_pengadaan" ).datepicker({dateFormat: 'yy'});
-        // });​
-    </script>
+    </section>    
