@@ -12,6 +12,6 @@ class Auth extends CI_Controller
 	
 	public function process()
 	{
-		echo "process";
+		$this->template->load('template', 'dashboard');
 	}
 }
