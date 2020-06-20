@@ -40,7 +40,7 @@
                       <td><?= $mahasiswa->email_mhs ?></td>
                     </tr>
                 </table>
-                <a href="#" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
+                <a href="<?= site_url('client/pinjam-mahasiswa/'.$mahasiswa->nim)?>" class="btn btn-primary btn-block btn-lg" style="margin-top: 100px;">Pinjam Alat</a>
             </div>
         </div>
       </div>

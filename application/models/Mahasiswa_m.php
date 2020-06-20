@@ -64,7 +64,7 @@ class Mahasiswa_m extends CI_Model {
             'form_params' => $data
         ]);
 
-        $result = json_decode($response->getBody()->getContents(),true);
+        $result = json_decode($response->getBody()->getContents());
                 
         return $result;
 	}

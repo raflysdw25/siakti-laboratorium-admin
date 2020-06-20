@@ -6,6 +6,7 @@
   <title>Website Inventaris Barang Jurusan TIK</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="shorcut icon" type="image/png" href="<?= base_url() ?>assets/dist/img/PNJLogo.png">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/fontawesome-free/css/all.min.css"/>
   <!-- Ionicons -->
@@ -97,7 +98,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang')  ? ' active' : '' ?>">
+                <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == '')  ? ' active' : '' ?>">
                   <i class="fas fa-boxes nav-icon"></i>
                   <p>Data Barang</p>
                 </a>

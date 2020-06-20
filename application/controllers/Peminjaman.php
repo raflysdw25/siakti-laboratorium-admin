@@ -26,16 +26,13 @@ class Peminjaman extends CI_Controller
 
     public function detailPeminjam($mahasiswa_nim='', $staff_nip='')
     {
-        if($mahasiswa_nim !== null){
-            $mahasiswa = $this->mahasiswa_m->get($mahasiswa_nim)[0];
-            $data['mahasiswa'] = $mahasiswa;
-            $data['peminjam'] = "Mahasiswa";
-        }
-        if($staff_nip !== null){
+        if($mahasiswa_nim == null){
             $staff = $this->staff_m->get($staff_nip)[0];
-            $data['staff'] = $staff;
-            $data['peminjam'] = "Staff";
-        }
+            $data['staff'] = $staff;            
+        }else{
+            $mahasiswa = $this->mahasiswa_m->get($mahasiswa_nim)[0];
+            $data['mahasiswa'] = $mahasiswa;                    
+        }        
 
         $this->load->view('peminjaman/detail_peminjam', $data);
     }
@@ -46,13 +43,22 @@ class Peminjaman extends CI_Controller
         $this->template->load('template', 'peminjaman/index', $data);
     }
 
+    
+
 	public function delete($kd_pjm)
-    {   
-        $detail = $this->PeminjamanDetail_m->delete($kd_pjm);     
-        if($detail->responseCode == "00"){
+    {                   
+        $detail = $this->PeminjamanDetail_m->get($kd_pjm);
+        if($detail->data !== null){
+            $deleteDetail = $this->PeminjamanDetail_m->delete($kd_pjm);
+            if($deleteDetail->responseCode == "00"){
+                $result = $this->Peminjaman_m->delete($kd_pjm);            
+                $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
+                redirect('peminjaman');
+            }
+        }else{
             $result = $this->Peminjaman_m->delete($kd_pjm);            
-            $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
-            redirect('peminjaman'); 
+            $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
+            redirect('peminjaman');
         }
     }
 

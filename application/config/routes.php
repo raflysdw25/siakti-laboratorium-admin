@@ -66,4 +66,6 @@ $route['client/stripe_card'] = 'client/Client/stripeCard';
 $route['client/panduan'] = 'client/Client/panduan';
 $route['client/daftar'] = 'client/Client/daftar';
 $route['client/card_data/(:any)'] = 'client/Client/card_data/$1';
-$route['client/form_peminjaman'] = 'client/Client/form_peminjaman';
+$route['client/formMahasiswa/(:any)'] = 'client/Client/form_peminjaman/$1';
+$route['client/cancel/(:any)'] = 'client/Client/cancelPeminjamanMahasiswa/$1';
+$route['client/pinjam-mahasiswa/(:any)'] = 'client/Client/createPeminjamanMahasiswa/$1';

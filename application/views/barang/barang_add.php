@@ -82,12 +82,21 @@
                             <div class="form-group">
                                 <label for="asal_pengadaan">Asal Pengadaan Barang</label>
                                 <select name="asal_pengadaan" id="asal_pengadaan" class="custom-select">
-                                    <option value="" selected>--Pilih asal Barang--</option>
-                                    <option value="BHP">BHP</option>
-                                    <option value="TA">TA</option>
+                                    <option>--Pilih asal Barang--</option>
+                                    <option value="Barang Habis Pakai">Barang Habis Pakai</option>
+                                    <option value="Hibah TA">Hibah TA</option>
                                     <option value="Supplier">Supplier</option>
+                                    <option value="Hibah Pemerintah">Hibah Pemerintah</option>
                                 </select>
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="jumlah">Jumlah Barang</label>
+                                <input type="number" name="jumlah" class="form-control" id="jumlah" placeholder="Masukkan Jumlah Barang" >                                
+                            </div>
+                            <div class="form-group">
+                                <label for="satuan">Satuan Barang</label>
+                                <input type="text" name="satuan" class="form-control" id="satuan" placeholder="Masukkan Satuan Barang" >                             
                             </div>
                             <div class="form-group">
                                 <label for="supplier_id_supp">Supplier</label>
@@ -96,8 +105,7 @@
                                     <?php foreach($suppliers as $supplier): ?>
                                         <option value="<?= $supplier->id_supp ?>"><?= $supplier->nama_supp ?></option>
                                     <?php endforeach; ?>
-                                </select>
-                                <small class="<?= form_error('supplier_id_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_id_supp')?></small>
+                                </select>                                
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -110,4 +118,21 @@
             </div>
         </form>
       </div><!-- /.container-fluid -->
-    </section>    
+    </section>
+
+
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>    
+    <script>
+        $(document).ready(function(){
+            $("#asal_pengadaan").change(function(){
+                $(this).find("option:selected").each(function(){
+                    let optionValue = $(this).attr("value");                                  
+                    if(optionValue === "Barang Habis Pakai"){                        
+                        $(".bhpInput").show() 
+                    } else{
+                       $(".bhpInput").hide()
+                    }
+                });
+            }).change();
+        });
+    </script>     -->

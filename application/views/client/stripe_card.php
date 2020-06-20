@@ -22,6 +22,7 @@
         <form action="" class="mt-4" method="POST">
             <div class="form-group">
                 <input type="text" name="no_ktm" class="form-control form-control-lg w-50 m-auto" placeholder="No KTM Anda" autofocus>
+                <small>Silahkan daftarkan kartu anda jika belum didaftarkan dengan <a href="<?= site_url('client/daftar')?>">Daftar Disini !</a> </small>
             </div>            
         </form>
       </div>

@@ -39,6 +39,7 @@
                     <tr>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
+                      <th>Supplier</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -48,6 +49,7 @@
                     <tr>
                       <td><?= $brg->kode_brg ?></td>
                       <td><?= $brg->nama_brg ?></td>
+                      <td><?= ($brg->nama_supp == null) ? 'None' : $brg->nama_supp ?></td>
                       <td><span class="badge <?= ($brg->status == 'TERSEDIA') ? "badge-success" : "badge-danger"?>"><?= $brg->status?></span></td>
                       <td>
                         <a href="#mymodal" 
@@ -57,10 +59,7 @@
                             data-target="#mymodal"
                             data-title="Detail Barang <?= $brg->kode_brg?>">
                             <i class="fas fa-eye"></i>
-                        </a>
-                        <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detail-modals">
-                          <i class="fas fa-eye"></i>
-                        </button> -->
+                        </a>                        
                         <a href="<?= site_url('barang/edit/'.$brg->kode_brg)?>" class="btn btn-primary">
                           <i class="fas fa-pencil-alt"></i>
                         </a>

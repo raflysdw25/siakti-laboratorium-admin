@@ -44,16 +44,24 @@ class Barang_m extends CI_Model {
 	{	
 		$nama_brg = $this->input->post('nama_brg',true);
 		$asal_pengadaan = $this->input->post('asal_pengadaan',true);
-		$thn_pengadaan = $this->input->post('thn_pengadaan',true);
-		$spesifikasi = addslashes($this->input->post('spesifikasi',true));
+		$thn_pengadaan = $this->input->post('thn_pengadaan',true);		
+
 		$words = explode(" ", $nama_brg);
-        $namabrg_acronym = "";
+		$namabrg_acronym = "";
+		
+		$words2 = explode(" ", $asal_pengadaan);
+		$asalpengadaan_acronym = "";
 
         foreach ($words as $w) {
             $namabrg_acronym .= $w[0];
 		}
-		$barcode = $namabrg_acronym."".$asal_pengadaan."".substr($thn_pengadaan,2,3);			
-		
+
+		foreach($words2 as $wt){
+			$asalpengadaan_acronym .= $wt[0];
+		}
+
+		$barcode = $namabrg_acronym."".$asalpengadaan_acronym."".substr($thn_pengadaan,2,3);			
+		$supplier_id_supp = ($this->input->post('supplier_id_supp',true)) == "" ? null : $this->input->post('supplier_id_supp',true);
 		$data = [
 			"kode_brg" => $this->input->post('kode_brg',true),
 			"nama_brg" => $nama_brg,
@@ -62,7 +70,9 @@ class Barang_m extends CI_Model {
 			"barcode" => $barcode,
 			"thn_pengadaan" => $thn_pengadaan,
 			"asal_pengadaan" => $asal_pengadaan,
-			"supplier_id_supp" => $this->input->post('supplier_id_supp',true),			
+			"jumlah" => $this->input->post('jumlah',true),
+			"satuan" => $this->input->post('satuan',true),
+			"supplier_id_supp" => $supplier_id_supp,			
 		];		
 
 		$response = $this->_client->request('POST', 'laboratorium/barang',[
@@ -91,15 +101,24 @@ class Barang_m extends CI_Model {
 	{
 		$nama_brg = $this->input->post('nama_brg',true);
 		$asal_pengadaan = $this->input->post('asal_pengadaan',true);
-		$thn_pengadaan = $this->input->post('thn_pengadaan',true);
-		$spesifikasi = $this->input->post('spesifikasi',true);
+		$thn_pengadaan = $this->input->post('thn_pengadaan',true);			
+		$supplier_id_supp = ($this->input->post('supplier_id_supp',true)) == "" ? null : $this->input->post('supplier_id_supp',true);
+
+
 		$words = explode(" ", $nama_brg);
+		$words2 = explode(" ", $asal_pengadaan);
+		$asalpengadaan_acronym = "";
         $namabrg_acronym = "";
 
         foreach ($words as $w) {
             $namabrg_acronym .= $w[0];
 		}
-		$barcode = $namabrg_acronym."".$asal_pengadaan."".substr($thn_pengadaan,2,3);
+
+		foreach($words2 as $w){
+			$asalpengadaan_acronym .= $w[0];
+		}
+
+		$barcode = $namabrg_acronym."".$asalpengadaan_acronym."".substr($thn_pengadaan,2,3);
 
 		$data = [
 			"kode_brg" => $this->input->post('kode_brg',true),
@@ -107,10 +126,12 @@ class Barang_m extends CI_Model {
 			"jenis" => $this->input->post('jenis',true),
 			"spesifikasi" => $this->input->post('spesifikasi',true),			
 			"status" => $this->input->post('status',true),
+			"jumlah" => $this->input->post('jumlah',true),
+			"satuan" => $this->input->post('satuan',true),
 			"barcode" => $barcode,
 			"thn_pengadaan" => $thn_pengadaan,
 			"asal_pengadaan" => $asal_pengadaan,
-			"supplier_id_supp" => $this->input->post('supplier_id_supp',true),			
+			"supplier_id_supp" => $supplier_id_supp ,			
 		];		
 
 		$response = $this->_client->request('PUT', 'laboratorium/barang',[

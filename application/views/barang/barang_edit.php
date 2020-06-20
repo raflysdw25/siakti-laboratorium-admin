@@ -98,21 +98,30 @@
                             </div>
                             <div class="form-group">
                                 <label for="asal_pengadaan">Asal Pengadaan Barang</label>
-                                <select name="asal_pengadaan" id="asal_pengadaan" class="custom-select">                                    
-                                    <option value="BHP" <?= ($barang->asal_pengadaan == "BHP")? "selected" : '' ?> >BHP</option>
-                                    <option value="TA" <?= ($barang->asal_pengadaan == "TA")? "selected" : '' ?>>TA</option>
+                                <select name="asal_pengadaan" id="asal_pengadaan" class="custom-select">                                                                        
+                                    <option value="Barang Habis Pakai" <?= ($barang->asal_pengadaan == "Barang Habis Pakai")? "selected" : '' ?> >Barang Habis Pakai</option>
+                                    <option value="Hibah TA" <?= ($barang->asal_pengadaan == "Hibah TA")? "selected" : '' ?>>Hibah TA</option>
                                     <option value="Supplier" <?= ($barang->asal_pengadaan == "Supplier")? "selected" : '' ?>>Supplier</option>
+                                    <option value="Hibah Pemerintah" <?= ($barang->asal_pengadaan == "Hibah Pemerintah")? "selected" : '' ?>>Hibah Pemerintah</option>
                                 </select>
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
                             </div>
                             <div class="form-group">
+                                <label for="jumlah">Jumlah Barang</label>
+                                <input type="number" name="jumlah" class="form-control" id="jumlah" value="<?= $barang->jumlah ?>" placeholder="Masukkan Jumlah Barang" >                                
+                            </div>
+                            <div class="form-group">
+                                <label for="satuan">Satuan Barang</label>
+                                <input type="text" name="satuan" class="form-control" id="satuan" value="<?= $barang->satuan ?>" placeholder="Masukkan Satuan Barang" >                             
+                            </div>
+                            <div class="form-group">
                                 <label for="supplier_id_supp">Supplier</label>
-                                <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">                                    
-                                    <?php foreach($suppliers as $supplier): ?>
+                                <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">
+                                    <option value="" <?= ($barang->supplier_id_supp == null )? "selected" : '' ?>>--Pilih Supplier--</option>                                    
+                                    <?php foreach($suppliers as $supplier): ?>                                        
                                         <option value="<?= $supplier->id_supp ?>" <?= ($supplier->id_supp == $barang->supplier_id_supp)? "selected" : '' ?>><?= $supplier->nama_supp ?></option>
                                     <?php endforeach; ?>
-                                </select>
-                                <small class="<?= form_error('supplier_id_supp') ? "form-text text-danger" : ''?>"><?= form_error('supplier_id_supp')?></small>
+                                </select>                                
                             </div>                            
                         </div>
                         <!-- /.card-body -->
@@ -129,8 +138,18 @@
       </div><!-- /.container-fluid -->
     </section>
 
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>    
     <script>
-        // $(function() {
-        //     $( "#thn_pengadaan" ).datepicker({dateFormat: 'yy'});
-        // });​
-    </script>
+        $(document).ready(function(){
+            $("#asal_pengadaan").change(function(){
+                $(this).find("option:selected").each(function(){
+                    let optionValue = $(this).attr("value");                                  
+                    if(optionValue === "Barang Habis Pakai"){                        
+                        $(".bhpInput").show() 
+                    } else{
+                       $(".bhpInput").hide()
+                    }
+                });
+            }).change();
+        });
+    </script>  -->

@@ -21,10 +21,10 @@ class Barang extends CI_Controller
     }
 
     public function showBarang($id){
-        $barang = $this->Barang_m->get($id)[0];
-        $supplier = $this->supplier_m->get($barang->supplier_id_supp)[0];
+        $barang = $this->Barang_m->get($id)[0];        
         $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-        $data = ["barang" => $barang, "supplier" => $supplier, 'generator' => $generator]; //Digunakan untuk mengenerate barcode
+        $data = ["barang" => $barang, 'generator' => $generator]; //Digunakan untuk mengenerate barcode
+        // var_dump($data); exit;
         $this->load->view('barang/barang_show',$data);
     }
 
@@ -36,8 +36,7 @@ class Barang extends CI_Controller
         $validation->set_rules('jenis', 'Jenis Barang', 'required');
         $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');                
         $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
-        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        $validation->set_rules('supplier_id_supp', 'Supplier', 'required');
+        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');        
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
@@ -67,8 +66,7 @@ class Barang extends CI_Controller
         $validation->set_rules('jenis', 'Jenis Barang', 'required');
         $validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');        
         $validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
-        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
-        $validation->set_rules('supplier_id_supp', 'Supplier', 'required');
+        $validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');        
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');

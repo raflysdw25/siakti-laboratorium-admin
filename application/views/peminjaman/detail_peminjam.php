@@ -34,7 +34,7 @@
            <tr>
                 <th>Status Peminjam</th>
                 <td>
-                    <?= $peminjam ?>
+                    <?=  ($mahasiswa !== null)? 'Mahasiswa'  : "Staff" ?>
                 </td>
            </tr>                              
         </table>
