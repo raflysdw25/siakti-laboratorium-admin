@@ -11,6 +11,21 @@ class Staff_m extends CI_Model {
         ]);
     }
 	
+	public function login()
+	{
+		$data = [			
+			"usr_name" => $this->input->post('usr_name',true),		
+			"password" => $this->input->post('password',true),			
+		];		
+
+		$response = $this->_client->request('POST', 'staff/access',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents());
+                
+        return $result->data;
+	}
 	
 
 	public function get($nip = null)

@@ -21,7 +21,7 @@
             <p class="login-box-msg">Sign in to start your session</p>
             <form action="<?=site_url('auth/process')?>" method="POST">
                 <div class="form-group has-feedback">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" name="usr_name" class="form-control" placeholder="Username" required autofocus>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                  <div class="form-group has-feedback">
