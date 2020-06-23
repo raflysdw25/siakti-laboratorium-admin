@@ -55,7 +55,7 @@
                               <td><?= ($pinjambrg->tgl_blk == null) ? "Tanggal Belum diatur" : $pinjambrg->tgl_blk?></td>
                               <td><?= ($pinjambrg->tgl_blk_real == null) ? "Barang belum dikembalikan" : $pinjambrg->tgl_pjm ?></td>
                               <td>
-                                <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : "badge-success"?>"><?= $pinjambrg->status ?></span>
+                                <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : ($pinjambrg->status == "SUCCESS") ? "badge-success" : "badge-danger" ?>"><?= $pinjambrg->status ?></span>
                               </td>                                                                       
                               <td>
                                 <a href="#mymodal" 
@@ -68,7 +68,7 @@
                                 </a>
                                 <a href="#mymodal" class="btn btn-primary"
                                   data-toggle="modal"
-                                  data-remote="<?= site_url('peminjaman/detailPeminjam/'.$pinjambrg->mahasiswa_nim."/".$pinjambrg->staff_nip)?>"
+                                  data-remote="<?= site_url('peminjaman/detailPeminjam/'.$pinjambrg->kd_pjm) ?>"
                                   data-target="#mymodal"
                                   data-title="Detail Peminjam"
                                 >

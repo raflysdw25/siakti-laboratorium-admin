@@ -16,12 +16,18 @@
   <div class="container-fluid">
     <!-- /.row -->
     <div class="row">
-      <div class="col-12 text-center" style="margin-top:170px">        
+      <div class="col-lg-12 text-center" style="margin-top:170px">        
         <h4 class="">Silahkan pilih</h4>
-        <div class="section-button mt-4">
-          <a href="<?= site_url('client/stripe_card') ?>" class="btn btn-primary btn-lg p-4 w-25">PINJAM ALAT</a>
-          <a href="<?= site_url('client/stripe_card') ?>" class="btn btn-primary btn-lg p-4 w-25">KEMBALIKAN ALAT</a>
-          <a href="<?= site_url('client/daftar') ?>" class="btn btn-primary btn-lg p-4 w-25">DAFTARKAN KTM</a>
+        <div class="section-button mt-4 row">
+          <div class="col-lg-4">
+            <a href="<?= site_url('client/pilihan/pinjam') ?>" class="btn btn-primary btn-lg btn-block p-4">PINJAM ALAT</a>
+          </div>
+          <div class="col-lg-4">
+            <a href="<?= site_url('client/pilihan/kembalikan') ?>" class="btn btn-primary btn-lg btn-block p-4">KEMBALIKAN ALAT</a>
+          </div>
+          <div class="col-lg-4">
+            <a href="<?= site_url('client/daftar') ?>" class="btn btn-primary btn-lg btn-block p-4">DAFTARKAN KTM</a>
+          </div>
         </div>
       </div>
     </div>   

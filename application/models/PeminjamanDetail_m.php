@@ -28,7 +28,7 @@ class PeminjamanDetail_m extends CI_Model {
         return $result->data;
     }
     
-    public function getDetail($id_detail)
+    public function getDetail($id_detail ='')
 	{
 		if($id_detail){
 			$response = $this->_client->request('GET', 'laboratorium/peminjamandetail/detailGet', [
@@ -43,7 +43,31 @@ class PeminjamanDetail_m extends CI_Model {
         $result = json_decode($response->getBody()->getContents());
                 
         return $result->data;
+    }
+
+    public function maxId(){
+		$response = $this->_client->request('GET', 'laboratorium/peminjamandetail/maxId');
+		$result = json_decode($response->getBody()->getContents());                
+        return $result->data;
 	}
+    
+    public function addDetail($post)
+    {
+        $data = [
+            'id_detail' => $post['id_detail'],
+            'pinjambrg_kd_pjm' => $post['kd_pjm'],
+            'barang_kode_brg' => $post['kode_brg'],
+            'jumlah' => $post['jumlah_pinjam']
+		];		
+
+		$response = $this->_client->request('POST', 'laboratorium/peminjamandetail',[
+            'form_params' => $data
+        ]);
+
+        $result = json_decode($response->getBody()->getContents());
+                
+        return $result;
+    }
 
 
     public function delete($pinjambrg_kd_pjm)
@@ -59,11 +83,11 @@ class PeminjamanDetail_m extends CI_Model {
         return $result;
     }
 
-    public function deleteDetail($id_detail)
+    public function deleteDetail()
     {
 		$response = $this->_client->request('DELETE', 'laboratorium/peminjamandetail/deleteDetail', [
             'form_params' => [
-                'id_detail' => $id_detail,
+                'id_detail' => $this->input->post('id_detail'),
             ]            
         ]);
 

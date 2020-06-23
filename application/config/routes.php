@@ -62,10 +62,23 @@ $route['peminjaman'] = 'Peminjaman/index';
 
 // Client Side
 $route['client'] = 'client/Client/index';
-$route['client/stripe_card'] = 'client/Client/stripeCard';
+$route['client/stripe-card/(:any)'] = 'client/Client/stripeCard/$1';
 $route['client/panduan'] = 'client/Client/panduan';
+$route['client/pilihan/(:any)'] = 'client/Client/pilihPeminjam/$1';
 $route['client/daftar'] = 'client/Client/daftar';
+
+// Client Side : Mahasiswa
 $route['client/card_data/(:any)'] = 'client/Client/card_data/$1';
-$route['client/formMahasiswa/(:any)'] = 'client/Client/form_peminjaman/$1';
+$route['client/form-mahasiswa/(:any)'] = 'client/Client/form_peminjaman/$1';
 $route['client/cancel/(:any)'] = 'client/Client/cancelPeminjamanMahasiswa/$1';
-$route['client/pinjam-mahasiswa/(:any)'] = 'client/Client/createPeminjamanMahasiswa/$1';
+$route['client/detail/(:any)'] = 'client/Client/detail_barang_pinjam/$1';
+$route['client/pinjam-barang/(:any)'] = 'client/Client/createPeminjamanMahasiswa/$1';
+$route['client/kembalikan-data/(:any)'] = 'client/Client/kembalikan_data/$1';
+$route['client/kembalikan-barang/(:any)'] = 'client/Client/updatePengembalian/$1';
+$route['client/delete-detail'] = 'client/Client/deleteDetail';
+$route['client/tambah-barang'] = 'client/Client/tambahBarang';
+
+// Client Side : Staff
+$route['client/nip-input/(:any)'] = 'client/Client/nipInput/$1';
+$route['client/form-staff/(:any)'] = 'client/Client/form_staff/$1';
+$route['client/return-data/(:any)'] = 'client/Client/return_data/$1';

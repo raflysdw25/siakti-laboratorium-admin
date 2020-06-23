@@ -66,8 +66,15 @@
                         <a href="<?= site_url('barang/delete/'.$brg->kode_brg)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
                           <i class="fas fa-trash"></i>
                         </a>
-                      </td>
-                    </tr>                    
+                        <button id="btn-rusak" 
+                          class="btn btn-warning" data-toggle="modal"
+                          data-remote="<?= site_url('barang/barangRusak/'.$brg->kode_brg)?>"
+                          data-target="#mymodal"
+                          data-title="Jumlah Barang Rusak" >
+                            <span class="fas fa-unlink"></span>                            
+                        </button>                        
+                      </td>                        
+                    </tr>                                                          
                   <?php endforeach; ?>
                   </tbody>
                 </table>
@@ -82,4 +89,3 @@
     </section>
     <!-- /.content -->
 
-    

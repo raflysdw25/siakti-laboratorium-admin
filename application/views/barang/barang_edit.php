@@ -108,7 +108,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="jumlah">Jumlah Barang</label>
-                                <input type="number" name="jumlah" class="form-control" id="jumlah" value="<?= $barang->jumlah ?>" placeholder="Masukkan Jumlah Barang" >                                
+                                <input type="number" name="jumlah" class="form-control" id="jumlah" value="<?= $barang->jumlah ?>" placeholder="Masukkan Jumlah Barang" min="0" >                                
                             </div>
                             <div class="form-group">
                                 <label for="satuan">Satuan Barang</label>

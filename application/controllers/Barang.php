@@ -51,8 +51,14 @@ class Barang extends CI_Controller
             $suppliers = $this->supplier_m->get();
             $data = ['suppliers' => $suppliers, 'nextId' => $nextId];
     		$this->template->load('template', 'barang/barang_add', $data);
-		} else {            			
-            $result = $this->Barang_m->add();            
+		} else {   
+            $post = $this->input->post(); 
+            if($post["jumlah"] == 0){
+                $post["status"] = "HABIS";
+            }else{
+                $post["status"] = "TERSEDIA";
+            }         
+            $result = $this->Barang_m->add($post);            
             $this->session->set_flashdata('success', 'Barang Berhasil ditambahkan');
             redirect('barang');                        
     	}
@@ -80,17 +86,35 @@ class Barang extends CI_Controller
             $barang = $this->Barang_m->get($kode_brg)[0];
             $data = ['suppliers' => $suppliers, 'barang' => $barang];
     		$this->template->load('template', 'barang/barang_edit', $data);
-		} else {			
-            $result = $this->Barang_m->edit();            
+		} else {
+            $post = $this->input->post();            
+            if($post["jumlah"] > 0){
+                $post["status"] = "TERSEDIA";
+            }			
+            $result = $this->Barang_m->edit($post);            
             $this->session->set_flashdata('success', 'Data Barang Berhasil diubah');
             redirect('barang');                        
     	}
     }
 
-    public function ubahStatus($kode_brg, $status)
+    public function barangRusak($kode_brg)
     {
-        $result = $this->Barang_m->updateStatus($kode_brg,$status);
-        $this->session->set_flashdata('success', 'Status Barang Berhasil diubah');
+        $data["barang"] = $this->Barang_m->get($kode_brg)[0];        
+        $this->load->view('barang/barang_rusak',$data);
+    }
+
+    public function ubahStatus()
+    {   
+        $post = $this->input->post();
+        $barang = $this->Barang_m->get($post["kode_brg"])[0];
+        $post["jumlah"] = $barang->jumlah - number_format($post["jumlah"]);        
+        if($post["jumlah"] == 0){
+            $post["status"] = "HABIS";
+        }else{
+            $post["status"] = "TERSEDIA";
+        }        
+        $result = $this->Barang_m->updateStatus($post);
+        $this->session->set_flashdata('success', 'Jumlah Barang Berhasil diubah');
         redirect('barang');                        
     }
 
@@ -99,5 +123,13 @@ class Barang extends CI_Controller
         $result = $this->Barang_m->delete($kode_brg);        
         $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
         redirect('barang'); 
+    }
+
+    function barcode_print($id){
+        $barang = $this->Barang_m->get($id)[0];
+        $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+        $data = ['barang' => $barang, 'generator' => $generator];
+        $html = $this->load->view('barang/barcode_print', $data, true);
+        $this->fungsi->PdfGenerator($html, 'barcode -'.$barang->barcode, 'A4', 'potrait');
     }
 }
