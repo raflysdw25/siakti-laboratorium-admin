@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -48,14 +48,14 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user fa-fw"></i> Alexander Pierce - Kepala Laboratorium
+            <i class="fas fa-user fa-fw"></i> <?= $this->session->userdata('admin_logged')->nama ?>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">
               <i class="fas fa-cogs"></i> Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
               <i class="fas fa-sign-out-alt"></i>  Logout
             </a>
         </div>
@@ -77,10 +77,11 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"/>
+          <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle mt-2" alt="User Image"/>
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?= $this->session->userdata('admin_logged')->nama ?></a>
+          <p class="text-white" style="font-size:12px"><?= $this->session->userdata('admin_logged')->jabatan ?></p>
         </div>
       </div>
 
@@ -99,10 +100,33 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == '')  ? ' active' : '' ?>">
-                  <i class="fas fa-boxes nav-icon"></i>
-                  <p>Data Barang</p>
+                <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
+                  <i class="fas fa-chart-pie nav-icon"></i>
+                  <p>Reports</p>
                 </a>
+              </li>              
+              <li class="nav-item has-treeview <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == 'jenisbarang')  ? ' menu-open active' : '' ?>">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-boxes"></i>
+                  <p>
+                    Barang
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == '')  ? ' active' : '' ?>">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Data Barang</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="<?= site_url('jenisbarang')?>" class="nav-link <?=($this->uri->segment(1) == 'jenisbarang') ? ' active' : '' ?>">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Jenis Barang</p>
+                    </a>
+                  </li>                  
+                </ul>
               </li>              
               <li class="nav-item">
                 <a href="<?= site_url('peminjaman')?>" class="nav-link <?=($this->uri->segment(1) == 'peminjaman')  ? ' active' : '' ?>">
@@ -116,6 +140,19 @@
                   <p>Supplier Barang</p>
                 </a>
               </li>
+              <?php
+                $currentDate = date('Y-m-d');
+                if($this->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium"):
+                  if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)):                
+              ?> 
+                  <li class="nav-item">
+                    <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'supplier')  ? ' active' : '' ?>">
+                      <i class="fas fa-user nav-icon"></i>
+                      <p>User</p>
+                    </a>
+                  </li>
+                  <?php endif; ?>              
+                <?php endif; ?>              
             </ul>
           </li>
         </ul>
@@ -190,7 +227,7 @@
   $(function () {
     $('.datatable').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,

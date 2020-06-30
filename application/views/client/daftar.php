@@ -15,8 +15,8 @@
     <!-- /.row -->
     <div class="row">
       <div class="col-12 text-center" >
-        <h4 class="font-weight-lighter">DAFTAR KTM</h4>
-        <form action="" class="mt-4" method="POST">
+        <h4 class="font-weight-bold">DAFTAR KTM</h4>
+        <form action="" class="mt-4" method="POST" autocomplete="off">
             <div class="form-group">
                 <input type="text" name="nim" class="form-control form-control-lg w-50 m-auto" placeholder="Nomor Induk Mahasiswa">
               </div>

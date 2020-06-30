@@ -55,7 +55,7 @@
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Jenis Barang</th>
-                                    <th>Jumlah Barang Pinjaman</th>                                    
+                                    <th>Kondisi Barang</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,8 +65,8 @@
                                     <td><?= $no++?></td>
                                     <td><?= $detail->barang_kode_brg?></td>
                                     <td><?= $detail->nama_brg?></td>
-                                    <td><?= $detail->jenis?></td>
-                                    <td><?= $detail->jumlah?></td>                                    
+                                    <td><?= $detail->nama_jenis?></td>
+                                    <td><?= $detail->kondisi?></td>                                    
                                 </tr>                                
                                 <?php endforeach; ?>
                             </tbody>

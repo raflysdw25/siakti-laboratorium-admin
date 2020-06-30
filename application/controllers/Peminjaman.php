@@ -7,68 +7,77 @@ class Peminjaman extends CI_Controller
 {
     function __construct()
     {
-        parent::__construct();
-        // check_not_login();
-        $this->load->model(['Peminjaman_m','PeminjamanDetail_m', 'Barang_m', 'mahasiswa_m', 'Staff_m']);
+        parent::__construct();        
+        // $this->load->model(['Peminjaman_m','PeminjamanDetail_m', 'Barang_m', 'mahasiswa_m', 'Staff_m']);
         $this->load->library('form_validation');
+        check_not_login();
     }
 
-    public function detailBarang($kd_pjm){        
-        $data["barang"] = $this->PeminjamanDetail_m->get($kd_pjm);        
+    public function detailBarang($kd_pjm){                        
+        $barang = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
+                
+        $data["barang"] = $barang->data;      
                                
         $this->load->view('peminjaman/peminjaman_barang',$data);
     }
 
     public function detailPeminjam($kd_pjm)
-    {
-        $peminjam = $this->Peminjaman_m->get($kd_pjm)[0];
-        if($peminjam->mahasiswa_nim == null){
-            $staff = $this->Staff_m->get($peminjam->staff_nip)[0];            
-            $data['staff'] = $staff;
+    {        
+        $data = array();        
+        $peminjam = retrieveData('laboratorium/peminjaman?kd_pjm='.$kd_pjm);
+
+        $peminjam = $peminjam->data[0];        
+        if($peminjam->mahasiswa_nim == null){ //mahasiswa_nim null            
+            $staff = retrieveData('staff?nip='.$peminjam->staff_nip);                  
+            $data['staff'] = $staff->data[0];
             $data['mahasiswa'] = null;                                
-        }else{
-            $mahasiswa = $this->mahasiswa_m->get($peminjam->mahasiswa_nim)[0];
-            $data['mahasiswa'] = $mahasiswa; 
+        }else{ //staff_nip null                        
+            $mahasiswa = retrieveData('mahasiswa?nim='.$peminjam->mahasiswa_nim);            
+            $data['mahasiswa'] = $mahasiswa->data[0]; 
             $data['staff'] = null;                   
         } 
-        
-        // var_dump($data); exit;
+                
 
         $this->load->view('peminjaman/detail_peminjam', $data);
     }
 
     public function index()
-    {        
-        $data['peminjaman'] = $this->Peminjaman_m->get();
+    {                                
+        $peminjaman = retrieveData('laboratorium/peminjaman');
+        
+        $data["peminjaman"] = $peminjaman->data;
         $this->template->load('template', 'peminjaman/index', $data);
     }
 
     
 
 	public function delete($kd_pjm)
-    {                   
-        $details = $this->PeminjamanDetail_m->get($kd_pjm);
-        if($details !== null){
-            // Mengubah jumlah barang dengan menambahkan kembali data yang telah dipinjam
-            foreach ($details as $detail) {
-                $post = $this->input->post(null,true);
-                $barang = $this->Barang_m->get($detail->barang_kode_brg)[0];
-                $post["kode_brg"] = $barang->kode_brg;
-                $post["jumlah"] = $barang->jumlah + $detail->jumlah;
-                $post["status"] = "TERSEDIA";
-                $result = $this->Barang_m->updateStatus($post); 
-            }
+    {
+        $post = $this->input->post(null, true);
 
-            $deleteDetail = $this->PeminjamanDetail_m->delete($kd_pjm);
-            if($deleteDetail->responseCode == "00"){
-                $result = $this->Peminjaman_m->delete($kd_pjm);            
-                $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
+        $post['kd_pjm'] = $kd_pjm; //Untuk menghapus peminjaman
+        
+        $post['pinjambrg_kd_pjm'] = $kd_pjm;  //Untuk menghapus detail peminjaman             
+                
+        $details = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
+        $details = $details->data;
+
+        if($details == null){            
+            $deletePeminjaman = deleteData('laboratorium/peminjaman', $post);
+            if($deletePeminjaman->responseCode == "00"){
+                $this->session->set_flashdata('success', 'Peminjaman berhasil dihapus');
+                redirect('peminjaman');
+            }else{
+                $this->session->set_flashdata('failed', 'Peminjaman gagal dihapus');
+                redirect('peminjaman');
+            }            
+        }else{                       
+            $deleteDetail = deleteData('laboratorium/peminjamandetail', $post);
+            if($deleteDetail->responseCode == "00"){                                
+                $delete_peminjaman = deleteData('laboratorium/peminjaman',$post);
+                $this->session->set_flashdata('success', 'Peminjaman berhasil dihapus');
                 redirect('peminjaman');
             }
-        }else{
-            $result = $this->Peminjaman_m->delete($kd_pjm);            
-            $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
-            redirect('peminjaman');
         }
     }
 

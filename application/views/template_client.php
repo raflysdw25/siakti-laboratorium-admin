@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -59,7 +59,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index.html" class="brand-link">
+    <a href="<?= site_url('client') ?>" class="brand-link">
       <img src="<?= base_url() ?>assets/dist/img/PNJLogo.png" alt="Politeknik Negeri Jakarta Logo" class="brand-image">
       <span class="brand-text font-weight-light">Sistem Informasi TIK</span>
     </a>

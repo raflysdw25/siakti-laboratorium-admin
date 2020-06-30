@@ -10,7 +10,7 @@
             <th>ID Detail</th>
             <th>Kode Barang</th>
             <th>Nama Barang</th>
-            <th>Jumlah yang di pinjam</th>
+            <th>Jenis Barang</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -22,7 +22,7 @@
 
 
 <!-- MODAL ADD -->
-<form>
+<form autocomplete="off">
     <div class="modal fade" id="Modal_Add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -33,15 +33,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                    <div class="form-group">
-                        <label for="barcode" >Barcode Barang</label>
-                        <input type="hidden" name="kd_pjm" id="kd_pjm" class="form-control" value="<?= $peminjaman->kd_pjm?>" >                                
+                                        
+                    <div class="form-group"> 
+                        <label for="barcode">Barcode Barang</label>                       
+                        <input type="hidden" name="pinjambrg_kd_pjm" id="pinjambrg_kd_pjm" class="form-control" value="<?= $peminjaman->kd_pjm?>">                                
                         <input type="text" name="barcode" id="barcode" class="form-control" placeholder="Barcode barang" autofocus>                                
-                    </div>                
-                    <div class="form-group">
-                        <label>Jumlah yang dipinjam</label>                                
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah" readonly>                                
+                        <p id="barcodeInput"></p>
                     </div>
+                    <div class="form-group"> 
+                        <label for="status">Status Barang</label>                                                                              
+                        <p id="status"></p>
+                        <p id="errorMessage" class="text-danger"></p>
+                    </div>                                    
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -54,7 +57,7 @@
 <!--END MODAL ADD-->
 
 <!--MODAL DELETE-->
-<form>
+<form action="" method="post">
     <div class="modal fade" id="Modal_Delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -86,9 +89,14 @@
         $("#barcode").change(function(){
             $('[name="barcode"]').each(function(){
                 if($(this).val().length > 0){
-                    $("#barcode").prop('readonly', true);                    
-                    $("#jumlah").prop('readonly', false);  
-                    $("#jumlah").focus();                  
+                    let barcode = $('#barcode').val();
+                    // $('#barcode').prop('readonly', true);                    
+                    $('#barcode').attr('type', 'hidden');
+                    $('#status').show();
+                    $('#status').text('BARCODE VALID');
+                    $('#errorMessage').hide();
+                    $('#barcodeInput').show();
+                    $('#barcodeInput').text(barcode);
                 }
             });
         }).change();
@@ -99,9 +107,12 @@
         
         $("#btn-add").on('click', function(){
             $('[name="barcode"]').val("");            
-            $('[name="barcode"]').prop('readonly', false);            
-            $('[name="jumlah"]').val(""); 
-            $('[name="jumlah"]').prop('readonly', true);            
+            $('[name="barcode"]').prop('readonly', false);
+            $('#barcode').attr('type', 'text');
+            $('#barcodeInput').hide();
+            $('#errorMessage').hide();
+            $('#status').show(); 
+            $('#status').text('Silahkan Scan Barcode Barang'); 
         });
 
         function showDetailBarang(){
@@ -117,7 +128,7 @@
                                     <td>${detail.id_detail}</td>
                                     <td>${detail.barang_kode_brg}</td>
                                     <td>${detail.nama_brg}</td>
-                                    <td>${detail.jumlah}</td>
+                                    <td>${detail.nama_jenis}</td>                                    
                                     <td>                                        
                                         <a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-id_detail="${detail.id_detail}">
                                             <i class="fas fa-trash"></i>
@@ -132,25 +143,31 @@
         }
 
         $('#btn_save').on('click',function(){
-            let kd_pjm = $('#kd_pjm').val();
-            let barcode = $('#barcode').val();
-            let jumlah = $('#jumlah').val();            
+            let pinjambrg_kd_pjm = $('#pinjambrg_kd_pjm').val();
+            let barcode = $('#barcode').val();                        
             $.ajax({
                 type : "POST",
                 url  : "<?= site_url('client/tambah-barang')?>",
                 dataType : "JSON",
                 data : {
-                    kd_pjm:kd_pjm,
-                    barcode:barcode , 
-                    jumlah_pinjam:jumlah
+                    pinjambrg_kd_pjm:pinjambrg_kd_pjm,
+                    barcode:barcode                    
                 },
                 success: function(data){
                     $('[name="barcode"]').val("");                    
-                    $('[name="jumlah"]').val("");
-                    $('[name="jumlah"]').prop('readonly', true);
                     $('[name="barcode"]').prop('readonly', false);
                     $('#Modal_Add').modal('hide');
                     showDetailBarang();
+                },
+                error: function(message){
+                    $('#errorMessage').show();
+                    $('#barcode').attr('type', 'text');
+                    $('#status').hide();
+                    $('#barcodeInput').hide();
+                    $('#errorMessage').text("Barang tidak ada");
+                    $('#barcode').val("");                    
+                    $('#barcode').prop('readonly', false);
+                    $('#barcode').focus();
                 }
             });
             return false;
@@ -176,7 +193,7 @@
                     $('[name="id_detail"]').val("");
                     $('#Modal_Delete').modal('hide');
                     showDetailBarang();
-                }
+                }                
             });
             return false;
         });

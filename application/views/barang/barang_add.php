@@ -41,16 +41,26 @@
                                 <label for="nama_brg">Nama Barang</label>
                                 <input type="text" name="nama_brg" class="form-control" id="nama_brg" placeholder="Masukkan Nama Barang">
                                 <small class="<?= form_error('nama_brg') ? "form-text text-danger" : ''?>"><?= form_error('nama_brg')?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="kondisi">Kondisi Barang</label>
+                                <select name="kondisi" id="kondisi" class="custom-select">
+                                    <option value="" selected>--Pilih asal Barang--</option>
+                                    <option value="BAIK">Baik</option>
+                                    <option value="RUSAK">Rusak</option>
+                                    <option value="HABIS">Habis</option>                                    
+                                </select>
+                                <small class="<?= form_error('kondisi') ? "form-text text-danger" : ''?>"><?= form_error('kondisi')?></small>
                             </div>                            
                             <div class="form-group">
-                                <label for="jenis">Jenis Barang</label>
-                                <select name="jenis" id="jenis" class="custom-select">
+                                <label for="jenis_id_jenis">Jenis Barang</label>
+                                <select name="jenis_id_jenis" id="jenis_id_jenis" class="custom-select">
                                     <option value="" selected>--Pilih Jenis Barang--</option>
-                                    <option value="Kabel">Kabel</option>
-                                    <option value="Proyektor">Proyektor</option>
-                                    <option value="Laptop">Laptop</option>
+                                    <?php foreach($jenisbarang as $jenis): ?>
+                                        <option value="<?= $jenis->id_jenis ?>"><?= $jenis->nama_jenis ?></option>
+                                    <?php endforeach;?>
                                 </select>
-                                <small class="<?= form_error('jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis')?></small>
+                                <small class="<?= form_error('jenis_id_jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis_id_jenis')?></small>
                             </div>                            
                             <div class="form-group">
                                 <label for="spesifikasi">Spesifikasi Barang</label>
@@ -75,14 +85,14 @@
                             <div class="form-group">
                                 <label for="thn_pengadaan">Tahun Pengadaan</label>
                                 <div class="input-group" id="thn_pengadaan">
-                                  <input type="number" name="thn_pengadaan" class="form-control" min="2014" max="2099" value="<?= date('Y') ?>"/>
+                                  <input type="number" name="thn_pengadaan" class="form-control" min="2000" max="2099" value="<?= date('Y') ?>"/>
                                   <small class="<?= form_error('thn_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('thn_pengadaan')?></small>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="asal_pengadaan">Asal Pengadaan Barang</label>
                                 <select name="asal_pengadaan" id="asal_pengadaan" class="custom-select">
-                                    <option>--Pilih asal Barang--</option>
+                                    <option value="" selected>--Pilih asal Barang--</option>
                                     <option value="Barang Habis Pakai">Barang Habis Pakai</option>
                                     <option value="Hibah TA">Hibah TA</option>
                                     <option value="Supplier">Supplier</option>
@@ -92,12 +102,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="jumlah">Jumlah Barang</label>
-                                <input type="number" name="jumlah" class="form-control" id="jumlah" placeholder="Masukkan Jumlah Barang" >                                
-                            </div>
-                            <div class="form-group">
-                                <label for="satuan">Satuan Barang</label>
-                                <input type="text" name="satuan" class="form-control" id="satuan" placeholder="Masukkan Satuan Barang" >                             
-                            </div>
+                                <input type="number" min="1" name="jumlah" class="form-control" value="1" id="jumlah" placeholder="Masukkan Jumlah Barang" >                                
+                            </div>                            
                             <div class="form-group">
                                 <label for="supplier_id_supp">Supplier</label>
                                 <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">

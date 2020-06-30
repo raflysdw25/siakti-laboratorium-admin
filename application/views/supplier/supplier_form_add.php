@@ -32,13 +32,14 @@
                     <!-- /.card-header -->
                     <!-- form start -->
                     <div class="card-body">
+                        <p class="text-danger mb-2">* Wajib diisi</p>
                         <div class="form-group">
-                            <label for="id_supp">ID Perusahaan</label>                            
+                            <label for="id_supp">ID Supplier <span class="text-danger">*</span></label>                            
                             <input type="text" name="id_supp" class="form-control" id="id_supp" value="<?= $nextId ?>" readonly>
                             <small class="<?= form_error('id_supp') ? "form-text text-danger" : ''?>"><?= form_error('id_supp')?></small>
                         </div>
                         <div class="form-group">
-                            <label for="nama_supp">Nama Perusahaan</label>
+                            <label for="nama_supp">Nama Supplier <span class="text-danger">*</span></label>
                             <input type="text" name="nama_supp" class="form-control" id="nama_supp" placeholder="Masukkan  Nama Perusahaan">
                             <small class="<?= form_error('nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('nama_supp')?></small>
                         </div>
@@ -48,7 +49,7 @@
                             <small class="<?= form_error('alamat') ? "form-text text-danger" : ''?>"><?= form_error('alamat')?></small>
                         </div>
                         <div class="form-group">
-                            <label for="tlpn">Nomor Telepon</label>
+                            <label for="tlpn">Nomor Telepon <span class="text-danger">*</span></label>
                             <input type="tel"  class="form-control" name="tlpn" id="tlpn" placeholder="Masukkan Nomor Telepon">
                             <small class="<?= form_error('tlpn') ? "form-text text-danger" : ''?>"><?= form_error('tlpn')?></small>
                         </div>
@@ -58,7 +59,7 @@
                             <small class="<?= form_error('email') ? "form-text text-danger" : ''?>"><?= form_error('email')?></small>
                         </div>
                         <div class="form-group">
-                            <label for="pic"><i>Person in Charge</i></label>
+                            <label for="pic"><i>Person in Charge</i> <span class="text-danger">*</span></label>
                             <input type="text"  class="form-control" name="pic" id="pic" placeholder="Masukkan PIC Perusahaan">
                             <small class="<?= form_error('pic') ? "form-text text-danger" : ''?>"><?= form_error('pic')?></small>
                         </div>

@@ -47,15 +47,15 @@
                   <tr>                    
                     <td><?= $supplier->id_supp ?></td>
                     <td><?= $supplier->nama_supp ?></td>
-                    <td><?= $supplier->alamat ?></td>
+                    <td><?= ($supplier->alamat == null) ? "<span class='badge badge-danger'>Alamat tidak diketahui</span>" : $supplier->alamat ?></td>
                     <td><?= $supplier->tlpn ?></td>
-                    <td><?= $supplier->email ?></td>
+                    <td><?= ($supplier->email == null) ? "<span class='badge badge-danger'>Email tidak diketahui</span>" : $supplier->email ?></td>
                     <td><?= $supplier->pic ?></td>
                     <td>
                       <a href="<?= site_url('supplier/edit/'.$supplier->id_supp)?>" class="btn btn-primary">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
-                      <a href="<?= site_url('supplier/delete/'.$supplier->id_supp)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
+                      <a href="<?= site_url('supplier/delete/'.$supplier->id_supp)?>" onclick="return confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                       </a>
                     </td>

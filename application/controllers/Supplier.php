@@ -8,44 +8,54 @@ class Supplier extends CI_Controller
 
     function __construct()
     {
-        parent::__construct();
-        // check_not_login();
-        $this->load->model(['Supplier_m']);
+        parent::__construct();        
+        // $this->load->model(['Supplier_m']);
         $this->load->library('form_validation');
+        check_not_login();
     }
     
     public function index()
-    {
-        $suppliers = $this->Supplier_m->get();        
-        // $maxId = number_format($this->Supplier_m->maxId()[0]->max);
-        // var_dump($maxId + 1); exit;
-        $data =  ['suppliers' => $suppliers];
+    {        
+        $suppliers = retrieveData('laboratorium/supplier');
+
+        $data["suppliers"] = $suppliers->data;
         $this->template->load('template', 'supplier/index',$data);
     }
 
     public function add()
-    {
-        $validation = $this->form_validation;    	
-        $validation->set_rules('id_supp', 'Nama Perusahaan', 'required');
-        $validation->set_rules('alamat', 'Alamat', 'required');
-        $validation->set_rules('tlpn', 'Telepon', 'required');
-        $validation->set_rules('email', 'Email', 'required');
-        $validation->set_rules('pic', 'Person In Charge', 'required');
+    {        
+        $this->form_validation->set_rules('id_supp', 'ID Supplier', 'required');
+        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check');        
+        $this->form_validation->set_rules('tlpn', 'Telepon', 'required');        
+        $this->form_validation->set_rules('pic', 'Person In Charge', 'required');
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');    	
     	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
-        if($validation->run() == FALSE)
-    	{
-            $maxId = number_format($this->Supplier_m->maxId()[0]->max);
+        if($this->form_validation->run() === FALSE)
+    	{            
+            // Mendapatkan ID Terbaru        
+            $id_supp = retrieveData('laboratorium/supplier/maxId');
+            
+            $maxId = $id_supp->data[0]->max;
             $nextId = ($maxId == null) ? 1 :  $maxId + 1;
+
             $data = ['nextId' => $nextId];
             $this->template->load('template','supplier/supplier_form_add', $data);
-		} else {			
-            $result = $this->Supplier_m->add();            
-            $this->session->set_flashdata('success', 'Perusahaan Berhasil ditambahkan');
-            redirect('supplier');                        
+		} else {			            
+            $post = $this->input->post();
+            $post["alamat"] = ($post["alamat"] == null) ? null : $post["alamat"];
+            $post["email"] = ($post["email"] == null) ? null : $post["email"];
+
+            $input_supplier = postData('laboratorium/supplier', $post);
+            if($input_supplier->responseCode == "00"){
+                $this->session->set_flashdata('success', 'Supplier Berhasil ditambahkan');
+                redirect('supplier');                        
+            }else{
+                $this->session->set_flashdata('failed', 'Supplier Gagal ditambahkan');
+                redirect('supplier/add');                        
+            }
     	}
     	
     }
@@ -54,37 +64,66 @@ class Supplier extends CI_Controller
 
     public function edit($id_supp)
     {
-        
-        $validation = $this->form_validation;    	
-        $validation->set_rules('id_supp', 'ID Perusahaan', 'required');
-        $validation->set_rules('nama_supp', 'Nama Perusahaan', 'required');
-        $validation->set_rules('alamat', 'Alamat', 'required');
-        $validation->set_rules('tlpn', 'Telepon', 'required');
-        $validation->set_rules('email', 'Email', 'required');
-        $validation->set_rules('pic', 'Person In Charge', 'required');
+                   	
+        $this->form_validation->set_rules('id_supp', 'ID Supplier', 'required');
+        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check');        
+        $this->form_validation->set_rules('tlpn', 'Telepon', 'required');        
+        $this->form_validation->set_rules('pic', 'Person In Charge', 'required');
     	
     	
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');    	
     	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
-        if($validation->run() == FALSE)
-    	{            
-            $supplier = $this->Supplier_m->get($id_supp)[0];            
+        if($this->form_validation->run() == FALSE)
+    	{                        
+            $getSupplier = retrieveData('laboratorium/supplier?id_supp='.$id_supp);
+            $supplier = $getSupplier->data[0];            
             $data['supplier'] = $supplier;
             $this->template->load('template','supplier/supplier_form_edit', $data);
-		} else {			
-            $result = $this->Supplier_m->edit();            
-            $this->session->set_flashdata('success', 'Perusahaan Berhasil diubah');
-            redirect('supplier');                        
+		} else {			            
+            $post = $this->input->post();
+            $post["alamat"] = ($post["alamat"] == null) ? null : $post["alamat"];
+            $post["email"] = ($post["email"] == null) ? null : $post["email"];
+            
+            $edit_supplier = updateData('laboratorium/supplier',$post);
+            
+            if($edit_supplier->responseCode == "00"){
+                $this->session->set_flashdata('success', 'Perusahaan Berhasil diubah');
+                redirect('supplier');                        
+            }else{
+                $this->session->set_flashdata('failed', 'Perusahaan Gagal diubah');
+                redirect('supplier/edit/'.$id_supp);                        
+            }
     	}
     	
     }
 
+    function namasupplier_check(){
+        $post = $this->input->post(null,TRUE);
+        $post["id_supp"] = ($post["id_supp"] == null) ? null : $post["id_supp"];
+        
+        $ambil_nama = postData('laboratorium/supplier/namasupp', $post);        
+        if($ambil_nama->responseCode == "200"){
+            $this->form_validation->set_message('namasupplier_check', '{field} ini sudah dipakai, silahkan ganti' );
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+
     public function delete($id_supp)
     {                
-        $result = $this->Supplier_m->delete($id_supp);                        
-        if($result->responseCode == "00"){
-            $this->session->set_flashdata('success', 'Proses berhasil dilakukan');
+        // $result = $this->Supplier_m->delete($id_supp); 
+        $post = $this->input->post(null, true);
+
+        $post['id_supp'] = $id_supp;
+        $delete_supllier = deleteData('laboratorium/supplier', $post);
+
+        if($delete_supllier->responseCode == "00"){
+            $this->session->set_flashdata('success', 'Supplier berhasil dihapus');
+            redirect('supplier');             
+        }else{
+            $this->session->set_flashdata('failed', 'Supplier gagal dihapus');
             redirect('supplier');             
         }
     }

@@ -20,10 +20,10 @@
         <h4 class="">Silahkan pilih</h4>
         <div class="section-button mt-4 row">
           <div class="col-lg-4">
-            <a href="<?= site_url('client/pilihan/pinjam') ?>" class="btn btn-primary btn-lg btn-block p-4">PINJAM ALAT</a>
+            <a href="<?= site_url('client/pilihan/pinjam') ?>" class="btn btn-primary btn-lg btn-block p-4 mb-2">PINJAM ALAT</a>
           </div>
           <div class="col-lg-4">
-            <a href="<?= site_url('client/pilihan/kembalikan') ?>" class="btn btn-primary btn-lg btn-block p-4">KEMBALIKAN ALAT</a>
+            <a href="<?= site_url('client/pilihan/kembalikan') ?>" class="btn btn-primary btn-lg btn-block p-4 mb-2">KEMBALIKAN ALAT</a>
           </div>
           <div class="col-lg-4">
             <a href="<?= site_url('client/daftar') ?>" class="btn btn-primary btn-lg btn-block p-4">DAFTARKAN KTM</a>

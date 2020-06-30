@@ -74,7 +74,7 @@
                                 >
                                   <i class="fas fa-user"></i>
                                 </a>
-                                <a href="<?= site_url('peminjaman/delete/'.$pinjambrg->kd_pjm)?>"  class="btn btn-danger">
+                                <a href="<?= site_url('peminjaman/delete/'.$pinjambrg->kd_pjm)?>" onclick="return confirm('Apakah anda ingin menghapus data ini ?')"  class="btn btn-danger">
                           <i class="fas fa-trash"></i>
                         </a>
                    </td>

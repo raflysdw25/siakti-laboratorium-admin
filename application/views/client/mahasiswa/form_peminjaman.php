@@ -23,11 +23,12 @@
 <section class="content">
     <div class="container-fluid">
         <!-- /.row -->
+        <p> <b>Peminjam</b> : <?= $peminjaman->mahasiswa_nim." - ".$peminjaman->nama_mhs?></p>
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mx-auto">
                     <div class="card-body">                
-                        <form action="" method="POST">
+                        <form action="" method="POST" autocomplete="off">
                             <input type="hidden" name="kd_pjm" value="<?= $peminjaman->kd_pjm ?>">
                             <input type="hidden" name="mahasiswa_nim" value="<?= $peminjaman->mahasiswa_nim ?>">
                             <div class="form-group">
@@ -37,7 +38,7 @@
                                         <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                                     </div>
                                     <select name="keperluan" class="custom-select" id="keperluan">
-                                        <option selected>Pilih...</option>
+                                        <option value="" selected>Pilih...</option>
                                         <option value="KBM">KBM</option>
                                         <option value="Acara Jurusan">Acara Jurusan</option>
                                         <option value="Acara Himpunan">Acara Himpunan</option>
@@ -52,7 +53,7 @@
                                         <span class="input-group-text"><i class="fas fa-chalkboard"></i></span>
                                     </div>
                                     <select name="ruangan_idruangan" class="custom-select" id="ruangan_idruangan">
-                                        <option selected>Pilih...</option>
+                                        <option value="" selected>Pilih...</option>
                                         <?php foreach($ruangan as $ruang):?>
                                             <option value="<?= $ruang->id_ruangan ?>"><?= $ruang->namaruang ?></option>
                                         <?php endforeach; ?>
@@ -67,7 +68,7 @@
                                         <span class="input-group-text"><i class="far fa-user"></i></span>
                                     </div>
                                     <select name="staff_penanggungjawab" class="custom-select" id="staff_penanggungjawab">
-                                        <option selected>Pilih...</option>
+                                        <option value="" selected>Pilih...</option>
                                         <?php foreach($staff as $dsn):?>
                                             <option value="<?= $dsn->nip ?>"><?= $dsn->nama ?></option>
                                         <?php endforeach; ?>

@@ -42,9 +42,9 @@
                                 </div>
                                 <div class="col-4">                                
                                     <div class="form-group">
-                                        <label for="status">Status</label>
-                                        <input type="text" name="status" id="status" class="form-control <?= ($barang->status == 'TERSEDIA') ? "bg-success" : "bg-danger" ?> " value="<?= $barang->status ?>" readonly>
-                                        <small class="<?= form_error('status') ? "form-text text-danger" : ''?>"><?= form_error('status')?></small>
+                                        <label for="kondisi">Kondisi Barang</label>
+                                        <input type="text" name="kondisi" id="kondisi" class="form-control <?= ($barang->kondisi == 'BAIK') ? "bg-success" : (($barang->kondisi == "HABIS")? "bg-warning" : "bg-danger")?> " value="<?= $barang->kondisi ?>" readonly>
+                                        <small class="<?= form_error('kondisi') ? "form-text text-danger" : ''?>"><?= form_error('kondisi')?></small>
                                     </div>
                                 </div>
                                 <div class="col-4">                                
@@ -61,13 +61,13 @@
                                 <small class="<?= form_error('nama_brg') ? "form-text text-danger" : ''?>"><?= form_error('nama_brg')?></small>
                             </div>
                             <div class="form-group">
-                                <label for="jenis">Jenis Barang</label>
-                                <select name="jenis" id="jenis" class="custom-select">                                    
-                                    <option value="Kabel" <?= ($barang->jenis == "Kabel")? "selected" : '' ?>>Kabel</option>
-                                    <option value="Proyektor" <?= ($barang->jenis == "Proyektor")? "selected" : '' ?>>Proyektor</option>
-                                    <option value="Laptop" <?= ($barang->jenis == "Laptop")? "selected" : '' ?>>Laptop</option>
+                                <label for="jenis_id_jenis">Jenis Barang</label>
+                                <select name="jenis_id_jenis" id="jenis_id_jenis" class="custom-select">                                    
+                                    <?php foreach($jenisbarang as $jenis): ?>
+                                        <option value="<?= $jenis->id_jenis ?>" <?= ($jenis->id_jenis == $barang->jenis_id_jenis) ? "selected" : '' ?>><?= $jenis->nama_jenis ?></option>
+                                    <?php endforeach;?>
                                 </select>
-                                <small class="<?= form_error('jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis')?></small>
+                                <small class="<?= form_error('jenis_id_jenis') ? "form-text text-danger" : ''?>"><?= form_error('jenis_id_jenis')?></small>
                             </div>
                             <div class="form-group">
                                 <label for="spesifikasi">Spesifikasi Barang</label>
@@ -105,15 +105,7 @@
                                     <option value="Hibah Pemerintah" <?= ($barang->asal_pengadaan == "Hibah Pemerintah")? "selected" : '' ?>>Hibah Pemerintah</option>
                                 </select>
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="jumlah">Jumlah Barang</label>
-                                <input type="number" name="jumlah" class="form-control" id="jumlah" value="<?= $barang->jumlah ?>" placeholder="Masukkan Jumlah Barang" min="0" >                                
-                            </div>
-                            <div class="form-group">
-                                <label for="satuan">Satuan Barang</label>
-                                <input type="text" name="satuan" class="form-control" id="satuan" value="<?= $barang->satuan ?>" placeholder="Masukkan Satuan Barang" >                             
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label for="supplier_id_supp">Supplier</label>
                                 <select class="custom-select" name="supplier_id_supp" id="supplier_id_supp">

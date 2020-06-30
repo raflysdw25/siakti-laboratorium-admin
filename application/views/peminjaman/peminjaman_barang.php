@@ -5,9 +5,8 @@
           <tr>
               <th>Kode</th>
               <th>Nama Barang</th>
-              <th>Jenis Barang</th>
-              <th>Jumlah yang dipinjam</th>              
-              <th>Status Barang</th>
+              <th>Jenis Barang</th>                           
+              <th>Kondisi Barang</th>
           </tr>
       </thead>    
       <tbody>
@@ -16,10 +15,9 @@
             <tr>
               <td><?= $brg->barang_kode_brg ?></td>
               <td><?= $brg->nama_brg ?></td>
-              <td><?= $brg->jenis ?></td>
-              <td><?= $brg->jumlah?></td>              
+              <td><?= $brg->nama_jenis ?></td>                            
               <td>
-                <span class="badge <?= ($brg->status == "TERSEDIA") ? "badge-success" : "badge-danger"?>"><?= $brg->status ?></span>
+              <span class="badge <?= ($brg->kondisi == 'BAIK') ? "badge-success" : (($brg->kondisi == "HABIS")? "badge-warning" : "badge-danger")?>"><?= $brg->kondisi?></span>
               </td>
             </tr>
         <?php endforeach; ?>

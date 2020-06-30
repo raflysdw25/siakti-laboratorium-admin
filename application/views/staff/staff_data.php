@@ -1,81 +1,96 @@
-<section class="content-header">
-    <h1>Staff
-        <small>Karyawan TIK</small>
-    </h1>
-    <ol class="breakcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Staff</li>
-    </ol>
-</section>
-
-<!-- <Main content> -->
-    <section class="content">
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Data Staff</h3>
-                <div class="pull-right">
-                    <a href="<?=site_url('staff/add')?>" class="btn btn-primary btn-flat">
-                        <i class="fa fa-user-plus"></i>Create
-                    </a>
-                </div>
-            </div>
-            <div class="box-body table-responsive">
-                <?php print_r($row->result()) ?>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>NIP</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Kecamatan</th>
-                            <th>Kelurahan</th>
-                            <th>Kota</th>
-                            <th>Telepon</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>ID Prodi</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($row->result() as $key => $data) { ?>
-                            # code...
-                        <tr>
-                            <td><?$no++?></td>
-                            <td><?=$data->nip?></td>
-                            <td><?=$data->nama?></td>
-                            <td><?=$data->alamat?></td>
-                            <td><?=$data->kec_staff?></td>
-                            <td><?=$data->kel_staff?></td>
-                            <td><?=$data->kota_staff?></td>
-                            <td><?=$data->tlp_staff?></td>
-                            <td><?=$data->email_staff?></td>
-                            <td><?=$data->usr_name?></td>
-                            <td><?=$data->password?></td>
-                            <td><?=$data->prodi_prodi_id?></td>
-                            <td class="text-center" width="60px">
-                                 <form action="<?=site_url('staff/del')?>" method="post">
-                                <a href="<?=site_url('staff/edit/' .$data->nip)?>" class="btn btn-primary btn-xs">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                               
-                                    <input type="hidden" name="nip" value="<?$data->nip?>">
-                                    <button onclick="return confirm('Apakah Anda Yakin Menghapus?')" 
-                                    class="btn btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php
-                    } ?>
-                    </tbody>
-                </table>
-                
+<!-- Content Header (Page header) -->
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark font-weight-bold">Daftar Staff Laboratorium</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Laboratorium</a></li>
+              <li class="breadcrumb-item active">Data Staff</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-12">
+              <a href="<?= site_url('staff/add')?>" class="btn btn-primary">
+                <i class="fas fa-plus"></i>  Tambah Data
+              </a>
             </div>
         </div>
+        <div class="mt-2">
+          <?php $this->view('alert'); ?>
+        </div>        
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body table-responsive">
+                <table class="table text-nowrap datatable">
+                  <thead>
+                    <tr>                      
+                      <th>NIP</th>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>Telepon</th>
+                      <th>Email</th>
+                      <th>Program Studi</th>
+                      <th>Hak Akses</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                    foreach($staffs as $staff):?>
+                    <tr>                        
+                        <td><?= $staff->nip ?></td>
+                        <td><?= $staff->nama ?></td>
+                        <td><?= $staff->alamat.", ".$staff->kel_staff.", ".$staff->kec_staff.", ".$staff->kota_staff ?></td>
+                        <td><?= $staff->tlp_staff ?></td>
+                        <td><?= $staff->email_staff ?></td>
+                        <td><?= $staff->nama_prodi ?></td>
+                        <td>
+                            <?php 
+                                if($staff->password == null){
+                                    echo '<span class="badge badge-danger">Dont get Access yet</span>';
+                                }else{
+                                    echo '<span class="badge badge-success">Get Access</span>';
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php if($staff->password == null): ?>      
+                                <a href="#" class="btn btn-primary">
+                                    <i class="fas fa-user-lock"></i>
+                                </a>
+                            <?php endif;?>
+                            <a href="#" class="btn btn-info">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>                        
+                    </tr>                                                          
+                  <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
         
+      </div><!-- /.container-fluid -->
     </section>
+    <!-- /.content -->
+

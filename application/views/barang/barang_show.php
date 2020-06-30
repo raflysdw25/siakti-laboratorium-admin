@@ -4,20 +4,16 @@
         <table class="table text-nowrap table-bordered">
             <tr>
                 <th>Jenis Barang</th>
-                <td><?= $barang->jenis ?></td>
+                <td><?= $barang->nama_jenis ?></td>
             </tr>            
             <tr>
-                <th>Status Barang</th>
-                <td><span class="badge <?= ($barang->status == "TERSEDIA") ? "badge-success": "badge-danger" ?>"><?= $barang->status ?></span></td>
+                <th>Kondisi Barang</th>
+                <td><span class="badge <?= ($barang->kondisi == 'BAIK') ? "badge-success" : (($barang->kondisi == "HABIS")? "badge-warning" : "badge-danger")?>"><?= $barang->kondisi?></span></td>
             </tr>
             <tr>
                 <th>Tahun Pengadaan</th>
                 <td><?= $barang->thn_pengadaan ?></td>
-            </tr>            
-            <tr>
-                <th>Jumlah</th>
-                <td><?= ($barang->jumlah == 0)? 0 : $barang->jumlah." ".$barang->satuan ?></td>
-            </tr>            
+            </tr>                                    
             <tr>
                 <th>Asal Pengadaan</th>
                 <td><?= $barang->asal_pengadaan ?></td>

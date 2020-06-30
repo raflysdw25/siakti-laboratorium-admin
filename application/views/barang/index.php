@@ -38,9 +38,10 @@
                   <thead>
                     <tr>
                       <th>Kode Barang</th>
+                      <th>Barcode</th>
                       <th>Nama Barang</th>
-                      <th>Supplier</th>
-                      <th>Status</th>
+                      <th>Asal Pengadaan</th>
+                      <th>Kondisi</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -48,31 +49,44 @@
                   <?php foreach($barang as $brg):?>
                     <tr>
                       <td><?= $brg->kode_brg ?></td>
+                      <td><?= $brg->barcode ?></td>
                       <td><?= $brg->nama_brg ?></td>
-                      <td><?= ($brg->nama_supp == null) ? 'None' : $brg->nama_supp ?></td>
-                      <td><span class="badge <?= ($brg->status == 'TERSEDIA') ? "badge-success" : "badge-danger"?>"><?= $brg->status?></span></td>
+                      <td><?= $brg->asal_pengadaan ?></td>
+                      <td><span class="badge <?= ($brg->kondisi == 'BAIK') ? "badge-success" : (($brg->kondisi == "HABIS")? "badge-warning" : "badge-danger")?>"><?= $brg->kondisi?></span></td>
                       <td>
-                        <a href="#mymodal" 
-                            class="btn btn-info" 
-                            data-toggle="modal" 
-                            data-remote="<?= site_url('barang/showBarang/'.$brg->kode_brg)?>"
-                            data-target="#mymodal"
-                            data-title="Detail Barang <?= $brg->kode_brg?>">
-                            <i class="fas fa-eye"></i>
-                        </a>                        
-                        <a href="<?= site_url('barang/edit/'.$brg->kode_brg)?>" class="btn btn-primary">
-                          <i class="fas fa-pencil-alt"></i>
-                        </a>
-                        <a href="<?= site_url('barang/delete/'.$brg->kode_brg)?>" onclick="confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                        <button id="btn-rusak" 
-                          class="btn btn-warning" data-toggle="modal"
-                          data-remote="<?= site_url('barang/barangRusak/'.$brg->kode_brg)?>"
-                          data-target="#mymodal"
-                          data-title="Jumlah Barang Rusak" >
-                            <span class="fas fa-unlink"></span>                            
-                        </button>                        
+                        <form action="<?= site_url('barang/ubahkondisi/'.$brg->kode_brg) ?>" method="post" class="mt-2">
+                          <a href="#mymodal" 
+                              class="btn btn-info" 
+                              data-toggle="modal" 
+                              data-remote="<?= site_url('barang/showBarang/'.$brg->kode_brg)?>"
+                              data-target="#mymodal"
+                              data-title="Detail Barang <?= $brg->kode_brg?>"
+                              data-toggle="tooltip" data-placement="top" title="Lihat Detail Barang">
+                              <i class="fas fa-eye"></i>
+                          </a>                        
+                          <a href="<?= site_url('barang/edit/'.$brg->kode_brg)?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Barang">
+                            <i class="fas fa-pencil-alt"></i>
+                          </a>
+                          <a href="<?= site_url('barang/delete/'.$brg->kode_brg)?>" onclick="return confirm('Apakah anda ingin menghapus data ini ?')" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus Barang">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                          <?php if($brg->kondisi == "BAIK" && $brg->asal_pengadaan !== "Barang Habis Pakai"): ?>                                                  
+                            <input type="hidden" name="kondisi" value="RUSAK">
+                            <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Ubah Kondisi Rusak">
+                              <i class="fas fa-times-circle"></i>
+                            </button>
+                          <?php elseif($brg->kondisi == "RUSAK" && $brg->asal_pengadaan !== "Barang Habis Pakai"): ?>
+                            <input type="hidden" name="kondisi" value="BAIK">
+                            <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Ubah Kondisi Baik">
+                              <i class="fas fa-check-circle"></i>
+                            </button>
+                          <?php elseif($brg->kondisi !== "HABIS" && $brg->asal_pengadaan == "Barang Habis Pakai" ):?>
+                            <input type="hidden" name="kondisi" value="HABIS">
+                            <button type="submit" class="btn btn-warning" data-toggle="tooltip" data-placement="right" title="Ubah Kondisi Habis">
+                              <i class="far fa-circle"></i>
+                            </button>
+                          <?php endif;?>
+                        </form>
                       </td>                        
                     </tr>                                                          
                   <?php endforeach; ?>
