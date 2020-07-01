@@ -21,6 +21,7 @@
     <div class="container-fluid">
     <!-- /.row -->
     <form action="" method="POST">
+    <?php $this->view('alert') ?>
         <div class="row">
             <div class="col">
                 <div class="card card-primary">

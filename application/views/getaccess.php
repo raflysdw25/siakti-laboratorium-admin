@@ -20,20 +20,20 @@
             <img src="<?= base_url() ?>assets/dist/img/BannerTIK.png" alt="Politeknik Negeri Jakarta Logo" class="img-fluid">
         </div>
         <div class="login-box-body">              
-            <p class="login-box-msg">Sign in to start your session</p>            
+            <p class="login-box-msg">Buat Akses Staff</p>            
             <?php $this->load->view('alert')?>  
-            <form action="<?=site_url('auth/process')?>" method="POST">
+            <form action="" method="POST">
                 <div class="form-group has-feedback">
-                    <input type="text" name="usr_name" class="form-control" placeholder="Username" required autofocus>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <input type="text" name="nip" class="form-control" placeholder="Masukkan NIP anda" required autofocus>
+                    <small class="<?= form_error('nip') ? "form-text text-danger" : ''?>"><?= form_error('nip')?></small> 
                 </div>
                  <div class="form-group has-feedback">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <input type="password" name="password" class="form-control" placeholder="Masukkan password yang anda inginkan" required>
+                    <small class="<?= form_error('password') ? "form-text text-danger" : ''?>"><?= form_error('password')?></small> 
                 </div>
                 <div class="form-group">
-                    <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    <a href="<?= site_url('auth/getaccess') ?>" class="btn text-muted mt-2 text-center btn-block">Buat Akses Login</a>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Simpan</button>
+                    <a href="<?= site_url('auth') ?>" class="btn text-muted mt-2 text-center btn-block">Batalkan</a>
                 </div>            
             </form>
         </div>

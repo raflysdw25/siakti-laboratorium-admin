@@ -55,7 +55,7 @@
               <i class="fas fa-cogs"></i> Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?= site_url('auth/logout') ?>">
+            <a class="dropdown-item" href="<?= site_url('auth/logout') ?>" onclick="return confirm('Apakah anda ingin keluar ?')">
               <i class="fas fa-sign-out-alt"></i>  Logout
             </a>
         </div>
@@ -98,62 +98,66 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
-                  <i class="fas fa-chart-pie nav-icon"></i>
-                  <p>Reports</p>
-                </a>
-              </li>              
-              <li class="nav-item has-treeview <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == 'jenisbarang')  ? ' menu-open active' : '' ?>">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-boxes"></i>
-                  <p>
-                    Barang
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == '')  ? ' active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Data Barang</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?= site_url('jenisbarang')?>" class="nav-link <?=($this->uri->segment(1) == 'jenisbarang') ? ' active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Jenis Barang</p>
-                    </a>
-                  </li>                  
-                </ul>
-              </li>              
-              <li class="nav-item">
-                <a href="<?= site_url('peminjaman')?>" class="nav-link <?=($this->uri->segment(1) == 'peminjaman')  ? ' active' : '' ?>">
-                  <i class="fas fa-shopping-basket nav-icon"></i>
-                  <p>Peminjaman Barang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= site_url('supplier')?>" class="nav-link <?=($this->uri->segment(1) == 'supplier')  ? ' active' : '' ?>">
-                  <i class="fas fa-truck nav-icon"></i>
-                  <p>Supplier Barang</p>
-                </a>
-              </li>
-              <?php
-                $currentDate = date('Y-m-d');
-                if($this->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium"):
-                  if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)):                
-              ?> 
-                  <li class="nav-item">
-                    <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'supplier')  ? ' active' : '' ?>">
-                      <i class="fas fa-user nav-icon"></i>
-                      <p>User</p>
-                    </a>
-                  </li>
-                  <?php endif; ?>              
-                <?php endif; ?>              
-            </ul>
+              <ul class="nav nav-treeview">
+            <?php $currentDate = date('Y-m-d');
+              if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): 
+                if(strpos($this->session->userdata('admin_logged')->jabatan,'Laboratorium')):?>
+                <li class="nav-item">
+                  <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
+                    <i class="fas fa-chart-pie nav-icon"></i>
+                    <p>Reports</p>
+                  </a>
+                </li>              
+                <li class="nav-item has-treeview <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == 'jenisbarang')  ? ' menu-open active' : '' ?>">
+                  <a href="#" class="nav-link <?=($this->uri->segment(1) == 'barang') || ($this->uri->segment(1) == 'jenisbarang')  ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-boxes"></i>
+                    <p>
+                      Barang
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?= site_url('barang')?>" class="nav-link <?=($this->uri->segment(1) == 'barang')  ? ' active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Data Barang</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= site_url('jenisbarang')?>" class="nav-link <?=($this->uri->segment(1) == 'jenisbarang') ? ' active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Jenis Barang</p>
+                      </a>
+                    </li>                  
+                  </ul>
+                </li>              
+                <li class="nav-item">
+                  <a href="<?= site_url('peminjaman')?>" class="nav-link <?=($this->uri->segment(1) == 'peminjaman')  ? ' active' : '' ?>">
+                    <i class="fas fa-shopping-basket nav-icon"></i>
+                    <p>Peminjaman Barang</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?= site_url('supplier')?>" class="nav-link <?=($this->uri->segment(1) == 'supplier')  ? ' active' : '' ?>">
+                    <i class="fas fa-truck nav-icon"></i>
+                    <p>Supplier Barang</p>
+                  </a>
+                </li>
+              <?php endif; ?> 
+            <?php endif; ?> 
+            <?php
+              $currentDate = date('Y-m-d H:i:s');
+              if($this->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium" || $this->session->userdata('admin_logged')->jabatan == "ADMIN" ):
+                if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): ?> 
+                    <li class="nav-item">
+                      <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'staff')  ? ' active' : '' ?>">
+                        <i class="fas fa-user nav-icon"></i>
+                        <p>User</p>
+                      </a>
+                    </li>
+              <?php endif; ?>              
+            <?php endif; ?>              
+              </ul>
           </li>
         </ul>
       </nav>

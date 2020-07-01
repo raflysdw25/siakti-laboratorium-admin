@@ -1,135 +1,92 @@
-<section class="content-header">
-    <h1>Staff
-        <small>Karyawan TIK</small>
-    </h1>
-    <ol class="breakcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Staff</li>
-    </ol>
-</section>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark font-weight-bold">Edit Staff Laboratorium</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Laboratorium</a></li>
+              <li class="breadcrumb-item active">Edit Staff</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-<!-- <Main content> -->
+    <!-- Main content -->
     <section class="content">
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Edit Staff</h3>
-                <div class="pull-right">
-                    <a href="<?=site_url('staff/add')?>" class="btn btn-warning btn-flat">
-                        <i class="fa fa-undo"></i>Back
-                    </a>
-                </div>
+      <div class="container">
+        <!-- /.row -->
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h5 class="font-weight-bold">Data Diri Staff</h5>
             </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4">
-                        <?php // echo validation_errors(); ?>
-                        <form action="" method="post">
-                            <div class="form-group" <?=form_eror('nip')? 'has-eror' : null?>">
-                                <label>NIP</label>
-                                <input type="text" name="NIP" 
-                                value="<?=$this->input->post('nip')?>" class="form-control">
-                                <?=form_eror('nip')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('nama')? 'has-eror' : null?>">
-                                <label>Nama</label>
-                                <input type="text" name="Nama" 
-                                value="<?=$this->input->post('nama')?>" class="form-control">
-                                <?=form_eror('nama')?>
-                            </div>
-                             <div class="form-group">
-                                <label>Alamat</label>
-                                <textarea name="Alamat" 
-                                value="<?=$this->input->post('alamat')?>" class="form-control">
-                                </textarea>
-                            </div>
-                            <div class="form-group" <?=form_eror('kec_staff')? 'has-eror' : null?>">
-                                <label>Kecamatan</label>
-                                <input type="text" name="Kecamatan" 
-                                value="<?=$this->input->post('kec_staff')?>" class="form-control">
-                                <?=form_eror('kec_staff')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('kel_staff')? 'has-eror' : null?>">
-                                <label>Kelurahan</label>
-                                <input type="text" name="Kelurahan" 
-                                value="<?=$this->input->post('kel_staff')?>" class="form-control">
-                                <?=form_eror('kel_staff')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('kota_staff')? 'has-eror' : null?>">
-                                <label>Kota</label>
-                                <input type="text" name="Kota" 
-                                value="<?=$this->input->post('kota_staff')?>" class="form-control">
-                                <?=form_eror('kota_staff')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('tlp_staff')? 'has-eror' : null?>">
-                                <label>Telepon</label>
-                                <input type="number" name="Telepon" 
-                                value="<?=$this->input->post('tlp_staff')?>" class="form-control">
-                                <?=form_eror('tlp_staff')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('email_staff')? 'has-eror' : null?>">
-                                <label>Email</label>
-                                <input type="text" name="Email" 
-                                value="<?=$this->input->post('email_staff')?>" class="form-control">
-                                <?=form_eror('email_staff')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('usr_name')? 'has-eror' : null?>">
-                                <label>Usename</label>
-                                <input type="text" name="Username" 
-                                value="<?=$this->input->post('usr_name')?>" class="form-control">
-                                <?=form_eror('usr_name')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('password')? 'has-eror' : null?>">
-                                <label>Password * <small>(Biarkan kosong jika tidak ingin diganti)</small>
-                                <input type="password" name="password" 
-                                value="<?=$this->input->post('password')?>" class="form-control">
-                                 <?=form_eror('password')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('prodi_prodi_id')? 'has-eror' : null?>">
-                                <label>ID Prodi</label>
-                               <input type="text" name="ID Prodi" 
-                                value="<?=$this->input->post('prodi_prodi_id')?>" class="form-control">
-                                <?=form_eror('prodi_prodi_id')?>
-                            </div>
-
-
-
-
-
-                            <div class="form-group" <?=form_eror('nama_user')? 'has-eror' : null?>">
-                                <label>Nama</label>
-                                <input type="hidden" name="user_id" value="<?=$row->user_id?"> class="form-control">
-                                <input type="text" name="nama_user" value="<?=$this->input->post('nama_user') ?? $row->name?>" class="form-control">
-                                <?=form_eror('nama_user')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('username')? 'has-eror' : null?>">
-                                <label>Usename</label>
-                                <input type="text" name="username" value="<?=$this->input->post('username') ?? $row->username?>" class="form-control">
-                                <?=form_eror('username')?>
-                            </div>
-                             <div class="form-group" <?=form_eror('password')? 'has-eror' : null?>">
-                                <label>Password</label> <small>(Biarkan kosong jika tidak ingin diganti)</small>
-                                <input type="password" name="password" 
-                                value="<?=$this->input->post('password')?>" class="form-control">
-                                 <?=form_eror('password')?>
-                            </div>
-                            <div class="form-group" <?=form_eror('passconf')? 'has-eror' : null?>">
-                                <label>Password Confirmation</label>
-                                <input type="password" name="passconf" 
-                                value="<?=$this->input->post('passconf')?>" class="form-control">
-                                 <?=form_eror('passconf')?>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-succes btn-flat">
-                                    <i class="fa fa-paper-plane"></i>Save</button>
-                                <button type="reset" class="btn btn-flat">Reset</button>
-                            </div>
-                        </form>
+            <div class="card-body">
+                <p class="text-danger">* Wajib diisi</p>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="nip">Nomor Induk Pegawai <span class="text-danger">*</span></label>
+                        <input type="number" name="nip" id="nip" class="form-control" value="<?= $staff->nip ?>" readonly>
+                        <input type="hidden" name="usr_name" id="usr_name" class="form-control" value="<?= $staff->usr_name ?>">
+                        <input type="hidden" name="password" id="password" class="form-control" value="<?= $staff->password ?>">
+                        <small class="<?= form_error('nip') ? "form-text text-danger" : ''?>"><?= form_error('nip')?></small>
                     </div>
-                </div>
-                
-                
+                    <div class="form-group">
+                        <label for="nama">Nama Staff <span class="text-danger">*</span></label>
+                        <input type="text" name="nama" id="nama" class="form-control" value="<?= $staff->nama ?>" >
+                        <small class="<?= form_error('nama') ? "form-text text-danger" : ''?>"><?= form_error('nama')?></small>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="alamat">Alamat Staff <span class="text-danger">*</span></label>
+                                <input type="text" name="alamat" id="alamat" class="form-control" value="<?= $staff->alamat ?>" >
+                                <small class="<?= form_error('alamat') ? "form-text text-danger" : ''?>"><?= form_error('alamat')?></small>                    
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="kec_staff">Kecamatan Staff</label>
+                                <input type="text" name="kec_staff" id="kec_staff" class="form-control" value="<?= $staff->kec_staff ?>" >                                                    
+                            </div>
+                            <div class="col-lg-6 mt-2">
+                                <label for="kel_staff">Kelurahan Staff</label>
+                                <input type="text" name="kel_staff" id="kel_staff" class="form-control" value="<?= $staff->kel_staff ?>">                                                    
+                            </div>
+                            <div class="col-lg-6 mt-2">
+                                <label for="kota_staff">Kota Staff</label>
+                                <input type="text" name="kota_staff" id="kota_staff" class="form-control" value="<?= $staff->kota_staff ?>">                                                    
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tlp_staff">Telepon Staff <span class="text-danger">*</span></label>
+                        <input type="tel" name="tlp_staff" id="tlp_staff" class="form-control" value="<?= $staff->tlp_staff ?>" >
+                        <small class="<?= form_error('tlp_staff') ? "form-text text-danger" : ''?>"><?= form_error('tlp_staff')?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email_staff">Email Staff <span class="text-danger">*</span></label>
+                        <input type="email" name="email_staff" id="email_staff" class="form-control" value="<?= $staff->email_staff ?>" >
+                        <small class="<?= form_error('email_staff') ? "form-text text-danger" : ''?>"><?= form_error('email_staff')?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="prodi_prodi_id">Program Studi </label>
+                        <select name="prodi_prodi_id" id="prodi_prodi_id" class="custom-select">
+                            <option value="" selected>Pilih Program Studi</option>
+                            <?php foreach($prodi as $prd): ?>
+                                <option value="<?= $prd->prodi_id ?>" <?= ($staff->prodi_prodi_id == $prd->prodi_id) ? ' selected' : '' ?>><?= $prd->namaprod ?></option>
+                            <?php endforeach;?>
+                        </select>                        
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
+                        <a href="<?= site_url('staff') ?>" class="btn btn-danger btn-lg">Batal</a>
+                    </div>
+                </form>
             </div>
         </div>
-        
-    </section>
+      </div><!-- /.container-fluid -->
+    </section>   

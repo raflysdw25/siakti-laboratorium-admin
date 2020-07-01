@@ -25,12 +25,13 @@ class Supplier extends CI_Controller
     public function add()
     {        
         $this->form_validation->set_rules('id_supp', 'ID Supplier', 'required');
-        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check');        
+        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check|max_length[25]');        
         $this->form_validation->set_rules('tlpn', 'Telepon', 'required');        
         $this->form_validation->set_rules('pic', 'Person In Charge', 'required');
     	
     	
-        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');    	
+        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
+        $this->form_validation->set_message('max_length', '{field} tidak boleh lebih dari {param} kata');    	
     	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
         if($this->form_validation->run() === FALSE)
@@ -48,7 +49,7 @@ class Supplier extends CI_Controller
             $post["alamat"] = ($post["alamat"] == null) ? null : $post["alamat"];
             $post["email"] = ($post["email"] == null) ? null : $post["email"];
 
-            $input_supplier = postData('laboratorium/supplier', $post);
+            $input_supplier = postData('laboratorium/supplier', $post);            
             if($input_supplier->responseCode == "00"){
                 $this->session->set_flashdata('success', 'Supplier Berhasil ditambahkan');
                 redirect('supplier');                        

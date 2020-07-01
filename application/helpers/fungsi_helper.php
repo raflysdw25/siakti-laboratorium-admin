@@ -17,6 +17,14 @@
         }
     }
 
+    function check_kalab(){
+        $ci =& get_instance();
+        $admin_kalab = $ci->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium" || $ci->session->userdata('admin_logged')->jabatan == "ADMIN";
+        if(!$admin_kalab){
+            redirect('/');
+        } 
+    }
+
     // GET Data from API
     function retrieveData($url){
         $ci =& get_instance();

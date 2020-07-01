@@ -139,7 +139,7 @@
             </div>
             <!-- /.card -->
         </div>
-        <div class="col-lg-8 col-md-6">
+        <!-- <div class="col-lg-8 col-md-6">
             <div class="card">
                 <div class="card-header bg-primary">
                     <h3 class="card-title font-weight-bold">
@@ -156,25 +156,25 @@
                         </thead>
                         <tbody>
                         <?php
-                        if($details): 
-                            foreach($details as $detail): ?>                                         
+                        //if($details): 
+                            //foreach($details as $detail): ?>                                         
                             <tr>
-                                <td><?= $detail->nama_brg ?></td>
-                                <td><?= $detail->jumlah_brg ?></td>
+                                <td><?//= $detail->nama_brg ?></td>
+                                <td><?//= $detail->jumlah_brg ?></td>
                             </tr>
-                        <?php endforeach; 
-                        else:?>
+                        <?php //endforeach; 
+                        //else:?>
                             <tr class="text-center">
                                 <td colspan="2">Belum ada peminjaman</td>
                             </tr>
-                        <?php endif;?>
+                        <?php //endif;?>
                         </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
-        </div>
+        </div> -->
     </div>
     
     </div><!-- /.container-fluid -->

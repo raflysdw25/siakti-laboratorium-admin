@@ -41,8 +41,7 @@
                       <th>Nama</th>
                       <th>Alamat</th>
                       <th>Telepon</th>
-                      <th>Email</th>
-                      <th>Program Studi</th>
+                      <th>Email</th>                      
                       <th>Hak Akses</th>
                       <th>Action</th>
                     </tr>
@@ -53,29 +52,30 @@
                     <tr>                        
                         <td><?= $staff->nip ?></td>
                         <td><?= $staff->nama ?></td>
-                        <td><?= $staff->alamat.", ".$staff->kel_staff.", ".$staff->kec_staff.", ".$staff->kota_staff ?></td>
+                        <td><?= ($staff->kota_staff == null) ? $staff->alamat : $staff->alamat.", ".$staff->kota_staff ?></td>
                         <td><?= $staff->tlp_staff ?></td>
-                        <td><?= $staff->email_staff ?></td>
-                        <td><?= $staff->nama_prodi ?></td>
+                        <td><?= $staff->email_staff ?></td>                        
                         <td>
-                            <?php 
-                                if($staff->password == null){
-                                    echo '<span class="badge badge-danger">Dont get Access yet</span>';
+                            <?php
+                                $currentDate = date('Y-m-d H:i:s');
+                                $access_valid = ($currentDate >= $staff->tgl_mulai && $currentDate <= $staff->tgl_selesai); 
+                                if($staff->id_jabdsn == null || $access_valid == false){
+                                    echo '<span class="badge badge-danger">Dont have Access yet</span>';
                                 }else{
-                                    echo '<span class="badge badge-success">Get Access</span>';
+                                    echo '<span class="badge badge-success">Have Access</span>';
                                 }
                             ?>
                         </td>
                         <td>
-                            <?php if($staff->password == null): ?>      
-                                <a href="#" class="btn btn-primary">
+                            <?php if($staff->id_jabdsn == null || $access_valid == false ): ?>      
+                                <a href="<?= site_url('staff/makeAccess/'.$staff->nip)?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Buat Hak Akses Staff">
                                     <i class="fas fa-user-lock"></i>
                                 </a>
-                            <?php endif;?>
-                            <a href="#" class="btn btn-info">
+                            <?php endif;?>                            
+                            <a href="<?= site_url('staff/edit/'.$staff->nip) ?>" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Ubah Data Staff">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="#" class="btn btn-danger">
+                            <a href="<?= site_url('staff/delete/'.$staff->nip) ?>" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus Data Staff" onclick="return confirm('Apakah anda ingin menghapus data ini?')">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>                        
