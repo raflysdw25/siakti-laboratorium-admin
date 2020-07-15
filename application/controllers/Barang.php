@@ -34,9 +34,7 @@ class Barang extends CI_Controller
     public function add()
     {        
     	$this->form_validation->set_rules('kode_brg', 'Kode Barang', 'required');
-        $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');
-        $this->form_validation->set_rules('jenis_id_jenis', 'Jenis Barang', 'required');
-        $this->form_validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');                
+        $this->form_validation->set_rules('nama_brg', 'Nama Barang', 'required');                        
         $this->form_validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
         $this->form_validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');
         $this->form_validation->set_rules('kondisi', 'Kondisi Barang', 'required');        
@@ -75,11 +73,11 @@ class Barang extends CI_Controller
                 $namabrg_acronym = "";
                 
                 foreach ($words as $w) {
-                    $namabrg_acronym .= $w[0];
+                    $namabrg_acronym .= ucwords($w[0]);
                 }
             
                 $post["barcode"] = $post['kode_brg']."".$namabrg_acronym."".substr($post['thn_pengadaan'],2,3);
-                            
+                $post["status"] = "TERSEDIA";
                 $input_barang = postData('laboratorium/barang', $post);
                 
                 $post["kode_brg"]++;
@@ -95,10 +93,9 @@ class Barang extends CI_Controller
     public function edit($kode_brg)
     {                
     	$this->form_validation->set_rules('kode_brg', 'Kode Barang', 'required');
-        $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');
-        $this->form_validation->set_rules('jenis_id_jenis', 'Jenis Barang', 'required');
+        $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');        
         $this->form_validation->set_rules('kondisi', 'Kondisi Barang', 'required');
-        $this->form_validation->set_rules('spesifikasi', 'Spesifikasi Barang', 'required');        
+        $this->form_validation->set_rules('status', 'Status Barang', 'required');        
         $this->form_validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');
         $this->form_validation->set_rules('asal_pengadaan', 'Asal Pengadaan', 'required');        
     	
@@ -126,8 +123,23 @@ class Barang extends CI_Controller
     		$this->template->load('template', 'barang/barang_edit', $data);
 		} else {
             $post = $this->input->post();
-            $post["supplier_id_supp"] = ($post["supplier_id_supp"] == null) ? null : $post["supplier_id_supp"];                        
-                        			            
+            $post["supplier_id_supp"] = ($post["supplier_id_supp"] == null) ? null : $post["supplier_id_supp"];
+            
+            if($post["barcode"] == null){
+                // Buat Barcode            
+                $nama_brg = $post['nama_brg'];                        
+    
+                $words = explode(" ", $nama_brg);
+                $namabrg_acronym = "";
+                
+                foreach ($words as $w) {
+                    $namabrg_acronym .= ucwords($w[0]);
+                }
+            
+                $post["barcode"] = $post['kode_brg']."".$namabrg_acronym."".substr($post['thn_pengadaan'],2,3);
+            }
+             
+            
             $put_barang = updateData('laboratorium/barang', $post);
             if($put_barang->responseCode == "00"){
                 $this->session->set_flashdata('success', 'Data Barang Berhasil diubah');
@@ -144,8 +156,16 @@ class Barang extends CI_Controller
     {
         $post = $this->input->post();
         $post["kode_brg"] = $kode_brg;
-        $updateKondisi = updateData('laboratorium/barang/updatekondisi', $post);
-        if($updateKondisi->responseCode == "00"){
+        $kondisi = $post["kondisi"];
+
+        if($kondisi == "BAIK"){
+            $post["status"] = "TERSEDIA";            
+        }else{
+            $post["status"] = "TIDAK TERSEDIA";
+        }
+        
+        $updateStatus = updateData('laboratorium/barang/updateStatus', $post);        
+        if($updateStatus->responseCode == "00"){
             $this->session->set_flashdata('success', 'Kondisi berhasil diubah');
             redirect('barang');
         }

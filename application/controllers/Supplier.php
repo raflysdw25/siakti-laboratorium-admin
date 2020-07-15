@@ -23,8 +23,7 @@ class Supplier extends CI_Controller
     }
 
     public function add()
-    {        
-        $this->form_validation->set_rules('id_supp', 'ID Supplier', 'required');
+    {                
         $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check|max_length[25]');        
         $this->form_validation->set_rules('tlpn', 'Telepon', 'required');        
         $this->form_validation->set_rules('pic', 'Person In Charge', 'required');
@@ -35,21 +34,14 @@ class Supplier extends CI_Controller
     	$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
         if($this->form_validation->run() === FALSE)
-    	{            
-            // Mendapatkan ID Terbaru        
-            $id_supp = retrieveData('laboratorium/supplier/maxId');
-            
-            $maxId = $id_supp->data[0]->max;
-            $nextId = ($maxId == null) ? 1 :  $maxId + 1;
-
-            $data = ['nextId' => $nextId];
-            $this->template->load('template','supplier/supplier_form_add', $data);
+    	{                        
+            $this->template->load('template','supplier/supplier_form_add');
 		} else {			            
             $post = $this->input->post();
             $post["alamat"] = ($post["alamat"] == null) ? null : $post["alamat"];
             $post["email"] = ($post["email"] == null) ? null : $post["email"];
 
-            $input_supplier = postData('laboratorium/supplier', $post);            
+            $input_supplier = postData('laboratorium/supplier', $post);
             if($input_supplier->responseCode == "00"){
                 $this->session->set_flashdata('success', 'Supplier Berhasil ditambahkan');
                 redirect('supplier');                        

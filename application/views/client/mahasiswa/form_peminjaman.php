@@ -27,12 +27,13 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mx-auto">
-                    <div class="card-body">                
+                    <div class="card-body">
+                        <span class="text-danger">* Wajib Diisi</span>                
                         <form action="" method="POST" autocomplete="off">
                             <input type="hidden" name="kd_pjm" value="<?= $peminjaman->kd_pjm ?>">
                             <input type="hidden" name="mahasiswa_nim" value="<?= $peminjaman->mahasiswa_nim ?>">
                             <div class="form-group">
-                                <label for="keperluan">Keperluan</label>
+                                <label for="keperluan">Keperluan</label> <span class="text-danger">*</span>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-clipboard"></i></span>
@@ -42,6 +43,9 @@
                                         <option value="KBM">KBM</option>
                                         <option value="Acara Jurusan">Acara Jurusan</option>
                                         <option value="Acara Himpunan">Acara Himpunan</option>
+                                        <option value="Skripsi">Skripsi</option>
+                                        <option value="PKL">PKL</option>
+                                        <option value="Operasional">Operasional</option>
                                     </select>
                                 </div>
                                 <small class="<?= form_error('keperluan') ? "form-text text-danger" : ''?>"><?= form_error('keperluan')?></small>
@@ -59,10 +63,11 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                <small class="text-muted">Jika peminjaman lebih dari satu hari, tidak perlu memilih ruangan</small>
                                 <small class="<?= form_error('ruangan_idruangan') ? "form-text text-danger" : ''?>"><?= form_error('ruangan_idruangan')?></small>
                             </div>
                             <div class="form-group">
-                                <label for="staff_penanggungjawab">Dosen</label>
+                                <label for="staff_penanggungjawab">Dosen</label> <span class="text-danger">*</span>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-user"></i></span>
@@ -79,7 +84,7 @@
                             
                             <div class="bootstrap-timepicker">
                                 <div class="form-group">
-                                    <label>Waktu Pengembalian</label>
+                                    <label>Waktu Pengembalian</label> <span class="text-danger">*</span>
                                     <div class="input-group date" id="timepicker" data-target-input="nearest">                                                                
                                         <input type="text" class="form-control datetimepicker-input" name="tgl_blk" data-target="#timepicker" data-toggle="datetimepicker"/>
                                     </div>
@@ -88,8 +93,8 @@
                                 <!-- /.form group -->
                             </div>                                                    
                             <div class="form-group mt-2">
-                                <button type="submit" name="confirm" id="confirm" class="btn btn-primary btn-lg">Konfirmasi</button>                        
-                                <a href="<?= site_url('client/cancel/'.$peminjaman->kd_pjm) ?>" class="btn btn-danger btn-lg">Batal</a>
+                                <button type="submit" name="confirm" id="confirm" class="btn btn-primary btn-lg" onclick="return confirm('Apakah anda yakin ingin melanjutkan peminjaman ini?')">Konfirmasi</button>                        
+                                <a href="<?= site_url('client/cancel/'.$peminjaman->kd_pjm) ?>" onclick="return confirm('Apakah anda yakin ingin membatalkan peminjaman ini?')" class="btn btn-danger btn-lg">Batal</a>
                             </div>
 
                         </form>
@@ -102,6 +107,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
+                        <span class="text-danger">* Wajib memilih barang</span>
                         <?php $this->view('client/barang_dipinjam') ?>
                     </div>
                 </div>

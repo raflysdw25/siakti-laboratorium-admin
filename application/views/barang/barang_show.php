@@ -4,7 +4,7 @@
         <table class="table text-nowrap table-bordered">
             <tr>
                 <th>Jenis Barang</th>
-                <td><?= $barang->nama_jenis ?></td>
+                <td><?= ($barang->nama_jenis == null) ? "Jenis Barang Belum ditentukan" : $barang->nama_jenis ?></td>
             </tr>            
             <tr>
                 <th>Kondisi Barang</th>
@@ -31,11 +31,15 @@
             <tr>
                 <th>Barcode</th>                
                 <td>
+                    <?php if($barang->kondisi != "HABIS"): ?>
                     <img src="<?= 'data:image/png;base64,'.base64_encode($generator->getBarcode($barang->barcode, $generator::TYPE_CODE_128))?>" alt="<?= "Barcode Barang ".$barang->barcode?>" title="<?= "Barcode Barang ".$barang->barcode?> ">
                     <p><?= $barang->barcode?></p>                    
                     <a href="<?= site_url('barang/barcode_print/'.$barang->kode_brg) ?>" class="btn btn-default btn-sm" target="_blank">
                         <i class="fas fa-print"></i> Print Barcode
-                    </a>                    
+                    </a>
+                    <?php else: ?>
+                        Tidak dapat melihat barcode
+                    <?php endif;?>                    
                 </td>
             </tr>
         </table>

@@ -19,7 +19,7 @@
 
     function check_kalab(){
         $ci =& get_instance();
-        $admin_kalab = $ci->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium" || $ci->session->userdata('admin_logged')->jabatan == "ADMIN";
+        $admin_kalab = $ci->session->userdata('admin_logged')->jabatan == "PLP" || $ci->session->userdata('admin_logged')->jabatan == "ADMIN";
         if(!$admin_kalab){
             redirect('/');
         } 

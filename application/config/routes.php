@@ -66,6 +66,8 @@ $route['client/stripe-card/(:any)'] = 'client/Client/stripeCard/$1';
 $route['client/panduan'] = 'client/Client/panduan';
 $route['client/pilihan/(:any)'] = 'client/Client/pilihPeminjam/$1';
 $route['client/daftar'] = 'client/Client/daftar';
+$route['client/success'] = 'client/Client/success_confirm';
+$route['client/confirm-return'] = 'client/Client/confirm_return';
 
 // Client Side : Mahasiswa
 $route['client/card_data/(:any)'] = 'client/Client/card_data/$1';
@@ -74,7 +76,7 @@ $route['client/cancel/(:any)'] = 'client/Client/cancelPeminjamanMahasiswa/$1';
 $route['client/detail/(:any)'] = 'client/Client/detail_barang_pinjam/$1';
 $route['client/pinjam-barang/(:any)'] = 'client/Client/createPeminjamanMahasiswa/$1';
 $route['client/kembalikan-data/(:any)'] = 'client/Client/kembalikan_data/$1';
-$route['client/kembalikan-barang/(:any)'] = 'client/Client/updatePengembalian/$1';
+$route['client/kembalikan-barang/(:any)/(:any)'] = 'client/Client/updatePengembalian/$1/$2';
 $route['client/delete-detail'] = 'client/Client/deleteDetail';
 $route['client/tambah-barang'] = 'client/Client/tambahBarang';
 

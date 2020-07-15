@@ -33,7 +33,7 @@
         <!-- /.row -->
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card mx-auto">
               <div class="card-body table-responsive">
                 <table class="table text-nowrap datatable">
                   <thead>

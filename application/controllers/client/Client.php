@@ -10,7 +10,7 @@ class Client extends CI_Controller
         parent::__construct();        
         // $this->load->model(['Mahasiswa_m', 'Peminjaman_m', 'Barang_m', 'PeminjamanDetail_m', 'Ruangan_m', 'Staff_m']);
         $this->load->library('form_validation');
-        check_not_login();
+        // check_not_login();
         date_default_timezone_set("Asia/Jakarta");
     }
 
@@ -78,7 +78,7 @@ class Client extends CI_Controller
         }
 
 
-        $content = $this->input->post('no_ktm');
+        $content = $this->input->post      ('no_ktm');
         if ($content[0] == '%') {
             $start = "%B";
             $end = "^";
@@ -115,105 +115,32 @@ class Client extends CI_Controller
         }          
     }
 
-    // Menampilkan Barang yang dikembalikan
-    public function kembalikan_data($no_ktm)
-    {
-        // $result = $this->Mahasiswa_m->kartuMahasiswa_get($no_ktm);
-        $getMahasiswa = retrieveData('mahasiswa/kartuMahasiswa?no_ktm='.$no_ktm);
-        
-        $mahasiswa = $getMahasiswa->data[0];
-
-        //GET data Peminjam (Mahasiswa)
-        $retrieve_peminjam  = $this->customguzzle->getPlain('laboratorium/peminjaman/pinjammahasiswa?mahasiswa_nim='.$mahasiswa->nim,'application/json');
-
-        // GET Data Peminjaman
-        $getPeminjam = retrieveData('laboratorium/peminjaman/pinjammahasiswa?mahasiswa_nim='.$mahasiswa->nim);                    
-        $terakhir_pinjam = end($getPeminjam->data);
-        
-        // GET Detail Peminjaman                
-        $detailBarang = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$terakhir_pinjam->kd_pjm);        
-
-        $data = ['mahasiswa' => $mahasiswa, 'pinjambrg' => $terakhir_pinjam, 'detailBarang' => $detailBarang->data];
-
-        $this->template->load('template_client', 'client/mahasiswa/kembalikan_data', $data);
-
-    }
+    
 
     // Membuat row peminjaman berdasarkan nim dan kode_peminjaman
     public function createPeminjamanMahasiswa($mahasiswa_nim)
-    {
-        // Mendapatkan ID Terbaru
-        $kd_pjm = retrieveData('laboratorium/peminjaman/maxId');        
-        $maxId = $kd_pjm->data[0]->max;
-        $nextId = ($maxId == null) ? 1 :  $maxId + 1;        
+    {               
         
         $check_peminjam = retrieveData('laboratorium/peminjaman/pinjammahasiswa?mahasiswa_nim='.$mahasiswa_nim);        
+        // var_dump($check_peminjam); exit;
         $last_mahasiswa_meminjam = end($check_peminjam->data);
-        
-        if($last_mahasiswa_meminjam->status == "SUCCESS"){
-            $this->session->set_flashdata('failed', 'Mahasiswa sudah melakukan peminjaman');
+        // var_dump($last_mahasiswa_meminjam); exit;
+        if($last_mahasiswa_meminjam->status == "SUCCESS" || $last_mahasiswa_meminjam->status == "NEED APPROVAL" ){
+            $this->session->set_flashdata('failed', 'Mahasiswa sedang melakukan peminjaman');
             redirect('client'); 
         }else{            
             $post = $this->input->post();
-            $post["mahasiswa_nim"] = $mahasiswa_nim;
-            $post["kd_pjm"] = $nextId;
+            $post["mahasiswa_nim"] = $mahasiswa_nim;            
            
             $newPeminjaman = postData('laboratorium/peminjaman', $post);         
+            $getPeminjaman = $newPeminjaman->data;
+            $kd_pjm = $getPeminjaman->kd_pjm;
+
             if($newPeminjaman->responseCode == "00"){
-                redirect(site_url('client/form-mahasiswa/'.$nextId));
-            }
-        }
-
-    }
-
-    // Prose Pengembalian Barang
-    public function updatePengembalian($kd_pjm)
-    {
-        $post = $this->input->post(null,true);
-        
-        $getPeminjaman = retrieveData('laboratorium/peminjaman?kd_pjm='.$kd_pjm);
-        $peminjaman = $getPeminjaman->data[0];
-        if($peminjaman->status == "SUCCESS" ){                                    
-            $post['tgl_blk_real'] = date('Y-m-d H:i:s');
-            $post["kd_pjm"]  = $kd_pjm;
-                        
-            $updatePengembalian = updateData('laboratorium/peminjaman/updateKembali', $post);
-            if($updatePengembalian->responseCode == "00"){
-                $this->session->set_flashdata('success', 'Pengembalian Berhasil dilakukan');
-                redirect('client');            
-            }
-        }else{
-            $this->session->set_flashdata('failed', 'Tidak Ada Peminjaman');
-            redirect('client');
-        }
-    }
-
-
-    // Melakukan pembatalan peminjaman
-    public function cancelPeminjamanMahasiswa($kd_pjm){
-        $post = $this->input->post(null,true);
-        $post["kd_pjm"] = $kd_pjm;
-        $post["pinjambrg_kd_pjm"] = $kd_pjm;        
-        $getDetails = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
-        $details = $getDetails->data;
-        
-        if($details == null){                         
-            $deletePeminajaman = deleteData('laboratorium/peminjaman', $post);
-            if($deletePeminajaman->responseCode == "00" ){
-                $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
-                redirect('client');
-            }else{
-                $this->session->set_flashdata('failed', 'Peminjaman gagal dibatalkan');
                 redirect(site_url('client/form-mahasiswa/'.$kd_pjm));
             }
-        }else{                        
-            $deleteDetail = deleteData('laboratorium/peminjamandetail', $post);
-            if($deleteDetail->responseCode == "00"){                
-                $deletePeminjaman = deleteData('laboratorium/peminjaman',$post);            
-                $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
-                redirect('client');
-            }            
-        }        
+        }
+
     }
 
     // Proses peminjaman Mahasiswa
@@ -221,8 +148,7 @@ class Client extends CI_Controller
     {                
         $this->form_validation->set_rules('kd_pjm', 'Kode Peminjaman', 'required');
         $this->form_validation->set_rules('staff_penanggungjawab', 'Penanggung Jawab', 'required');
-        $this->form_validation->set_rules('tgl_blk', 'Waktu Pengembalian', 'required');
-        $this->form_validation->set_rules('ruangan_idruangan', 'Ruangan', 'required');
+        $this->form_validation->set_rules('tgl_blk', 'Waktu Pengembalian', 'required');        
         $this->form_validation->set_rules('keperluan', 'Keperluan', 'required');        
         $this->form_validation->set_rules('mahasiswa_nim', 'Mahasiswa', 'required');
         
@@ -254,6 +180,14 @@ class Client extends CI_Controller
             $post = $this->input->post();
             $post['tgl_pjm'] = date('Y-m-d H:i:s');
             $post['tgl_blk'] = date_format(date_create($post['tgl_blk']), 'Y-m-d H:i:s');
+            // Menentukan Status Peminjaman, jika lebih dari 6 jam, maka perlu approval
+            $difference = abs(strtotime($post["tgl_blk"]) - strtotime($post["tgl_pjm"]))/3600;
+            
+            if($difference > 6){
+                $post["status"] = "NEED APPROVAL";                
+            }else{
+                $post["status"] = "SUCCESS";
+            }
             
             // Cek apakah sudah pinjam alat atau belum                        
             $detailPeminjaman = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$post["kd_pjm"]);
@@ -264,48 +198,203 @@ class Client extends CI_Controller
                 redirect('client/form-mahasiswa/'.$post["kd_pjm"]);
             }else{
                 // Update Data Pinjam Barang                
-                $$post["staff_nip"] = ($post["staff_nip"] == "") ? null : $post["staff_nip"];                
+                $post["staff_nip"] = ($post["staff_nip"] == null) ? null : $post["staff_nip"];                
                 $updatePeminjaman = updateData('laboratorium/peminjaman', $post);
                 
                 if($updatePeminjaman->responseCode == "00"){
-                    $this->session->set_flashdata('success', 'Peminjaman Berhasil dilakukan');
-                    redirect('client');
+                    if($post["status"] == "NEED APPROVAL"){
+                        $this->session->set_flashdata('approval', 'Diharapkan untuk menghubungi laboratorium, untuk mendapatkan persetujuan');
+                        redirect('client/success');
+                    }else{
+                        $this->session->set_flashdata('confirm', 'Diharapkan untuk mengembalikan barang tepat pada waktunya');
+                        redirect('client/success');
+                    }
                 }
             }
         }       
 
     }
+    // --END PEMINJAMAN MAHASISWA
+
+    // PENGEMBALIAN PEMINJAMAN
+
+    // Menampilkan Barang yang dikembalikan
+    public function kembalikan_data($no_ktm)
+    {
+        // $result = $this->Mahasiswa_m->kartuMahasiswa_get($no_ktm);
+        $getMahasiswa = retrieveData('mahasiswa/kartuMahasiswa?no_ktm='.$no_ktm);
+        
+        $mahasiswa = $getMahasiswa->data[0];
+        
+        // GET Data Peminjaman
+        $getPeminjam = retrieveData('laboratorium/peminjaman/pinjammahasiswa?mahasiswa_nim='.$mahasiswa->nim);                    
+        $peminjaman = $getPeminjam->data;        
+        
+        $numItems = count($peminjaman);
+        $i = 0;
+        foreach(array_reverse($peminjaman) as $key => $pinjambrg){
+            if($pinjambrg->status == "FINISH" || $pinjambrg->status == "NEED APPROVAL"){
+                if(++$i === $numItems){
+                    // var_dump($key); exit;
+                    $this->session->set_flashdata('failed', 'Tidak ada peminjaman mahasiswa yang harus dikembalikan');
+                    redirect('client');
+                }
+                continue;
+            }else{
+                               
+                $data = ['mahasiswa' => $mahasiswa, 'pinjambrg' => $pinjambrg];
+                $this->template->load('template_client', 'client/mahasiswa/kembalikan_data', $data);
+
+            }
+            
+        }
+
+        // if($terakhir_pinjam->status == "FINISH" || $terakhir_pinjam->status == "NEED APPROVAL"){
+            
+        // }else{
+            
+        // }        
+
+    }
+
+    // Verifikasi apakah barang yang discan di barcode sesuai dengan data barang yang dipinjam
+    public function confirm_return()
+    {
+        $post = $this->input->post();
+
+        // Ambil barang berdasarkan barcode yang di scan
+        $barcode = $post["barcode"];        
+        $getBarang = retrieveData('laboratorium/barang/barcodeBarang?barcode='.$barcode);
+        $barang = $getBarang->data[0];
+
+        // Ambil peminjaman detail berdasarkan id_detail
+        $id_detail = $post["id_detail"];
+        $getDetail = retrieveData('laboratorium/peminjamandetail/detailGet?id_detail='.$id_detail);
+        $detail = $getDetail->data[0];
+
+        if($barang->kode_brg == $detail->barang_kode_brg){
+            $post["kode_brg"] = $barang->kode_brg;
+            $post["status"] = "TERSEDIA";
+            $post["kondisi"] = $barang->kondisi;
+    
+            $putBarang = updateData('laboratorium/barang/updateStatus', $post);
+    
+            if($putBarang->responseCode == "00"){
+                echo json_encode($putBarang);
+            }
+        }else{
+            return false;
+        }
+    }
+
+    // Prose Pengembalian Barang
+    public function updatePengembalian($kd_pjm, $id)
+    {
+        $post = $this->input->post(null,true);
+
+        $getPeminjaman = retrieveData('laboratorium/peminjaman?kd_pjm='.$kd_pjm);
+        $peminjaman = $getPeminjaman->data[0];
+                
+
+        if($peminjaman->status == "SUCCESS" || $peminjaman->status == "APPROVE"){
+            // Cek Apakah barang sudah diverifikasi
+            $getDetail = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
+            $details = $getDetail->data;
+            foreach($details as $detail){
+                $getBarang = retrieveData('laboratorium/barang?kode_brg='.$detail->barang_kode_brg);
+                $barang = $getBarang->data[0];                
+
+                if($barang->asal_pengadaan == "Barang Habis Pakai"){
+                    $post["kode_brg"] = $barang->kode_brg;
+                    $post["status"] = "TIDAK TERSEDIA";
+                    $post["kondisi"] = "HABIS";
+                    $putBarang = updateData('laboratorium/barang/updatestatus', $post);                                    
+                }elseif($barang->status == "DIGUNAKAN"){
+                    $this->session->set_flashdata('failed', 'Terdapat barang yang belum diverifikasi');
+                    if($peminjaman->no_ktm == $id){
+                        redirect('client/kembalikan-data/'.$id);
+                    }else{
+                        redirect('client/return-data/'.$id);
+                    }
+                }
+            }                                    
+            $post['tgl_blk_real'] = date('Y-m-d H:i:s');
+            $post["kd_pjm"]  = $kd_pjm;
+                        
+            $updatePengembalian = updateData('laboratorium/peminjaman/updateKembali', $post);
+            if($updatePengembalian->responseCode == "00"){
+                $this->session->set_flashdata('success', 'Pengembalian Berhasil dilakukan');
+                redirect('client');            
+            }
+        }else{
+            $this->session->set_flashdata('failed', 'Tidak Dapat Mengembalikan Alat');
+            redirect('client');
+        }
+    }
 
 
+    // Melakukan pembatalan peminjaman
+    public function cancelPeminjamanMahasiswa($kd_pjm){
+        $post = $this->input->post(null,true);
+        $post["kd_pjm"] = $kd_pjm;
+        $post["pinjambrg_kd_pjm"] = $kd_pjm;        
+        $getDetails = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
+        $details = $getDetails->data;
+        
+        if($details == null){                         
+            $deletePeminajaman = deleteData('laboratorium/peminjaman', $post);
+            if($deletePeminajaman->responseCode == "00" ){
+                $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
+                redirect('client');
+            }else{
+                $this->session->set_flashdata('failed', 'Peminjaman gagal dibatalkan');
+                redirect(site_url('client/form-mahasiswa/'.$kd_pjm));
+            }
+        }else{
+            foreach($details as $detail){
+                // Mengubah Status Barang jadi Tersedia
+                $post["kode_brg"] = $detail->barang_kode_brg;
+                $post["status"] = "TERSEDIA";
+                $putBarang = updateData('laboratorium/barang/updatestatus',$post);
+            }
+            
+            $deleteDetail = deleteData('laboratorium/peminjamandetail', $post);
+            if($deleteDetail->responseCode == "00"){                
+                $deletePeminjaman = deleteData('laboratorium/peminjaman',$post);            
+                $this->session->set_flashdata('failed', 'Peminjaman batal dilakukan');
+                redirect('client');
+            }            
+        }        
+    }
+
+    
     // PEMINJAMAN DOSEN
     public function nipInput($page){
         $validation = $this->form_validation;
-        $this->form_validation->set_rules('nip', 'No Kartu', 'required');
+        $this->form_validation->set_rules('nip', 'Nomor Induk Pegawai', 'required');
         $nip = $this->input->post('nip');
         
         if($this->form_validation->run() == FALSE){  
             $data["page"] = $page;
             $this->template->load('template_client', 'client/staff/nip_input', $data);
 		} else {
-            if($page == "pinjam"){
-                // Mendapatkan ID Terbaru
-                $kd_pjm = retrieveData('laboratorium/peminjaman/maxId');        
-                $maxId = $kd_pjm->data[0]->max;
-                $nextId = ($maxId == null) ? 1 :  $maxId + 1;  
+            if($page == "pinjam"){                 
 
                 $check_peminjam = retrieveData('laboratorium/peminjaman/pinjamstaff?staff_nip='.$nip);        
                 $last_meminjam = end($check_peminjam->data);
-                if($last_meminjam->status == "SUCCESS"){
+                
+                if($last_meminjam->status == "SUCCESS" || $last_meminjam->status == "NEED APPROVAL"){
                     $this->session->set_flashdata('failed', 'Staff sudah melakukan peminjaman');
                     redirect('client'); 
                 }else{                    
                     $post = $this->input->post();
-                    $post["staff_nip"] = $nip;
-                    $post["kd_pjm"] = $nextId;
+                    $post["staff_nip"] = $nip;                    
                 
-                    $newPeminjaman = postData('laboratorium/peminjaman', $post);         
+                    $newPeminjaman = postData('laboratorium/peminjaman', $post); 
                     if($newPeminjaman->responseCode == "00"){
-                        redirect(site_url('client/form-staff/'.$nextId));
+                        $getPeminjaman = $newPeminjaman->data;
+                        $kd_pjm = $getPeminjaman->kd_pjm;        
+                        redirect(site_url('client/form-staff/'.$kd_pjm));
                     }
                 }                            
             }else{
@@ -319,10 +408,9 @@ class Client extends CI_Controller
     {
         date_default_timezone_set("Asia/Jakarta");        
         $this->form_validation->set_rules('kd_pjm', 'Kode Peminjaman', 'required');
-        $this->form_validation->set_rules('staff_nip', 'Kode Peminjaman', 'required');
-        $this->form_validation->set_rules('keperluan', 'Kode Peminjaman', 'required');
-        $this->form_validation->set_rules('tgl_blk', 'Kode Peminjaman', 'required');
-        $this->form_validation->set_rules('ruangan_idruangan', 'Kode Peminjaman', 'required');
+        $this->form_validation->set_rules('staff_nip', 'NIP Staff tidak ada', 'required');
+        $this->form_validation->set_rules('keperluan', 'Keperluan', 'required');
+        $this->form_validation->set_rules('tgl_blk', 'Tanggal Kembali', 'required');        
 
 
         $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
@@ -349,9 +437,7 @@ class Client extends CI_Controller
             }
         }else{
             $post = $this->input->post();
-            $post['tgl_pjm'] = date('Y-m-d H:i:s');
-            $post['tgl_blk'] = date_format(date_create($post['tgl_blk']), 'Y-m-d H:i:s');
-                        
+                       
             // Cek apakah sudah pinjam alat atau belum                        
             $detailPeminjaman = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$post["kd_pjm"]);
             $detailPeminjaman = $detailPeminjaman->data;
@@ -360,56 +446,92 @@ class Client extends CI_Controller
                 redirect('client/form-staff/'.$post["kd_pjm"]);
             }else{
                 // Update Data Pinjam Barang
-                $post["staff_penanggungjawab"] = ($post["staff_penanggungjawab"] == "") ? null : $post["staff_penanggungjawab"];
-                $post["mahasiswa_nim"] = ($post["mahasiswa_nim"] == "") ? null : $post["mahasiswa_nim"];
+                // $post["staff_penanggungjawab"] = ($post["staff_penanggungjawab"] == "") ? null : $post["staff_penanggungjawab"];
+                // $post["mahasiswa_nim"] = ($post["mahasiswa_nim"] == "") ? null : $post["mahasiswa_nim"];
+
+                $post['tgl_pjm'] = date('Y-m-d H:i:s');
+                $post['tgl_blk'] = date_format(date_create($post['tgl_blk']), 'Y-m-d H:i:s');
+                $difference = abs(strtotime($post["tgl_blk"]) - strtotime($post["tgl_pjm"]))/3600;
+                
+                if($difference > 6){
+                    $post["status"] = "NEED APPROVAL";
+                }else{
+                    $post["status"] = "SUCCESS";
+                }
+
                 $updatePeminjaman = updateData('laboratorium/peminjaman', $post);
                 
                 if($updatePeminjaman->responseCode == "00"){
-                    $this->session->set_flashdata('success', 'Peminjaman Berhasil dilakukan');
-                    redirect('client');
+                    if($post["status"] == "NEED APPROVAL"){
+                        $this->session->set_flashdata('approval', 'Diharapkan untuk menghubungi laboratorium, untuk mendapatkan persetujuan');
+                        redirect('client/success');
+                    }else{
+                        $this->session->set_flashdata('confirm', 'Diharapkan untuk mengembalikan barang tepat pada waktunya');
+                        redirect('client/success');
+                    }
                 }
             }
         }
     }
     
+    // Pengembalian Staff
     public function return_data($nip)
     {                        
-        $getPeminjam = retrieveData('laboratorium/peminjaman/pinjamstaff?staff_nip='.$nip);                         
-        
-        $terakhir_pinjam = end($getPeminjam->data);
-        
-        $getDetail = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$terakhir_pinjam->kd_pjm);
-        $detailBarang = $getDetail->data;
-        $data = ['pinjambrg' => $terakhir_pinjam, 'detailBarang' => $detailBarang];
+        $getPeminjam = retrieveData('laboratorium/peminjaman/pinjamStaff?staff_nip='.$nip);                         
+        $peminjaman = $getPeminjam->data;   
+        // $key = array_keys($peminjaman); 
+        // $last_key = end($key);
+        $numItems = count($peminjaman);
+        $i = 0;
+        // var_dump($key); exit;
+        foreach(array_reverse($peminjaman) as $key => $pinjambrg){
+            if($pinjambrg->status == "FINISH" || $pinjambrg->status == "NEED APPROVAL"){
+                if(++$i === $numItems){
+                    // var_dump($key); exit;
+                    $this->session->set_flashdata('failed', 'Tidak ada peminjaman staff yang harus dikembalikan');
+                    redirect('client');
+                }
+                continue;
+            }else{                
+                $data = ['pinjambrg' => $pinjambrg];
+                $this->template->load('template_client', 'client/staff/return_data', $data);
 
-        $this->template->load('template_client', 'client/staff/return_data', $data);
+            }
+            
+        }
+        
     }
+
+    // --END PEMINJAMAN DOSEN
+
+    // --END PENGEMBALIAN
+
+    // AJAX PROSES
 
     // Penambahan Detail Barang yang dipinjam untuk proses ajax
     public function tambahBarang()
     {
-        $post = $this->input->post(null,true);
-
-        
-        // Mendapatkan ID Terbaru
-        $id_detail = retrieveData('laboratorium/peminjamandetail/maxId');        
-        $maxId = $id_detail->data[0]->max;
-        $nextId = ($maxId == null) ? 1 :  $maxId + 1;
-        $post["id_detail"] = $nextId;
-                                
-
+        $post = $this->input->post(null,true);        
+                        
         $barcode = $post["barcode"];        
         $getBarang = retrieveData('laboratorium/barang/barcodeBarang?barcode='.$barcode);
         $barang = $getBarang->data[0];        
-        $post["barang_kode_brg"] = $barang->kode_brg;
-        
 
-        // Tambah Detail Peminjaman Barang        
-        $pinjambrg_detail = postData('laboratorium/peminjamandetail',$post);        
-                        
-
-        if($pinjambrg_detail->responseCode == "00"){
-            echo json_encode($pinjambrg_detail); 
+        if($barang->status == "TERSEDIA"){
+            // Ubah Status Barang jadi DIGUNAKAN
+            $post["kode_brg"] = $barang->kode_brg;
+            $post["status"] = "DIGUNAKAN";
+            $post["kondisi"] = $barang->kondisi;
+            $putBarang = updateData('laboratorium/barang/updateStatus', $post);            
+    
+            // Tambah Detail Peminjaman Barang        
+            $post["barang_kode_brg"] = $barang->kode_brg;
+            $pinjambrg_detail = postData('laboratorium/peminjamandetail',$post);        
+                            
+    
+            if($pinjambrg_detail->responseCode == "00" && $putBarang->responseCode == "00"){
+                echo json_encode($pinjambrg_detail); 
+            }            
         }
 
     }
@@ -425,10 +547,31 @@ class Client extends CI_Controller
     // Delete detail barang yang dipinjam untuk proses Ajax
     public function deleteDetail()
     {
-        $post = $this->input->post(null, true);        
-                      
-        $deleteDetail = deleteData('laboratorium/peminjamandetail/deleteDetail', $post);
-        echo json_encode($deleteDetail);
+        $post = $this->input->post(null, true);
+        
+
+        // Ubah Status Barang jadi TERSEDIA
+        $getDetail = retrieveData('laboratorium/peminjamandetail/detailGet?id_detail='.$post["id_detail"]);
+        $detail = $getDetail->data[0];
+        
+        $post["kode_brg"] = $detail->barang_kode_brg;
+        $post["status"] = "TERSEDIA";
+        $putBarang = updateData('laboratorium/barang/updatestatus', $post);
+        
+        
+        if($putBarang->responseCode == "00"){
+            $deleteDetail = deleteData('laboratorium/peminjamandetail/deleteDetail', $post);
+            echo json_encode($deleteDetail);
+        }
             
+    }
+
+    // -- END AJAX PROSES
+
+    // CONFIRM PAGE
+
+    // Sukses Peminjaman
+    public function success_confirm(){
+        $this->template->load('template_client', 'client/success_confirm');
     }
 }

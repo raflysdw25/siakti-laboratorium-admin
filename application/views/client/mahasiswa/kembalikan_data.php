@@ -37,7 +37,7 @@
                     <table class="table table-borderless">
                         <tr>
                             <th>Ruangan</th>
-                            <td><?= $pinjambrg->namaruang ?></td>
+                            <td><?= ($pinjambrg->namaruang == null) ? "Tidak memakai ruangan" : $pinjambrg->namaruang ?></td>
                         </tr>
                         <tr>
                             <th>Dosen</th>
@@ -52,31 +52,9 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <table class="table mt-4">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>No</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th>Jenis Barang</th>
-                                    <th>Kondisi Barang</th>                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $no = 1;
-                                foreach($detailBarang as $detail): ?>
-                                <tr>
-                                    <td><?= $no++?></td>
-                                    <td><?= $detail->barang_kode_brg?></td>
-                                    <td><?= $detail->nama_brg?></td>
-                                    <td><?= $detail->nama_jenis?></td>
-                                    <td><?= $detail->kondisi?></td>                                    
-                                </tr>                                
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                        <?php $this->view('client/barang_dikembalikan') ?>
 
-                        <a href="<?= site_url('client/kembalikan-barang/'.$pinjambrg->kd_pjm) ?>" class="mt-2 btn btn-primary btn-lg ml-auto">Kembalikan Alat</a>
+                        <a href="<?= site_url('client/kembalikan-barang/'.$pinjambrg->kd_pjm.'/'.$mahasiswa->no_ktm) ?>" class="mt-2 btn btn-primary btn-lg ml-auto" onclick="return confirm('Apakah anda yakin ingin melanjutkan proses ini?')">Kembalikan Alat</a>
                     </div>
                 </div>  
             </div>
@@ -84,3 +62,5 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    

@@ -36,13 +36,14 @@ class Auth extends CI_Controller
 			}else{
 				$currentDate = date('Y-m-d H:i:s');
 				$getAdmin = postData('staff/access', $post);
-				$admin = $getAdmin->data;				
+				$admin = $getAdmin->data;							
 				$admin_valid = ($currentDate >= $admin->tgl_mulai && $currentDate <= $admin->tgl_selesai);
 				if ($getAdmin->responseCode == "200") { //benar							
-					if($admin_valid == false || (strpos($admin->jabatan,'Laboratorium') == false)){
+					if($admin_valid == false || $admin->jabatan == null){
 						$this->session->set_flashdata("failed", "Tidak memiliki hak akses");
 						redirect(site_url('auth'));
 					}else{
+						
 						$this->session->set_userdata(['admin_logged' => $admin]);
 						redirect(site_url('/'));
 					}	
@@ -64,13 +65,13 @@ class Auth extends CI_Controller
 			$post = $this->input->post();
 
 			// Cek apakah Staff sudah mendapatkan akses
-			$checkStaff = retrieveData('jabatandosen?staff_nip='.$post["nip"]);			
+			$checkStaff = retrieveData('laboratorium/jabatanlab?staff_nip='.$post["nip"]);			
 			
 			if($checkStaff->responseCode == "200"){
 				$post["password"] = password_hash($post["password"], PASSWORD_DEFAULT);
 				$updateAccount = updateData('staff/updateAccount', $post);
 				if($updateAccount->responseCode == "00"){
-					$this->session->set_flashdata("success", "Password berhasil diubah");
+					$this->session->set_flashdata("success", "Password berhasil dibuat");
 					redirect(site_url('auth'));
 				}
 			}else{

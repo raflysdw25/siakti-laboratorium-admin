@@ -34,11 +34,7 @@
                     <!-- form start -->
                     <div class="card-body">
                         <p class="text-danger mb-2">* Wajib diisi</p>
-                        <div class="form-group">
-                            <label for="id_supp">ID Supplier <span class="text-danger">*</span></label>                            
-                            <input type="text" name="id_supp" class="form-control" id="id_supp" value="<?= $nextId ?>" readonly>
-                            <small class="<?= form_error('id_supp') ? "form-text text-danger" : ''?>"><?= form_error('id_supp')?></small>
-                        </div>
+                        
                         <div class="form-group">
                             <label for="nama_supp">Nama Supplier <span class="text-danger">*</span></label>
                             <input type="text" name="nama_supp" class="form-control" id="nama_supp" placeholder="Masukkan  Nama Perusahaan">

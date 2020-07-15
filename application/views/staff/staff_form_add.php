@@ -45,16 +45,17 @@
                                 <small class="<?= form_error('alamat') ? "form-text text-danger" : ''?>"><?= form_error('alamat')?></small>                    
                             </div>
                             <div class="col-lg-6">
+                                <label for="kota_staff">Kota Staff <span class="text-danger">*</span> </label>
+                                <input type="text" name="kota_staff" id="kota_staff" class="form-control" > 
+                                <small class="<?= form_error('kota_staff') ? "form-text text-danger" : ''?>"><?= form_error('kota_staff')?></small>                                                    
+                            </div>
+                            <div class="col-lg-6 mt-2">
                                 <label for="kec_staff">Kecamatan Staff</label>
                                 <input type="text" name="kec_staff" id="kec_staff" class="form-control" >                                                    
                             </div>
                             <div class="col-lg-6 mt-2">
                                 <label for="kel_staff">Kelurahan Staff</label>
                                 <input type="text" name="kel_staff" id="kel_staff" class="form-control" >                                                    
-                            </div>
-                            <div class="col-lg-6 mt-2">
-                                <label for="kota_staff">Kota Staff</label>
-                                <input type="text" name="kota_staff" id="kota_staff" class="form-control" >                                                    
                             </div>
                             
                         </div>

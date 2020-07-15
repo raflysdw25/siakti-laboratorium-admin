@@ -12,7 +12,7 @@
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
               <a href="<?= site_url('staff/add')?>" class="btn btn-primary">
                 <i class="fas fa-plus"></i>  Tambah Data
@@ -38,11 +38,8 @@
                   <thead>
                     <tr>                      
                       <th>NIP</th>
-                      <th>Nama</th>
-                      <th>Alamat</th>
-                      <th>Telepon</th>
-                      <th>Email</th>                      
-                      <th>Hak Akses</th>
+                      <th width="20%">Nama</th>                                           
+                      <th width="15%">Hak Akses</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -51,28 +48,41 @@
                     foreach($staffs as $staff):?>
                     <tr>                        
                         <td><?= $staff->nip ?></td>
-                        <td><?= $staff->nama ?></td>
-                        <td><?= ($staff->kota_staff == null) ? $staff->alamat : $staff->alamat.", ".$staff->kota_staff ?></td>
-                        <td><?= $staff->tlp_staff ?></td>
-                        <td><?= $staff->email_staff ?></td>                        
+                        <td><?= $staff->nama ?></td>                                               
                         <td>
                             <?php
                                 $currentDate = date('Y-m-d H:i:s');
-                                $access_valid = ($currentDate >= $staff->tgl_mulai && $currentDate <= $staff->tgl_selesai); 
-                                if($staff->id_jabdsn == null || $access_valid == false){
+                                
+                                $access_valid = ($currentDate >= $staff->tgl_mulai && $currentDate <= $staff->tgl_selesai);
+                                
+                                if($staff->id_jablab == null || $access_valid == false){
                                     echo '<span class="badge badge-danger">Dont have Access yet</span>';
+                                }elseif(($staff->id_jablab != null && $access_valid == true) && $staff->password == null){
+                                    echo '<p class="badge badge-warning">Punya Akses, Belum mendaftar</p>';
                                 }else{
                                     echo '<span class="badge badge-success">Have Access</span>';
                                 }
                             ?>
                         </td>
                         <td>
-                            <?php if($staff->id_jabdsn == null || $access_valid == false ): ?>      
+                            <?php if($staff->id_jablab == null || $access_valid == false ): ?>      
                                 <a href="<?= site_url('staff/makeAccess/'.$staff->nip)?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Buat Hak Akses Staff">
                                     <i class="fas fa-user-lock"></i>
                                 </a>
-                            <?php endif;?>                            
-                            <a href="<?= site_url('staff/edit/'.$staff->nip) ?>" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Ubah Data Staff">
+                            <?php endif;?>
+                            <?php if($staff->id_jablab != null && $access_valid == true ): ?>      
+                                <a href="<?= site_url('staff/editJabatan/'.$staff->nip)?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Jabatan Staff">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                            <?php endif;?>  
+                            <a href="#mymodal" class="btn btn-info"  data-placement="top" title="Lihat Data Staff"
+                              data-toggle="modal" 
+                              data-remote="<?= site_url('staff/showStaff/'.$staff->nip)?>"
+                              data-target="#mymodal"
+                              data-title="Detail Staff <?= $staff->nama?>">
+                                <i class="fas fa-eye"></i>
+                            </a>                          
+                            <a href="<?= site_url('staff/edit/'.$staff->nip) ?>" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Ubah Data Staff">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <a href="<?= site_url('staff/delete/'.$staff->nip) ?>" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus Data Staff" onclick="return confirm('Apakah anda ingin menghapus data ini?')">

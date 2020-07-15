@@ -8,7 +8,7 @@
     <thead class="thead-dark">
         <tr>
             <th>ID Detail</th>
-            <th>Kode Barang</th>
+            <th>Barcode</th>
             <th>Nama Barang</th>
             <th>Jenis Barang</th>
             <th>Action</th>
@@ -82,9 +82,11 @@
 <!--END MODAL DELETE-->
 
 
-<script type="text/javascript">
+<script type="text/javascript">    
     $(document).ready(function(){
         showDetailBarang();
+
+        
 
         $("#barcode").change(function(){
             $('[name="barcode"]').each(function(){
@@ -126,7 +128,7 @@
                     details.forEach( function(detail,index){
                              html += `<tr>
                                     <td>${detail.id_detail}</td>
-                                    <td>${detail.barang_kode_brg}</td>
+                                    <td>${detail.barcode}</td>
                                     <td>${detail.nama_brg}</td>
                                     <td>${detail.nama_jenis}</td>                                    
                                     <td>                                        
@@ -160,11 +162,12 @@
                     showDetailBarang();
                 },
                 error: function(message){
+                    console.log(message);
                     $('#errorMessage').show();
                     $('#barcode').attr('type', 'text');
                     $('#status').hide();
                     $('#barcodeInput').hide();
-                    $('#errorMessage').text("Barang tidak ada");
+                    $('#errorMessage').text("Barang tidak dapat dipinjam");
                     $('#barcode').val("");                    
                     $('#barcode').prop('readonly', false);
                     $('#barcode').focus();
@@ -193,10 +196,30 @@
                     $('[name="id_detail"]').val("");
                     $('#Modal_Delete').modal('hide');
                     showDetailBarang();
+                }, 
+                error: function(message){
+                    console.log(message);
                 }                
             });
             return false;
         });
     });
+
+    let delay = (function(){
+        let timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    $("#barcode").on("input", function() {
+    delay(function(){
+            if ($("#barcode").val().length < 2) {
+                $("#barcode").val("");
+            }
+        }, 66 );
+    });
+    
  
 </script>

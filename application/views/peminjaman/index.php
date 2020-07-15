@@ -55,15 +55,21 @@
                               <td><?= ($pinjambrg->tgl_blk == null) ? "Tanggal Belum diatur" : $pinjambrg->tgl_blk?></td>
                               <td><?= ($pinjambrg->tgl_blk_real == null) ? "Barang belum dikembalikan" : $pinjambrg->tgl_pjm ?></td>
                               <td>
-                                <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : ($pinjambrg->status == "SUCCESS") ? "badge-success" : "badge-danger" ?>"><?= $pinjambrg->status ?></span>
+                                <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : (($pinjambrg->status == "SUCCESS" || $pinjambrg->status == "APPROVE" ) ? "badge-success" : (($pinjambrg->status == "NEED APPROVAL")? "badge-secondary" :"badge-danger")) ?>"><?= $pinjambrg->status ?></span>
                               </td>                                                                       
                               <td>
+                                <?php if($pinjambrg->status == "NEED APPROVAL"): ?>
+                                    <a href="<?= site_url('peminjaman/approval/'.$pinjambrg->kd_pjm) ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Setujui peminjaman" onclick="return confirm('Apakah anda yakin setuju atas peminjaman ini?')">
+                                      <i class="fas fa-check"></i>                                  
+                                    </a>
+                                <?php endif;?> 
                                 <a href="#mymodal" 
                                   class="btn btn-info" 
                                   data-toggle="modal" 
                                   data-remote="<?= site_url('peminjaman/detailBarang/'.$pinjambrg->kd_pjm)?>"
                                   data-target="#mymodal"
-                                  data-title="Detail Peminjaman <?= $pinjambrg->kd_pjm?>">
+                                  data-title="Detail Peminjaman <?= $pinjambrg->kd_pjm?>"
+                                  data-toggle="tooltip" data-placement="top" title="Detail Barang Dipinjam">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="#mymodal" class="btn btn-primary"
@@ -71,6 +77,7 @@
                                   data-remote="<?= site_url('peminjaman/detailPeminjam/'.$pinjambrg->kd_pjm) ?>"
                                   data-target="#mymodal"
                                   data-title="Detail Peminjam"
+                                  data-toggle="tooltip" data-placement="top" title="Detail Peminjam"
                                 >
                                   <i class="fas fa-user"></i>
                                 </a>

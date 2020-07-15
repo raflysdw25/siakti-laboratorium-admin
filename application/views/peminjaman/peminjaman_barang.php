@@ -3,7 +3,7 @@
     <table class="table table-bordered">
       <thead>
           <tr>
-              <th>Kode</th>
+              <th>Barcode</th>
               <th>Nama Barang</th>
               <th>Jenis Barang</th>                           
               <th>Kondisi Barang</th>
@@ -13,9 +13,9 @@
         <?php if($barang): ?>
         <?php foreach($barang as $brg) :?>
             <tr>
-              <td><?= $brg->barang_kode_brg ?></td>
+              <td><?= $brg->barcode ?></td>
               <td><?= $brg->nama_brg ?></td>
-              <td><?= $brg->nama_jenis ?></td>                            
+              <td><?= ($brg->nama_jenis == null) ? "Jenis Barang tidak ditentukan" : $brg->nama_jenis ?></td>                            
               <td>
               <span class="badge <?= ($brg->kondisi == 'BAIK') ? "badge-success" : (($brg->kondisi == "HABIS")? "badge-warning" : "badge-danger")?>"><?= $brg->kondisi?></span>
               </td>

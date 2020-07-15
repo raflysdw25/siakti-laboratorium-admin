@@ -44,12 +44,25 @@ class Peminjaman extends CI_Controller
     public function index()
     {                                
         $peminjaman = retrieveData('laboratorium/peminjaman');
-        
+            
+
         $data["peminjaman"] = $peminjaman->data;
+
         $this->template->load('template', 'peminjaman/index', $data);
     }
 
     
+    public function approval($kd_pjm){
+        $post["kd_pjm"] = $kd_pjm;
+        $post["status"] = "APPROVE";
+
+        $putPeminjaman = updateData('laboratorium/peminjaman/updatestatus', $post);
+        if($putPeminjaman->responseCode == "00"){
+            $this->session->set_flashdata('success', 'Peminjaman sudah diizinkan');
+            redirect('peminjaman');
+        }
+    }
+
 
 	public function delete($kd_pjm)
     {
@@ -71,7 +84,13 @@ class Peminjaman extends CI_Controller
                 $this->session->set_flashdata('failed', 'Peminjaman gagal dihapus');
                 redirect('peminjaman');
             }            
-        }else{                       
+        }else{ 
+            foreach($details as $detail){
+                // Mengubah Status Barang jadi Tersedia
+                $post["kode_brg"] = $detail->barang_kode_brg;
+                $post["status"] = "TERSEDIA";
+                $putBarang = updateData('laboratorium/barang/updatestatus',$post);
+            }                      
             $deleteDetail = deleteData('laboratorium/peminjamandetail', $post);
             if($deleteDetail->responseCode == "00"){                                
                 $delete_peminjaman = deleteData('laboratorium/peminjaman',$post);

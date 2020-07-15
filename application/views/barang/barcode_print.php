@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barcode Product <?= $barang->barcode ?></title>
     <style>        
-        img{
+        #barcode{
             border: 1px solid #000;
             width:30%;
             padding: 5px;
         }
 
+        #logo_pnj{
+            width: 30%;
+            margin-bottom: 10px;
+        }
+
         #barcodeImage{
-            padding: 0;
-            transform-origin: 25 20;
+            padding: 0;                        
+            transform-origin: 40 35;
             transform: rotate(90deg);
         }
 
@@ -22,7 +27,8 @@
 <body>
     
     <div id="barcodeImage">
-        <img src="<?= 'data:image/png;base64,'.base64_encode($generator->getBarcode($barang->barcode, $generator::TYPE_CODE_128))?>">
+        <img id="logo_pnj" src="assets/dist/img/BannerTIK.png" alt=""><br>        
+        <img id="barcode" src="<?= 'data:image/png;base64,'.base64_encode($generator->getBarcode($barang->barcode, $generator::TYPE_CODE_128))?>">
         <br>
         <small><?= $barang->barcode?></small>
     </div>

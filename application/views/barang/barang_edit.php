@@ -22,7 +22,7 @@
         <!-- /.row -->
         <form action="" method="post">
             <div class="row">
-                <div class="col-8">
+                <div class="col-lg-8">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -33,25 +33,32 @@
                         <!-- form start -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">                                
+                                <div class="col-lg-3 col-md-6">                                
                                     <div class="form-group">
                                         <label for="kode_brg">Kode Barang</label>
                                         <input type="number" name="kode_brg" class="form-control" id="kode_brg" placeholder="Masukkan ID Barang" readonly value="<?= $barang->kode_brg?>">
                                         <small class="<?= form_error('kode_brg') ? "form-text text-danger" : ''?>"><?= form_error('kode_brg')?></small>
                                     </div>
                                 </div>
-                                <div class="col-4">                                
+                                <div class="col-lg-3 col-md-6">                                
                                     <div class="form-group">
                                         <label for="kondisi">Kondisi Barang</label>
                                         <input type="text" name="kondisi" id="kondisi" class="form-control <?= ($barang->kondisi == 'BAIK') ? "bg-success" : (($barang->kondisi == "HABIS")? "bg-warning" : "bg-danger")?> " value="<?= $barang->kondisi ?>" readonly>
                                         <small class="<?= form_error('kondisi') ? "form-text text-danger" : ''?>"><?= form_error('kondisi')?></small>
                                     </div>
                                 </div>
-                                <div class="col-4">                                
+                                <div class="col-lg-3 col-md-6">                                
                                     <div class="form-group">
                                         <label for="barcode">Barcode</label>
-                                        <input type="text" name="barcode" id="barcode" class="form-control" value="<?= $barang->barcode ?>" readonly>
+                                        <input type="text" name="barcode" id="barcode" class="form-control font-weight-bold" value="<?= $barang->barcode ?>" readonly>
                                         <small class="<?= form_error('barcode') ? "form-text text-danger" : ''?>"><?= form_error('barcode')?></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">                                
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <input type="text" name="status" id="status" class="form-control <?= ($barang->status == 'TERSEDIA') ? "bg-success" : (($barang->status == "DIGUNAKAN")? "bg-primary" : "bg-danger")?> " value="<?= $barang->status ?>" readonly>
+                                        <small class="<?= form_error('status') ? "form-text text-danger" : ''?>"><?= form_error('status')?></small>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +69,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="jenis_id_jenis">Jenis Barang</label>
-                                <select name="jenis_id_jenis" id="jenis_id_jenis" class="custom-select">                                    
+                                <select name="jenis_id_jenis" id="jenis_id_jenis" class="custom-select"> 
+                                    <option value="" <?= ($barang->jenis_id_jenis == null )? "selected" : '' ?>>--Pilih Jenis Barang--</option>                                    
                                     <?php foreach($jenisbarang as $jenis): ?>
                                         <option value="<?= $jenis->id_jenis ?>" <?= ($jenis->id_jenis == $barang->jenis_id_jenis) ? "selected" : '' ?>><?= $jenis->nama_jenis ?></option>
                                     <?php endforeach;?>
@@ -78,7 +86,7 @@
                         <!-- /.card-body -->
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -92,7 +100,7 @@
                             <div class="form-group">
                                 <label for="thn_pengadaan">Tahun Pengadaan</label>
                                 <div class="input-group" id="thn_pengadaan">
-                                  <input type="number" min="2014" max="2099" name="thn_pengadaan" class="form-control" value="<?= $barang->thn_pengadaan ?>" />
+                                  <input type="number" min="2000" max="2099" name="thn_pengadaan" class="form-control" value="<?= $barang->thn_pengadaan ?>" />
                                   <small class="<?= form_error('thn_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('thn_pengadaan')?></small>
                                 </div>
                             </div>

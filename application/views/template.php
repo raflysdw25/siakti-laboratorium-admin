@@ -99,9 +99,9 @@
               </p>
             </a>
               <ul class="nav nav-treeview">
-            <?php $currentDate = date('Y-m-d');
-              if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): 
-                if(strpos($this->session->userdata('admin_logged')->jabatan,'Laboratorium')):?>
+            <?php $currentDate = date('Y-m-d H:i:s');
+              // if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): 
+                if($this->session->userdata('admin_logged')->jabatan != null):?>
                 <li class="nav-item">
                   <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
                     <i class="fas fa-chart-pie nav-icon"></i>
@@ -144,18 +144,17 @@
                   </a>
                 </li>
               <?php endif; ?> 
-            <?php endif; ?> 
-            <?php
-              $currentDate = date('Y-m-d H:i:s');
-              if($this->session->userdata('admin_logged')->jabatan == "Kepala Laboratorium" || $this->session->userdata('admin_logged')->jabatan == "ADMIN" ):
-                if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): ?> 
+            <?php //endif; ?> 
+            <?php              
+              if($this->session->userdata('admin_logged')->jabatan == "PLP" || $this->session->userdata('admin_logged')->jabatan == "ADMIN" ):
+                //if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): ?> 
                     <li class="nav-item">
                       <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'staff')  ? ' active' : '' ?>">
                         <i class="fas fa-user nav-icon"></i>
-                        <p>User</p>
+                        <p>Staff Laboratorium</p>
                       </a>
                     </li>
-              <?php endif; ?>              
+              <?php //endif; ?>              
             <?php endif; ?>              
               </ul>
           </li>
@@ -169,6 +168,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <?= $contents ?>
+    
   </div>
   <!-- /.content-wrapper -->
   
@@ -233,20 +233,12 @@
       "paging": true,
       "lengthChange": true,
       "searching": true,
-      "ordering": true,
+      "ordering": false,
       "info": true,
       "autoWidth": false,
       "responsive": true,
     });
   });
-  ClassicEditor
-      .create( document.querySelector('.ckeditor') )
-      .then( editor => {
-          console.log(editor);
-      } )
-      .catch( error => {
-          console.error( error );
-      } );
 
 </script>
 <script>

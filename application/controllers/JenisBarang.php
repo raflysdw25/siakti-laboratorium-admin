@@ -50,17 +50,11 @@ class JenisBarang extends CI_Controller
     }
 
     public function add(){
-        $this->form_validation->set_rules('nama_jenis', 'Nama Jenis', 'required|callback_namajenis_check');
-        $this->form_validation->set_rules('id_jenis', 'ID Jenis', 'required');
+        $this->form_validation->set_rules('nama_jenis', 'Nama Jenis', 'required|callback_namajenis_check');        
 
         if($this->form_validation->run() === FALSE)
         {
-            // Mendapatkan ID Terbaru        
-            $id_jenis = retrieveData('laboratorium/jenisbarang/maxId');
-            
-            $maxId = $id_jenis->data[0]->max;            
-            $data["nextId"] = ($maxId == null) ? 1 :  $maxId + 1;
-            $this->template->load('template', 'jenisbarang/jenisbarang_form_add', $data);
+            $this->template->load('template', 'jenisbarang/jenisbarang_form_add');
         }else{
             $post = $this->input->post();
             $input_jenisbarang = postData('laboratorium/jenisbarang', $post);
@@ -91,10 +85,10 @@ class JenisBarang extends CI_Controller
 
             if($updateJenis->responseCode == "00")
             {
-                $this->session->set_flashdata('success', 'Jenis Barang Berhasil ditambahkan');
+                $this->session->set_flashdata('success', 'Jenis Barang Berhasil diubah');
                 redirect('jenisbarang');
             }else{
-                $this->session->set_flashdata('failed', 'Jenis Barang Gagal ditambahkan');
+                $this->session->set_flashdata('failed', 'Jenis Barang Gagal diubah');
                 redirect('jenisbarang/add');
             }
         }

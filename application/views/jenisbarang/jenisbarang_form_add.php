@@ -25,7 +25,7 @@
     <form action="" method="POST">
         <div class="row">
             <div class="col">
-                <div class="card card-primary">
+                <div class="card card-primary col-lg-8 mx-auto p-0">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-boxes"></i> Detail Jenis Barang
@@ -34,12 +34,7 @@
                     <!-- /.card-header -->
                     <!-- form start -->
                     <div class="card-body">
-                        <p class="text-danger mb-2">* Wajib diisi</p>
-                        <div class="form-group">
-                            <label for="id_jenis">ID Jenis Barang <span class="text-danger">*</span></label>                            
-                            <input type="text" name="id_jenis" class="form-control" id="id_jenis" value="<?= $nextId ?>" readonly>
-                            <small class="<?= form_error('id_jenis') ? "form-text text-danger" : ''?>"><?= form_error('id_jenis')?></small>
-                        </div>
+                        <p class="text-danger mb-2">* Wajib diisi</p>                        
                         <div class="form-group">
                             <label for="nama_jenis">Nama Jenis Barang <span class="text-danger">*</span></label>
                             <input type="text" name="nama_jenis" class="form-control" id="nama_jenis" placeholder="Masukkan  Nama Jenis Barang">
