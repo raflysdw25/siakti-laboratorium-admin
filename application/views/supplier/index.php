@@ -31,7 +31,7 @@
               <table class="table text-nowrap table-bordered datatable">
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Nama Supplier</th>
                     <th>Alamat</th>
                     <th>Telepon</th>

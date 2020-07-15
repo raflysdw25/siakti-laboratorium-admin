@@ -43,7 +43,7 @@ class Auth extends CI_Controller
 						$this->session->set_flashdata("failed", "Tidak memiliki hak akses");
 						redirect(site_url('auth'));
 					}else{
-						
+						$admin->valid = $admin_valid;						
 						$this->session->set_userdata(['admin_logged' => $admin]);
 						redirect(site_url('/'));
 					}	

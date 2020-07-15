@@ -93,7 +93,7 @@ class Supplier extends CI_Controller
 
     function namasupplier_check(){
         $post = $this->input->post(null,TRUE);
-        $post["id_supp"] = ($post["id_supp"] == null) ? null : $post["id_supp"];
+        $post["id_supp"] = ($this->input->post('id_jablab_struk') == null) ? null : $this->input->post('id_jablab_struk');
         
         $ambil_nama = postData('laboratorium/supplier/namasupp', $post);        
         if($ambil_nama->responseCode == "200"){

@@ -47,4 +47,7 @@
             }
         }, 20 );
     });
+    $('#no_ktm').on("cut copy paste",function(e) {
+      e.preventDefault();
+   });
 </script>

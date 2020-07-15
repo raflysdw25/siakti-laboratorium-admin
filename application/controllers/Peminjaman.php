@@ -84,13 +84,17 @@ class Peminjaman extends CI_Controller
                 $this->session->set_flashdata('failed', 'Peminjaman gagal dihapus');
                 redirect('peminjaman');
             }            
-        }else{ 
-            foreach($details as $detail){
-                // Mengubah Status Barang jadi Tersedia
-                $post["kode_brg"] = $detail->barang_kode_brg;
-                $post["status"] = "TERSEDIA";
-                $putBarang = updateData('laboratorium/barang/updatestatus',$post);
-            }                      
+        }else{
+            $getPeminjaman = retrieveData('laboratorium/peminjaman?kd_pjm='.$kd_pjm);
+            $peminjaman = $getPeminjaman->data[0];
+            if($peminjaman->status != "FINISH"){
+                foreach($details as $detail){
+                    // Mengubah Status Barang jadi Tersedia
+                    $post["kode_brg"] = $detail->barang_kode_brg;
+                    $post["status"] = "TERSEDIA";
+                    $putBarang = updateData('laboratorium/barang/updatestatus',$post);
+                }                      
+            } 
             $deleteDetail = deleteData('laboratorium/peminjamandetail', $post);
             if($deleteDetail->responseCode == "00"){                                
                 $delete_peminjaman = deleteData('laboratorium/peminjaman',$post);

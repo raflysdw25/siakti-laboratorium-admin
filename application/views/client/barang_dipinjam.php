@@ -221,5 +221,7 @@
         }, 66 );
     });
     
- 
+    $('#barcode').on("cut copy paste",function(e) {
+      e.preventDefault();
+   });
 </script>

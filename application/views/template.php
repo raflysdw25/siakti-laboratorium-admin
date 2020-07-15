@@ -101,7 +101,7 @@
               <ul class="nav nav-treeview">
             <?php $currentDate = date('Y-m-d H:i:s');
               // if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): 
-                if($this->session->userdata('admin_logged')->jabatan != null):?>
+                if($this->session->userdata('admin_logged')->jabatan != null && $this->session->userdata('admin_logged')->valid):?>
                 <li class="nav-item">
                   <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
                     <i class="fas fa-chart-pie nav-icon"></i>
@@ -146,7 +146,7 @@
               <?php endif; ?> 
             <?php //endif; ?> 
             <?php              
-              if($this->session->userdata('admin_logged')->jabatan == "PLP" || $this->session->userdata('admin_logged')->jabatan == "ADMIN" ):
+              if(($this->session->userdata('admin_logged')->jabatan == "PLP" || $this->session->userdata('admin_logged')->jabatan == "ADMIN") && $this->session->userdata('admin_logged')->valid ):
                 //if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): ?> 
                     <li class="nav-item">
                       <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'staff')  ? ' active' : '' ?>">

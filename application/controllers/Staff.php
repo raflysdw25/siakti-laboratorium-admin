@@ -205,4 +205,75 @@ class Staff extends CI_Controller
         }
     }
 
+
+    public function struktural()
+    {
+        $getStruktural = retrieveData('laboratorium/strukturallab');
+        $data['strukturals'] = $getStruktural->data;
+        $this->load->view('struktural/index', $data);
+    }
+
+    public function addstruktural(){
+        $this->form_validation->set_rules('nama_jab', 'Nama Jabatan', 'required|max_length[20]|callback_namajabatan_check');
+        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
+        $this->form_validation->set_message('max_length', '{field} tidak boleh lebih dari {param} huruf');
+
+        if($this->form_validation->run() === FALSE){
+            $this->template->load('template', 'struktural/add');
+        }else{
+            $post = $this->input->post();
+            // Insert Data
+            $addStruktural = postData('laboratorium/strukturallab', $post);
+            if($addStruktural->responseCode =="00"){
+                $this->session->set_flashdata('success', 'Jabatan berhasil ditambahkan');
+                redirect('staff');
+            }
+        }
+    }
+
+    public function editstruktural($id_jablab_struk){
+        $this->form_validation->set_rules('nama_jab', 'Nama Jabatan', 'required|max_length[20]|callback_namajabatan_check');
+        $this->form_validation->set_message('required', '%s masih kosong, silakan isi');
+        $this->form_validation->set_message('max_length', '{field} tidak boleh lebih dari {param} huruf');
+
+        if($this->form_validation->run() === FALSE){
+            $getStruktural = retrieveData('laboratorium/strukturallab?id_jablab_struk='.$id_jablab_struk);
+            $data["struktural"] = $getStruktural->data[0];
+            $this->template->load('template', 'struktural/edit' , $data);
+        }else{
+            $post = $this->input->post();
+            // Insert Data
+            $editStruktural = updateData('laboratorium/strukturallab', $post);
+            
+            if($editStruktural->responseCode =="00"){
+                $this->session->set_flashdata('success', 'Jabatan berhasil diubah');
+                redirect('staff');
+            }
+        }
+    }
+
+    public function hapusstruktural($id_jablab_struk){
+        $post = $this->input->post();
+        $post["id_jablab_struk"] = $id_jablab_struk;
+        $deleteData = deleteData('laboratorium/strukturallab', $post);
+
+        if($deleteData->responseCode == "00"){
+            $this->session->set_flashdata('success', 'Jabatan berhasil dihapus');
+            redirect('staff'); 
+        }
+    }
+
+    function namajabatan_check(){
+        $post = $this->input->post(null,TRUE);
+        $post["id_jablab_struk"] = ($this->input->post('id_jablab_struk') == null) ? null : $this->input->post('id_jablab_struk');
+        
+        $ambil_nama = postData('laboratorium/strukturallab/namastruktural', $post);        
+        if($ambil_nama->responseCode == "200"){
+            $this->form_validation->set_message('namajabatan_check', '{field} ini sudah dipakai, silahkan ganti' );
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+
 }

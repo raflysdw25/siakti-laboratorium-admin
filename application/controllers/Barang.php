@@ -155,19 +155,26 @@ class Barang extends CI_Controller
     public function ubahKondisi($kode_brg)
     {
         $post = $this->input->post();
-        $post["kode_brg"] = $kode_brg;
-        $kondisi = $post["kondisi"];
-
-        if($kondisi == "BAIK"){
-            $post["status"] = "TERSEDIA";            
-        }else{
-            $post["status"] = "TIDAK TERSEDIA";
-        }
-        
-        $updateStatus = updateData('laboratorium/barang/updateStatus', $post);        
-        if($updateStatus->responseCode == "00"){
-            $this->session->set_flashdata('success', 'Kondisi berhasil diubah');
+        $getBarang = retrieveData('laboratorium/barang?kode_brg='.$kode_brg);
+        $barang = $getBarang->data[0];
+        if($barang->status == "DIGUNAKAN"){
+            $this->session->set_flashdata('failed', 'Barang tidak tersedia, kondisi tidak dapat diubah');
             redirect('barang');
+        }else{
+            $post["kode_brg"] = $kode_brg;
+            $kondisi = $post["kondisi"];
+    
+            if($kondisi == "BAIK"){
+                $post["status"] = "TERSEDIA";            
+            }else{
+                $post["status"] = "TIDAK TERSEDIA";
+            }
+            
+            $updateStatus = updateData('laboratorium/barang/updateStatus', $post);        
+            if($updateStatus->responseCode == "00"){
+                $this->session->set_flashdata('success', 'Kondisi berhasil diubah');
+                redirect('barang');
+            }
         }
     }
             

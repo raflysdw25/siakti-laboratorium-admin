@@ -17,6 +17,13 @@
               <a href="<?= site_url('staff/add')?>" class="btn btn-primary">
                 <i class="fas fa-plus"></i>  Tambah Data
               </a>
+              <a href="#" class="btn btn-info float-right" data-placement="top" title="Lihat Data Staff"
+                              data-toggle="modal" 
+                              data-remote="<?= site_url('staff/struktural')?>"
+                              data-target="#mymodal"
+                              data-title="Daftar Struktural Laboratorium">
+                <i class="fas fa-eye mr-2"></i>  Lihat Struktural
+              </a>              
             </div>
         </div>
         <div class="mt-2">
