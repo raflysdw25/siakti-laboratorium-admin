@@ -17,6 +17,9 @@
               <a href="<?= site_url('barang/add')?>" class="btn btn-primary">
                 <i class="fas fa-plus"></i>  Tambah Data
               </a>
+              <!-- <a href="<?= site_url('barang/generateAllBarcode')?>" class="btn btn-primary">
+                Generate All Barcode
+              </a> -->
             </div>
         </div>
         <div class="mt-2">

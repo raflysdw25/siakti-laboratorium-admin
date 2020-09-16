@@ -90,6 +90,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <?php if(($this->session->userdata('admin_logged')->jabatan != 'ADMIN')  && $this->session->userdata('admin_logged')->valid):?>
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-laptop"></i>
@@ -99,9 +100,6 @@
               </p>
             </a>
               <ul class="nav nav-treeview">
-            <?php $currentDate = date('Y-m-d H:i:s');
-              // if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): 
-                if($this->session->userdata('admin_logged')->jabatan != null && $this->session->userdata('admin_logged')->valid):?>
                 <li class="nav-item">
                   <a href="<?= site_url('reports')?>" class="nav-link <?=($this->uri->segment(1) == 'reports') || ($this->uri->segment(1) == '')   ? ' active' : '' ?>">
                     <i class="fas fa-chart-pie nav-icon"></i>
@@ -143,18 +141,14 @@
                     <p>Supplier Barang</p>
                   </a>
                 </li>
-              <?php endif; ?> 
-            <?php //endif; ?> 
-            <?php              
-              if(($this->session->userdata('admin_logged')->jabatan == "PLP" || $this->session->userdata('admin_logged')->jabatan == "ADMIN") && $this->session->userdata('admin_logged')->valid ):
-                //if( ($currentDate >= $this->session->userdata('admin_logged')->tgl_mulai) && ($currentDate <= $this->session->userdata('admin_logged')->tgl_selesai)): ?> 
-                    <li class="nav-item">
-                      <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'staff')  ? ' active' : '' ?>">
-                        <i class="fas fa-user nav-icon"></i>
-                        <p>Staff Laboratorium</p>
-                      </a>
-                    </li>
-              <?php //endif; ?>              
+            <?php endif; ?>             
+            <?php if(($this->session->userdata('admin_logged')->jabatan == "PLP" || $this->session->userdata('admin_logged')->jabatan == "ADMIN") && $this->session->userdata('admin_logged')->valid ): ?> 
+                <li class="nav-item">
+                  <a href="<?= site_url('staff')?>" class="nav-link <?=($this->uri->segment(1) == 'staff')  ? ' active' : '' ?>">
+                    <i class="fas fa-user nav-icon"></i>
+                    <p>Staff Laboratorium</p>
+                  </a>
+                </li>                          
             <?php endif; ?>              
               </ul>
           </li>
@@ -231,7 +225,7 @@
   $(function () {
     $('.datatable').DataTable({
       "paging": true,
-      "lengthChange": true,
+      "lengthChange": false,
       "searching": true,
       "ordering": false,
       "info": true,

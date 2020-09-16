@@ -183,7 +183,7 @@ class Client extends CI_Controller
             // Menentukan Status Peminjaman, jika lebih dari 6 jam, maka perlu approval
             $difference = abs(strtotime($post["tgl_blk"]) - strtotime($post["tgl_pjm"]))/3600;
             
-            if($difference > 6){
+            if($difference > 12){
                 $post["status"] = "NEED APPROVAL";                
             }else{
                 $post["status"] = "SUCCESS";

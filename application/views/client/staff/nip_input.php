@@ -21,7 +21,7 @@
         <h2 class="font-weight-bold">Silahkan Masukkan NIP Anda </h2>
         <form action="" class="mt-4" method="POST">
             <div class="form-group w-50 m-auto">
-                <input type="text" name="nip" class="form-control form-control-lg" placeholder="Nomor Induk Pegawai" autofocus>
+                <input type="text" name="nip" id="nip" class="form-control form-control-lg" placeholder="Nomor Induk Pegawai" autofocus>
                 <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"><?= ucfirst($page) ?> Alat</button>                
             </div>            
         </form>
@@ -30,3 +30,8 @@
   </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<script>
+    $('#nip').on("cut copy paste",function(e) {
+      e.preventDefault();
+   });
+</script>

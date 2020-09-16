@@ -31,6 +31,7 @@ class Auth extends CI_Controller
 				
 				$admin->nama = "ADMIN SERVER";
 				$admin->jabatan = "ADMIN";
+				$admin->valid = true;
 				$this->session->set_userdata(['admin_logged' => $admin]);
 				redirect(site_url('staff'));
 			}else{

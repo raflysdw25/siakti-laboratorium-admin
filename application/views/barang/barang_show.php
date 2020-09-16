@@ -25,7 +25,7 @@
             <tr>
                 <th>Spesifikasi</th>
                 <td>
-                    <?= $barang->spesifikasi ?>
+                    <?= ($barang->spesifikasi == null)? "Tidak menentukan spesifikasi" : $barang->spesifikasi ?>
                 </td>
             </tr>
             <tr>
