@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'client';
+$route['default_controller'] = 'reports';
 $route['404_override'] = 'welcome';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -60,29 +60,5 @@ $route['tambahdata'] = 'Tambahdata/index';
 $route['barang'] = 'Barang/index';
 $route['peminjaman'] = 'Peminjaman/index';
 $route['reports'] = 'Reports/index';
-$route['admin'] = 'reports';
 
-// Client Side
 
-$route['client/stripe-card/(:any)'] = 'client/stripeCard/$1';
-$route['client/panduan'] = 'client/panduan';
-$route['client/pilihan/(:any)'] = 'client/pilihPeminjam/$1';
-$route['client/daftar'] = 'client/daftar';
-$route['client/success'] = 'client/success_confirm';
-$route['client/confirm-return'] = 'client/confirm_return';
-
-// Client Side : Mahasiswa
-$route['client/card_data/(:any)'] = 'client/card_data/$1';
-$route['client/form-mahasiswa/(:any)'] = 'client/form_peminjaman/$1';
-$route['client/cancel/(:any)'] = 'client/cancelPeminjamanMahasiswa/$1';
-$route['client/detail/(:any)'] = 'client/detail_barang_pinjam/$1';
-$route['client/pinjam-barang/(:any)'] = 'client/createPeminjamanMahasiswa/$1';
-$route['client/kembalikan-data/(:any)'] = 'client/kembalikan_data/$1';
-$route['client/kembalikan-barang/(:any)/(:any)'] = 'client/updatePengembalian/$1/$2';
-$route['client/delete-detail'] = 'client/deleteDetail';
-$route['client/tambah-barang'] = 'client/tambahBarang';
-
-// Client Side : Staff
-$route['client/nip-input/(:any)'] = 'client/nipInput/$1';
-$route['client/form-staff/(:any)'] = 'client/form_staff/$1';
-$route['client/return-data/(:any)'] = 'client/return_data/$1';
