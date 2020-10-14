@@ -24,7 +24,7 @@ class Supplier extends CI_Controller
 
     public function add()
     {                
-        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check|max_length[25]');        
+        $this->form_validation->set_rules('nama_supp', 'Nama Supplier', 'required|callback_namasupplier_check|max_length[100]');        
         $this->form_validation->set_rules('tlpn', 'Telepon', 'required');        
         $this->form_validation->set_rules('pic', 'Person In Charge', 'required');
     	
@@ -93,7 +93,7 @@ class Supplier extends CI_Controller
 
     function namasupplier_check(){
         $post = $this->input->post(null,TRUE);
-        $post["id_supp"] = ($this->input->post('id_jablab_struk') == null) ? null : $this->input->post('id_jablab_struk');
+        $post["id_supp"] = ($this->input->post('id_supp') == null) ? null : $this->input->post('id_supp');
         
         $ambil_nama = postData('laboratorium/supplier/namasupp', $post);        
         if($ambil_nama->responseCode == "200"){
@@ -106,7 +106,6 @@ class Supplier extends CI_Controller
 
     public function delete($id_supp)
     {                
-        // $result = $this->Supplier_m->delete($id_supp); 
         $post = $this->input->post(null, true);
 
         $post['id_supp'] = $id_supp;

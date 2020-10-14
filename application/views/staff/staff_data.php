@@ -62,9 +62,11 @@
                                 
                                 $access_valid = ($currentDate >= $staff->tgl_mulai && $currentDate <= $staff->tgl_selesai);
                                 
-                                if($staff->id_jablab == null || $access_valid == false){
+                                if($staff->id_jablab == null){
                                     echo '<span class="badge badge-danger">Dont have Access yet</span>';
-                                }elseif(($staff->id_jablab != null && $access_valid == true) && $staff->password == null){
+                                }elseif($staff->id_jablab !== null && $access_valid == false){
+                                  echo '<span class="badge badge-danger">Expired</span>';
+                                }elseif($staff->id_jablab != null && $access_valid == true && $staff->password == null){
                                     echo '<p class="badge badge-warning">Punya Akses, Belum mendaftar</p>';
                                 }else{
                                     echo '<span class="badge badge-success">Have Access</span>';

@@ -29,42 +29,7 @@ class Barang extends CI_Controller
         $this->load->view('barang/barang_show',$data);
     }
 
-    // public function generateAllBarcode(){
-    //     $allBarang = retrieveData('laboratorium/barang');        
-    //     $listBarang = $allBarang->data;        
-    //     $post = $this->input->post();
-    //     foreach ($listBarang as $barang) {
-    //         if($barang->barcode != null){
-    //             continue;
-    //         }
-    //         // Buat Barcode            
-    //         $nama_brg = $barang->nama_brg;                        
     
-    //         $words = explode(" ", $nama_brg);
-    //         $namabrg_acronym = ucwords($words[0][0])."".ucwords($words[0][1]);
-                       
-
-    //         $newKodeBarang = "";
-    //         if($barang->kode_brg < 10){
-    //             $newKodeBarang = "000"."".$barang->kode_brg;
-    //         }else if($barang->kode_brg >= 10 && $barang->kode_brg < 100){
-    //             $newKodeBarang = "00"."".$barang->kode_brg;
-    //         }else if($barang->kode_brg >= 100 && $barang->kode_brg < 999){
-    //             $newKodeBarang = "0"."".$barang->kode_brg;
-    //         }else{
-    //             $newKodeBarang = $barang->kode_brg;
-    //         }
-
-            
-
-    //         $post["kode_brg"] = $barang->kode_brg;
-    //         $post["barcode"] = $newKodeBarang."".$namabrg_acronym."".substr($barang->thn_pengadaan,2,3);                
-    //         $put_barang = updateData('laboratorium/barang/generateBarcode', $post);
-    //     }
-        
-    //     redirect('barang');                        
-        
-    // }
 
     public function add()
     {        
@@ -108,14 +73,14 @@ class Barang extends CI_Controller
                 $namabrg_acronym = ucwords($words[0][0])."".ucwords($words[0][1]);
                                 
                 $newKodeBarang = "";
-                if($barang->kode_brg < 10){
-                    $newKodeBarang = "000"."".$barang->kode_brg;
-                }else if($barang->kode_brg >= 10 && $barang->kode_brg < 100){
-                    $newKodeBarang = "00"."".$barang->kode_brg;
-                }else if($barang->kode_brg >= 100 && $barang->kode_brg < 999){
-                    $newKodeBarang = "0"."".$barang->kode_brg;
+                if($post['kode_brg'] < 10){
+                    $newKodeBarang = "000"."".$post['kode_brg'];
+                }else if($post['kode_brg'] >= 10 && $post['kode_brg'] < 100){
+                    $newKodeBarang = "00"."".$post['kode_brg'];
+                }else if($post['kode_brg'] >= 100 && $post['kode_brg'] < 999){
+                    $newKodeBarang = "0"."".$p1ost['kode_brg'];
                 }else{
-                    $newKodeBarang = $barang->kode_brg;
+                    $newKodeBarang = $post['kode_brg'];
                 }
             
                 $post["barcode"] = $newKodeBarang."".$namabrg_acronym."".substr($post['thn_pengadaan'],2,3);
@@ -135,7 +100,7 @@ class Barang extends CI_Controller
     public function edit($kode_brg)
     {                
     	$this->form_validation->set_rules('kode_brg', 'Kode Barang', 'required');
-        $this->form_validation->set_rules('nama_brg', 'Nama_Barang', 'required');        
+        $this->form_validation->set_rules('nama_brg', 'Nama Barang', 'required');        
         $this->form_validation->set_rules('kondisi', 'Kondisi Barang', 'required');
         $this->form_validation->set_rules('status', 'Status Barang', 'required');        
         $this->form_validation->set_rules('thn_pengadaan', 'Tahun Pengadaan', 'required');

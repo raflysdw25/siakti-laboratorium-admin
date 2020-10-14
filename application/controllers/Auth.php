@@ -24,7 +24,7 @@ class Auth extends CI_Controller
 	{		
 			$post = $this->input->post();		
 											
-			if($post["usr_name"] == "ADMIN" && $post["password"] == "ADMIN"){
+			if($post["usr_name"] == "ADMIN" && $post["password"] == "ADMINLABTIK123"){
 				$admin = new stdClass();
 				$admin->tgl_mulai = date('Y-m-d H:i:s');
 				$admin->tgl_selesai = date('Y-m-d H:i:s', strtotime($admin->tgl_mulai . ' +1 day'));
@@ -46,7 +46,7 @@ class Auth extends CI_Controller
 					}else{
 						$admin->valid = $admin_valid;						
 						$this->session->set_userdata(['admin_logged' => $admin]);
-						redirect(site_url('/'));
+						redirect('reports');
 					}	
 				} else{ //salah				
 					$this->session->set_flashdata("failed", "Username / Password Salah");
@@ -66,14 +66,22 @@ class Auth extends CI_Controller
 			$post = $this->input->post();
 
 			// Cek apakah Staff sudah mendapatkan akses
-			$checkStaff = retrieveData('laboratorium/jabatanlab?staff_nip='.$post["nip"]);			
+			$checkJabatanStaff = retrieveData('laboratorium/jabatanlab?staff_nip='.$post["nip"]);
 			
-			if($checkStaff->responseCode == "200"){
-				$post["password"] = password_hash($post["password"], PASSWORD_DEFAULT);
-				$updateAccount = updateData('staff/updateAccount', $post);
-				if($updateAccount->responseCode == "00"){
-					$this->session->set_flashdata("success", "Password berhasil dibuat");
-					redirect(site_url('auth'));
+			// Cek apakah staff sudah memiliki hak akses atau belum
+			if($checkJabatanStaff->responseCode == "200"){
+				$staffData = retrieveData('staff?nip='.$post['nip']);
+				$staff = $staffData->data[0];
+				if($staff->password != null){
+					$this->session->set_flashdata("failed", "Tidak dapat mengatur password untuk akun ini");
+					redirect(site_url('auth/getAccess'));
+				}else{
+					$post["password"] = password_hash($post["password"], PASSWORD_DEFAULT);
+					$updateAccount = updateData('staff/updateAccount', $post);
+					if($updateAccount->responseCode == "00"){
+						$this->session->set_flashdata("success", "Password berhasil dibuat");
+						redirect(site_url('auth'));
+					}
 				}
 			}else{
 				$this->session->set_flashdata("failed", "NIP ini belum mendapatkan hak akses");

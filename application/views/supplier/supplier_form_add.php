@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label for="nama_supp">Nama Supplier <span class="text-danger">*</span></label>
                             <input type="text" name="nama_supp" class="form-control" id="nama_supp" placeholder="Masukkan  Nama Perusahaan">
-                            <small class="<?= form_error('nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('nama_supp')?></small>
+                            <small class="<?= form_error('nama_supp') ? "form-text text-danger" : ''?>"><?= form_error('nama_supp') ? form_error('nama_supp') : 'Nama supplier tidak boleh lebih dari 100 huruf'?></small>
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>

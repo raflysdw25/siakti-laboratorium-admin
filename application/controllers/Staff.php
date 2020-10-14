@@ -17,9 +17,8 @@ class Staff extends CI_Controller
     public function index()
     {
         $getStaff = retrieveData('staff');
-        $staffs = $getStaff->data;
-        $data["staffs"] = $staffs;
-        // var_dump($data["staffs"]); exit;        
+        $staffs = $getStaff->data;         
+        $data["staffs"] = $staffs;        
         $this->template->load('template', 'staff/staff_data', $data);
     }
 
@@ -94,14 +93,26 @@ class Staff extends CI_Controller
 
             $data = ['staff' => $staff, 'struktural' => $struktural];
             $this->template->load('template', 'staff/makeaccess', $data);            
-        }else{            
+        }else{
+            //Check sudah pernah buat akses atau belum
+            $checkJabatanLab =  retrieveData('laboratorium/jabatanlab?staff_nip='.$nip);                        
             $post['tgl_mulai'] = date_format(date_create($post['tgl_mulai']), 'Y-m-d H:i:s');            
-            $post['tgl_selesai'] = date_format(date_create($post['tgl_selesai']), 'Y-m-d H:i:s');            
+            $post['tgl_selesai'] = date_format(date_create($post['tgl_selesai']), 'Y-m-d H:i:s'); 
             
-            $createAccess = postData('laboratorium/jabatanlab', $post);                         
-            if($createAccess->responseCode == "00"){
-                $this->session->set_flashdata('success', 'Akses Staff berhasil ditambahkan');
-                redirect('staff');
+            // Jika sebelumnya sudah diberikan akses, namun expired
+            if(sizeof($checkJabatanLab->data) === 1){                
+                $post['id_jablab'] = $checkJabatanLab->data[0]->id_jablab;                
+                $updateAccess = updateData('laboratorium/jabatanlab', $post);                
+                if($updateAccess->responseCode == "00"){
+                    $this->session->set_flashdata('success', 'Akses Staff berhasil diperbaharui');
+                    redirect('staff');
+                }
+            }else{
+                $createAccess = postData('laboratorium/jabatanlab', $post);                         
+                if($createAccess->responseCode == "00"){
+                    $this->session->set_flashdata('success', 'Akses Staff berhasil ditambahkan');
+                    redirect('staff');
+                }                
             }
         }
     }

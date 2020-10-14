@@ -43,6 +43,7 @@
                                         <option value="KBM">KBM</option>
                                         <option value="Acara Jurusan">Acara Jurusan</option>
                                         <option value="Acara Himpunan">Acara Himpunan</option>
+                                        <option value="Pengabdian">Pengabdian</option>
                                         <option value="Skripsi">Skripsi</option>
                                         <option value="PKL">PKL</option>
                                         <option value="Operasional">Operasional</option>

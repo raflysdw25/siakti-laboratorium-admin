@@ -81,7 +81,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= site_url('client') ?>" class="nav-link <?=($this->uri->segment(1) == 'client' && $this->uri->segment(2) == '') || (($this->uri->segment(2) == 'stripe_card') || ($this->uri->segment(2) == 'daftar') || ($this->uri->segment(2) == 'card_data')) || ($this->uri->segment(2) == 'form_peminjaman') ? ' active' : '' ?>">
+                <a href="<?= site_url('client') ?>" class="nav-link <?=(($this->uri->segment(1) == 'client' || $this->uri->segment(1) == '') && $this->uri->segment(2) == '') || (($this->uri->segment(2) == 'stripe_card') || ($this->uri->segment(2) == 'daftar') || ($this->uri->segment(2) == 'card_data')) || ($this->uri->segment(2) == 'form_peminjaman') ? ' active' : '' ?>">
                   <i class="fas fa-home nav-icon"></i>
                   <p>Beranda</p>
                 </a>

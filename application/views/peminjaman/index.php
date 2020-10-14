@@ -58,7 +58,7 @@
                                 <span class="badge <?= ($pinjambrg->status == "PENDING") ? "badge-warning" : (($pinjambrg->status == "SUCCESS" || $pinjambrg->status == "APPROVE" ) ? "badge-success" : (($pinjambrg->status == "NEED APPROVAL")? "badge-secondary" :"badge-danger")) ?>"><?= $pinjambrg->status ?></span>
                               </td>                                                                       
                               <td>
-                                <?php if($pinjambrg->status == "NEED APPROVAL"): ?>
+                                <?php if($pinjambrg->status == "NEED APPROVAL" && $this->session->userdata('admin_logged')->jabatan == "PLP"): ?>
                                     <a href="<?= site_url('peminjaman/approval/'.$pinjambrg->kd_pjm) ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Setujui peminjaman" onclick="return confirm('Apakah anda yakin setuju atas peminjaman ini?')">
                                       <i class="fas fa-check"></i>                                  
                                     </a>
@@ -81,9 +81,11 @@
                                 >
                                   <i class="fas fa-user"></i>
                                 </a>
+                                <?php if(($this->session->userdata('admin_logged')->jabatan == "PLP")): ?> 
                                 <a href="<?= site_url('peminjaman/delete/'.$pinjambrg->kd_pjm)?>" onclick="return confirm('Apakah anda ingin menghapus data ini ?')"  class="btn btn-danger">
-                          <i class="fas fa-trash"></i>
-                        </a>
+                                  <i class="fas fa-trash"></i>
+                                </a>
+                                <?php endif; ?>
                    </td>
                     </tr>                    
                   <?php endforeach; ?>

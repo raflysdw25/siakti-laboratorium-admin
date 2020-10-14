@@ -97,6 +97,7 @@
                                     <option value="Barang Habis Pakai">Barang Habis Pakai</option>
                                     <option value="Hibah TA">Hibah TA</option>
                                     <option value="Supplier">Supplier</option>
+                                    <option value="PNJ">PNJ</option>
                                     <option value="Hibah Pemerintah">Hibah Pemerintah</option>
                                 </select>
                                 <small class="<?= form_error('asal_pengadaan') ? "form-text text-danger" : ''?>"><?= form_error('asal_pengadaan')?></small>
@@ -127,19 +128,3 @@
       </div><!-- /.container-fluid -->
     </section>
 
-
-    <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>    
-    <script>
-        $(document).ready(function(){
-            $("#asal_pengadaan").change(function(){
-                $(this).find("option:selected").each(function(){
-                    let optionValue = $(this).attr("value");                                  
-                    if(optionValue === "Barang Habis Pakai"){                        
-                        $(".bhpInput").show() 
-                    } else{
-                       $(".bhpInput").hide()
-                    }
-                });
-            }).change();
-        });
-    </script>     -->

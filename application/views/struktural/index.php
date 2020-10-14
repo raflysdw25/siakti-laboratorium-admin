@@ -36,9 +36,11 @@
                         <a href="<?= site_url('staff/editstruktural/'.$struktural->id_jablab_struk) ?>" class="btn btn-info" data-toggle="tooltip" title="Edit Jabatan" data-placement="top">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
+                        <?php if($struktural->nama_jab !== 'PLP'): ?>
                         <a href="<?= site_url('staff/hapusstruktural/'.$struktural->id_jablab_struk) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger" data-toggle="tooltip" title="Hapus Jabatan" data-placement="top">
                             <i class="fas fa-trash"></i>
                         </a>
+                        <?php endif;?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

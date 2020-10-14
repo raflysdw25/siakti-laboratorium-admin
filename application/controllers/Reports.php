@@ -80,7 +80,7 @@ class Reports extends CI_Controller
         if($filter->responseCode == "00"){
             $data['filters'] = $filter->data;
             $data["posts"] = $post;
-            // var_dump($data["posts"]); exit;
+            // var_dump($data["filters"][0]->nama_jenis); exit;
             $this->template->load('template', 'reports/filter-barang', $data);
         }else{
             $this->session->set_flashdata('failed', 'Barang tidak ditemukan');

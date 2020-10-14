@@ -8,7 +8,6 @@ class Peminjaman extends CI_Controller
     function __construct()
     {
         parent::__construct();        
-        // $this->load->model(['Peminjaman_m','PeminjamanDetail_m', 'Barang_m', 'mahasiswa_m', 'Staff_m']);
         $this->load->library('form_validation');
         check_not_login();
     }
@@ -44,10 +43,7 @@ class Peminjaman extends CI_Controller
     public function index()
     {                                
         $peminjaman = retrieveData('laboratorium/peminjaman');
-            
-
         $data["peminjaman"] = $peminjaman->data;
-
         $this->template->load('template', 'peminjaman/index', $data);
     }
 
@@ -75,6 +71,7 @@ class Peminjaman extends CI_Controller
         $details = retrieveData('laboratorium/peminjamandetail?pinjambrg_kd_pjm='.$kd_pjm);
         $details = $details->data;
 
+        // Cek jika sudah ada barang yang dipinjam
         if($details == null){            
             $deletePeminjaman = deleteData('laboratorium/peminjaman', $post);
             if($deletePeminjaman->responseCode == "00"){
@@ -87,6 +84,7 @@ class Peminjaman extends CI_Controller
         }else{
             $getPeminjaman = retrieveData('laboratorium/peminjaman?kd_pjm='.$kd_pjm);
             $peminjaman = $getPeminjaman->data[0];
+            // Jika status peminjaman belum FINISH
             if($peminjaman->status != "FINISH"){
                 foreach($details as $detail){
                     // Mengubah Status Barang jadi Tersedia

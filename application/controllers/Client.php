@@ -7,10 +7,8 @@ class Client extends CI_Controller
 {
     function __construct()
     {
-        parent::__construct();        
-        // $this->load->model(['Mahasiswa_m', 'Peminjaman_m', 'Barang_m', 'PeminjamanDetail_m', 'Ruangan_m', 'Staff_m']);
-        $this->load->library('form_validation');
-        // check_not_login();
+        parent::__construct();                
+        $this->load->library('form_validation');        
         date_default_timezone_set("Asia/Jakarta");
     }
 
@@ -122,9 +120,7 @@ class Client extends CI_Controller
     {               
         
         $check_peminjam = retrieveData('laboratorium/peminjaman/pinjammahasiswa?mahasiswa_nim='.$mahasiswa_nim);        
-        // var_dump($check_peminjam); exit;
         $last_mahasiswa_meminjam = end($check_peminjam->data);
-        // var_dump($last_mahasiswa_meminjam); exit;
         if($last_mahasiswa_meminjam->status == "SUCCESS" || $last_mahasiswa_meminjam->status == "NEED APPROVAL" ){
             $this->session->set_flashdata('failed', 'Mahasiswa sedang melakukan peminjaman');
             redirect('client'); 
@@ -180,9 +176,11 @@ class Client extends CI_Controller
             $post = $this->input->post();
             $post['tgl_pjm'] = date('Y-m-d H:i:s');
             $post['tgl_blk'] = date_format(date_create($post['tgl_blk']), 'Y-m-d H:i:s');
-            // Menentukan Status Peminjaman, jika lebih dari 6 jam, maka perlu approval
+
+            // Menentukan Status Peminjaman, 
             $difference = abs(strtotime($post["tgl_blk"]) - strtotime($post["tgl_pjm"]))/3600;
             
+            // jika lebih dari 12 jam, maka perlu approval (Atur status NEED Approval)
             if($difference > 12){
                 $post["status"] = "NEED APPROVAL";                
             }else{
@@ -232,6 +230,7 @@ class Client extends CI_Controller
         
         $numItems = count($peminjaman);
         $i = 0;
+        
         foreach(array_reverse($peminjaman) as $key => $pinjambrg){
             if($pinjambrg->status == "FINISH" || $pinjambrg->status == "NEED APPROVAL"){
                 if(++$i === $numItems){
@@ -247,13 +246,7 @@ class Client extends CI_Controller
 
             }
             
-        }
-
-        // if($terakhir_pinjam->status == "FINISH" || $terakhir_pinjam->status == "NEED APPROVAL"){
-            
-        // }else{
-            
-        // }        
+        }       
 
     }
 

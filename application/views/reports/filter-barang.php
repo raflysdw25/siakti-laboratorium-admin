@@ -32,7 +32,7 @@
         <?php endif; ?>
 
         <?php if($posts["jenis_brg"]): ?>
-            <span class="mr-2">Jenis Barang : <?= $posts["jenis_brg"] ?></span>
+            <span class="mr-2">Jenis Barang : <?= $filters[0]->nama_jenis ?></span>
         <?php endif; ?>
         </div>
 
